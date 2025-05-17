@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Data\UserData;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UserController
     public function index(Request $request)
     {
         return inertia('settings/users/Index', [
-            UserData::COLLECTION_NAME => UserData::collect(User::paginate()),
+            UserData::COLLECTION_NAME => UserResource::collection(User::paginate($request->input('per_page', 15))),
         ]);
     }
 

@@ -42,6 +42,8 @@ export interface PaginatedCollection {
     data: Array<any>;
     first_page_url: string;
     from: number;
+    total: number;
+    per_page: number;
     last_page: number;
     last_page_url: string;
     links: Array<{
@@ -50,6 +52,11 @@ export interface PaginatedCollection {
         active: boolean;
     }>;
     next_page_url: string | null;
+}
+
+export interface DatatableColumn {
+    field: string;
+    title: string;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

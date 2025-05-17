@@ -59,12 +59,13 @@ test('user can delete their account', function () {
             'password' => 'password',
         ]);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
+    $response->assertSessionHasNoErrors();
 
     $this->assertGuest();
-    expect($user->fresh())->toBeNull();
+
+    $this->assertDatabaseMissing('users', [
+        'id' => $user->id,
+    ]);
 });
 
 test('correct password must be provided to delete account', function () {

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { type BreadcrumbItem, type PaginatedCollection } from '@/types';
 import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import UsersLayout from '@/layouts/settings/UsersLayout.vue';
+import SettingsLayout from '@/layouts/settings/Layout.vue';
+import Datatable from '@/components/Datatable.vue';
+
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
@@ -17,22 +19,49 @@ interface Props {
 
 const props = defineProps<Props>();
 
-import Vue3Datatable from "@bhplugin/vue3-datatable";
-import "@bhplugin/vue3-datatable/dist/style.css";
 
 const cols = ref([
     { field: "id", title: "ID", width: "90px", filter: false },
     { field: "name", title: "Name" },
     { field: "email", title: "Email" },
+    { field: "email_verified_at", title: "Email Verified At" },
 ]);
 
+const params = {
+    page: 1,
+    per_page: 15,
+    sortColumn: 'id',
+    sortDirection: 'asc',
+    search: '',
+};
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="General settings" />
-        <UsersLayout>
-            <vue3-datatable :rows="props.users.data" :columns="cols"> </vue3-datatable>
-        </UsersLayout>
+        <SettingsLayout>
+            <Datatable
+                :columns="cols"
+                :data="props.users"
+                :reload="['users']"
+                :params="params">
+
+                <template #id="data">
+                    {{ data.value.id }}
+                </template>
+
+                <template #name="data">
+                    {{ data.value.name }}
+                </template>
+
+                <template #email="data">
+                    {{ data.value.email }}
+                </template>
+
+                <template #email_verified_at="data">
+                    {{ data.value.formatted_email_verified_at }}
+                </template>
+            </Datatable>
+        </SettingsLayout>
     </AppLayout>
 </template>

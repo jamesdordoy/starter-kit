@@ -78,5 +78,7 @@ class UserData extends Data
 
         #[WithCast(DateTimeInterfaceCast::class)]
         public ?Carbon $updatedAt,
+
+        public ?string $formattedEmailVerifiedAt,
     ) {}
 }

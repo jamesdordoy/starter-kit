@@ -6,6 +6,7 @@ use App\Actions\Users\DestroyUser;
 use App\Data\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,33 +14,36 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProfileController extends Controller
+final class ProfileController
 {
     /**
      * Show the user's profile settings page.
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request, User $profile): Response
     {
         return Inertia::render('settings/Profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
+            UserData::DATA_NAME => UserData::from($profile),
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, User $profile): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $profile->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $profile->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $profile->save();
 
-        return to_route('profile.edit');
+        return to_route('profile.edit', [
+            'profile' => $profile,
+        ])->with('status', __('Profile updated successfully.'));
     }
 
     /**

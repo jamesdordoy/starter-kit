@@ -17,6 +17,7 @@ use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
+/** @typescript */
 #[MapName(SnakeCaseMapper::class)]
 class UserData extends Data
 {
@@ -54,6 +55,8 @@ class UserData extends Data
             Max(255),
         ]
         public string $password,
+
+        public ?string $avatar,
 
         public ?string $twoFactorSecret,
 

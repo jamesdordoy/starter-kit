@@ -3,7 +3,8 @@ import type { LucideIcon } from 'lucide-vue-next';
 import type { Config } from 'ziggy-js';
 
 export interface Auth {
-    user: User;
+    user: App.Data.UserData;
+    can: Array<string>;
 }
 
 export interface BreadcrumbItem {

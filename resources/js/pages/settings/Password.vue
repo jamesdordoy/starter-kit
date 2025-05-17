@@ -18,6 +18,12 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
+interface Props {
+    user: App.Data.UserData;
+}
+
+const props = defineProps<Props>();
+
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
 
@@ -54,7 +60,7 @@ const updatePassword = () => {
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Password settings" />
 
-        <SettingsLayout>
+        <SettingsLayout :user="props.user">
             <div class="space-y-6">
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
 

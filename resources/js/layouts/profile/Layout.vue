@@ -5,14 +5,24 @@ import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 
+interface Props {
+    user: App.Data.UserData;
+}
+
+const props = defineProps<Props>();
+
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'General Settings',
-        href: route('setting.index'),
+        title: 'Profile',
+        href: route('profile.edit', { profile: props.user }),
     },
     {
-        title: 'Staff',
-        href: route('settings.users.index'),
+        title: 'Password',
+        href: '/settings/password',
+    },
+    {
+        title: 'Appearance',
+        href: '/settings/appearance',
     },
 ];
 
@@ -23,7 +33,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
 
 <template>
     <div class="px-4 py-6">
-        <Heading title="General Settings" description="Manage your staff and general site settings." />
+        <Heading title="Profile Settings" description="Manage your profile and account settings" />
 
         <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-y-0 lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">

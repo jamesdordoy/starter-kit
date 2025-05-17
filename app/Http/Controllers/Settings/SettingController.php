@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-final class SettingsController
+final class SettingController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        
     }
 
     /**

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
+import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -60,7 +60,7 @@ const updatePassword = () => {
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Password settings" />
 
-        <SettingsLayout :user="props.user">
+        <ProfileLayout :user="props.user">
             <div class="space-y-6">
                 <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
 
@@ -120,6 +120,6 @@ const updatePassword = () => {
                     </div>
                 </form>
             </div>
-        </SettingsLayout>
+        </ProfileLayout>
     </AppLayout>
 </template>

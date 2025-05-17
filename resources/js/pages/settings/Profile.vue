@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
+import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { useForm } from 'laravel-precognition-vue-inertia';
 
@@ -41,7 +41,7 @@ const submit = async () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Profile settings" />
 
-        <SettingsLayout :user="props.user">
+        <ProfileLayout :user="props.user">
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
@@ -108,7 +108,7 @@ const submit = async () => {
                 </form>
             </div>
 
-            <DeleteUser />
-        </SettingsLayout>
+            <DeleteUser :user="props.user" />
+        </ProfileLayout>
     </AppLayout>
 </template>

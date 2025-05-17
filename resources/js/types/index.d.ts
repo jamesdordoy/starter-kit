@@ -37,4 +37,19 @@ export interface User {
     updated_at: string;
 }
 
+export interface PaginatedCollection {
+    current_page: number;
+    data: Array<any>;
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: Array<{
+        label: string;
+        url: string | null;
+        active: boolean;
+    }>;
+    next_page_url: string | null;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

@@ -16,9 +16,12 @@ use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-/** @typescript */
-#[MapName(SnakeCaseMapper::class)]
+#[
+    TypeScript,
+    MapName(SnakeCaseMapper::class)
+]
 class UserData extends Data
 {
     public const DATA_NAME = 'user';

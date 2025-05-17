@@ -9,4 +9,6 @@ enum PermissionEnum: string
     case UPDATE_USERS = 'update_users';
     case DELETE_USERS = 'delete_users';
     case RESTORE_USERS = 'restore_users';
+
+    case VIEW_SETTINGS = 'view_settings';
 }

@@ -123,13 +123,13 @@ const handleChange = (e) => {
 <template>
     <div class="datatable">
         <vue3-datatable
-            :rows="props.data.data"
+            :rows="props.data?.data"
             :columns="columns"
-            :total-rows="props.data.meta.total"
+            :total-rows="props.data?.meta.total"
             is-server-mode
             @change="handleChange"
-            :page="props.data.meta.current_page"
-            :page-size="props.data.meta.per_page"
+            :page="props.data?.meta.current_page"
+            :page-size="props.data?.meta.per_page"
             :page-size-options="[15, 30, 50, 100]"
             :sortable="true"
             :first-arrow="firstArrow"

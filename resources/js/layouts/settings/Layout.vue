@@ -8,7 +8,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 const sidebarNavItems: NavItem[] = [
     {
         title: 'General Settings',
-        href: route('setting.index'),
+        href: route('settings.index'),
     },
     {
         title: 'Staff',

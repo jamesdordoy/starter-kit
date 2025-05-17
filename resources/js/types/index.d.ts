@@ -4,7 +4,7 @@ import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: App.Data.UserData;
-    can: Array<string>;
+    can: Array<App.Enums.PermissionEnum>;
 }
 
 export interface BreadcrumbItem {
@@ -38,20 +38,22 @@ export interface User {
 }
 
 export interface PaginatedCollection {
-    current_page: number;
     data: Array<any>;
-    first_page_url: string;
-    from: number;
-    total: number;
-    per_page: number;
-    last_page: number;
-    last_page_url: string;
+    meta: Array<{
+        current_page: number;
+        first_page_url: string;
+        from: number;
+        total: number;
+        per_page: number;
+        last_page: number;
+        last_page_url: string;
+        next_page_url: string | null;
+    }>;
     links: Array<{
         label: string;
         url: string | null;
         active: boolean;
     }>;
-    next_page_url: string | null;
 }
 
 export interface DatatableColumn {

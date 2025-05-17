@@ -12,9 +12,10 @@ twoFactorConfirmedAt: string | null;
 emailVerifiedAt: string | null;
 createdAt: string | null;
 updatedAt: string | null;
+formattedEmailVerifiedAt: string | null;
 };
 }
 declare namespace App.Enums {
-export type PermissionEnum = 'view_users' | 'create_users' | 'update_users' | 'delete_users' | 'restore_users';
+export type PermissionEnum = 'view_users' | 'create_users' | 'update_users' | 'delete_users' | 'restore_users' | 'view_settings';
 export type RoleEnum = 'manager' | 'staff' | 'admin';
 }

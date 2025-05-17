@@ -9,7 +9,7 @@ import Datatable from '@/components/Datatable.vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: route('setting.index'),
+        href: route('settings.index'),
     },
 ];
 

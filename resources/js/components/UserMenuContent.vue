@@ -2,17 +2,15 @@
 import UserInfo from '@/components/UserInfo.vue';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Link, router } from '@inertiajs/vue3';
-import { LogOut, PersonStanding, Settings } from 'lucide-vue-next';
-
-interface Props {
-    user: App.Data.UserData;
-}
+import { LogOut, Settings } from 'lucide-vue-next';
+import { usePage } from '@inertiajs/vue3';
+import { type SharedData } from '@/types';
 
 const handleLogout = () => {
     router.flushAll();
 };
-
-defineProps<Props>();
+const page = usePage<SharedData>();
+const user = page.props.auth.user as App.Data.UserData;
 </script>
 
 <template>
@@ -21,10 +19,10 @@ defineProps<Props>();
             <UserInfo :user="user" :show-email="true" />
         </Link>
     </DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuGroup>
+    <DropdownMenuSeparator v-if="page.props.auth.can.view_settings" />
+    <DropdownMenuGroup v-if="page.props.auth.can.view_settings">
         <DropdownMenuItem :as-child="true">
-            <Link class="block w-full" :href="route('settings')" prefetch as="button">
+            <Link class="block w-full" :href="route('settings.index')" prefetch as="button">
                 <Settings class="mr-2 h-4 w-4" />
                 Settings
             </Link>

@@ -7,7 +7,7 @@ import SettingsLayout from '@/layouts/settings/Layout.vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'General settings',
-        href: route('setting.index'),
+        href: route('settings.index'),
     },
 ];
 

@@ -12,10 +12,6 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('settings')->group(function () {
 
-        Route::get('/', function () {
-            return Inertia::render('settings/Index');
-        })->name('settings');
-
         Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);
         
         Route::name('settings.')->group(function () {
@@ -32,5 +28,5 @@ Route::middleware('auth')->group(function () {
         })->name('appearance');
     });
 
-    Route::resource('setting', SettingController::class);
+    Route::resource('settings', SettingController::class);
 });

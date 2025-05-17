@@ -12,7 +12,9 @@ final class SettingController
      */
     public function index()
     {
-        
+        return inertia('settings/Index', [
+            
+        ]);
     }
 
     /**

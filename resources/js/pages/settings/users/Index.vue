@@ -21,7 +21,7 @@ const props = defineProps<Props>();
 
 
 const cols = ref([
-    { field: "id", title: "ID", width: "90px", filter: false },
+    { field: "id", title: "ID", width: "90px", sort: false },
     { field: "name", title: "Name" },
     { field: "email", title: "Email" },
     { field: "email_verified_at", title: "Email Verified At" },

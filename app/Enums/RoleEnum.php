@@ -19,10 +19,9 @@ enum RoleEnum: string
                 PermissionEnum::RESTORE_USERS,
             ],
             self::STAFF => [
-
+                //
             ],
             self::ADMIN => [
-                // All permissions
                 PermissionEnum::values(),
             ],
             default => [],

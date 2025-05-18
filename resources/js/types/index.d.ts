@@ -4,7 +4,7 @@ import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: App.Data.UserData;
-    can: Array<App.Enums.PermissionEnum>;
+    can: App.Enums.PermissionEnum;
 }
 
 export interface BreadcrumbItem {
@@ -21,7 +21,6 @@ export interface NavItem {
 
 export interface SharedData extends PageProps {
     name: string;
-    quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;

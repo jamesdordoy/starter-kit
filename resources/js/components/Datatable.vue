@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {useDataTableable} from "@/composables/datatableable";
 import { ref, useSlots, watch} from "vue";
 import { router } from '@inertiajs/vue3';
 import { type PaginatedCollection, type DatatableColumn } from '@/types';
@@ -52,41 +51,7 @@ props.columns.forEach(column => {
     column.hide = props.showColumns.length !== 0 && props.showColumns.indexOf(column.field) === -1;
 });
 
-
-watch(() => props.scopes, (scopes) => {
-    getData(scopes);
-}, {
-    deep: true
-});
-
-const {
-    // loading,
-    getData,
-    // rows,
-    meta,
-    sortable,
-    page,
-    pageSize,
-    // handleChange,
-    skin,
-    firstArrow,
-    lastArrow,
-    previousArrow,
-    nextArrow,
-} = useDataTableable(
-    props.endpoint,
-    {
-        ...props.params,
-        ... props.defaultOrderBy ? {
-            sort: (props.defaultOrderByDir === 'desc' ? '-' : '') + props.defaultOrderBy
-        } : {},
-    },
-    props.filters,
-    props.scopes
-);
-
 const slots = useSlots()
-
 
 const handleChange = (e) => {
 
@@ -123,19 +88,18 @@ const handleChange = (e) => {
 <template>
     <div class="datatable">
         <vue3-datatable
+            class="dark:text-white"
             :rows="props.data?.data"
             :columns="columns"
             :total-rows="props.data?.meta.total"
             is-server-mode
+            skin="bh-table-striped bh-table-hover bh-table-bordered bh-table-compact"
             @change="handleChange"
+            @rowClick="handleRowClick"
             :page="props.data?.meta.current_page"
             :page-size="props.data?.meta.per_page"
             :page-size-options="[15, 30, 50, 100]"
             :sortable="true"
-            :first-arrow="firstArrow"
-            :last-arrow="lastArrow"
-            :previous-arrow="previousArrow"
-            :next-arrow="nextArrow"
             :searchable="true"
             :filterable="true"
             :filter="true"

@@ -6,15 +6,17 @@ use App\Data\UserData;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class UserController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
-        return inertia('settings/users/Index', [
+        return Inertia::render('settings/users/Index', [
             UserData::COLLECTION_NAME => UserResource::collection(User::paginate($request->input('per_page', 15))),
         ]);
     }

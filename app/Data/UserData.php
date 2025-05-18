@@ -4,14 +4,17 @@ namespace App\Data;
 
 use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\Validation\Confirmed;
 use Spatie\LaravelData\Attributes\Validation\Email;
 use Spatie\LaravelData\Attributes\Validation\IntegerType;
 use Spatie\LaravelData\Attributes\Validation\Lowercase;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Attributes\Validation\Password;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Attributes\Validation\Sometimes;
 use Spatie\LaravelData\Attributes\Validation\StringType;
+use Spatie\LaravelData\Attributes\Validation\Unique;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
@@ -48,7 +51,8 @@ class UserData extends Data
             Email,
             StringType,
             Lowercase,
-            Max(255)
+            Max(255),
+            Unique('users', 'email'),
         ]
         public string $email,
 
@@ -56,6 +60,8 @@ class UserData extends Data
             Required,
             StringType,
             Max(255),
+            Confirmed,
+            Password
         ]
         public string $password,
 

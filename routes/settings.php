@@ -20,12 +20,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
         Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
-
-        Route::get('/appearance', function () {
-            return Inertia::render('settings/Appearance', [                
-                UserData::DATA_NAME => UserData::from(request()->user()),
-            ]);
-        })->name('appearance');
     });
 
     Route::resource('settings', SettingController::class);

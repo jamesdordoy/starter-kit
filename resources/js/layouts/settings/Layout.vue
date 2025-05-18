@@ -14,6 +14,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Staff',
         href: route('settings.users.index'),
     },
+    {
+        title: 'Activity Log',
+        href: route('settings.activity-log'),
+    },
 ];
 
 const page = usePage();

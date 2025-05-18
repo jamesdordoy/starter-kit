@@ -17,6 +17,8 @@ enum RoleEnum: string
                 PermissionEnum::UPDATE_USERS,
                 PermissionEnum::DELETE_USERS,
                 PermissionEnum::RESTORE_USERS,
+                PermissionEnum::VIEW_SETTINGS,
+                PermissionEnum::VIEW_ACTIVITY_LOG,
             ],
             self::STAFF => [
                 //

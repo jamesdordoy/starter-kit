@@ -11,4 +11,5 @@ enum PermissionEnum: string
     case RESTORE_USERS = 'restore_users';
 
     case VIEW_SETTINGS = 'view_settings';
+    case VIEW_ACTIVITY_LOG = 'view_activity_log';
 }

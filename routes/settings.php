@@ -5,7 +5,7 @@ use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SettingController;
 use App\Http\Controllers\Settings\UserController as SettingsUserController;
-use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\Settings\ActivityLogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

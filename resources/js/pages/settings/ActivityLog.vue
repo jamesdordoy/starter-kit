@@ -43,10 +43,21 @@
                                 </div>
                                 <div class="flex-1">
                                     <div class="grid gap-2">
-                                        <Label for="date_range">Date Range</Label>
+                                        <Label for="date_from">Date From</Label>
                                         <Input
-                                            id="date_range"
-                                            v-model="filters.date"
+                                            id="date_from"
+                                            v-model="filters.date_from"
+                                            type="date"
+                                            class="mt-1 block w-full"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="grid gap-2">
+                                        <Label for="date_to">Date To</Label>
+                                        <Input
+                                            id="date_to"
+                                            v-model="filters.date_to"
                                             type="date"
                                             class="mt-1 block w-full"
                                         />
@@ -55,23 +66,28 @@
                             </div>
                         </div>
 
-                        <DataTable
+                        <Datatable
+                            :columns="cols"
                             :data="activities"
                             :reload="['activities']"
-                            :columns="columns"
-                            :filters="filters"
-                            @update:filters="updateFilters"
+                            :params="params"
                         >
-                            <template #cell(created_at)="{ value }">
-                                {{ formatDate(value) }}
+                            <template #created_at="data">
+                                {{ formatDate(data.value.created_at) }}
                             </template>
-                            <template #cell(causer)="{ value }">
-                                {{ value?.name || 'System' }}
+                            <template #log_name="data">
+                                {{ data.value.log_name }}
                             </template>
-                            <template #cell(properties)="{ value }">
-                                <pre class="text-xs whitespace-pre-wrap">{{ JSON.stringify(value, null, 2) }}</pre>
+                            <template #causer="data">
+                                {{ data.value.causer?.name || 'System' }}
                             </template>
-                        </DataTable>
+                            <template #description="data">
+                                {{ data.value.description }}
+                            </template>
+                            <template #properties="data">
+                                <pre class="text-xs whitespace-pre-wrap">{{ JSON.stringify(data.value.properties, null, 2) }}</pre>
+                            </template>
+                        </Datatable>
                     </div>
                 </div>
             </div>
@@ -84,7 +100,7 @@ import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import DataTable from '@/components/DataTable.vue';
+import Datatable from '@/components/Datatable.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import { Head } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
@@ -106,19 +122,29 @@ interface Props {
     filters: {
         log_name?: string;
         causer_id?: string;
-        date?: string;
+        date_from?: string;
+        date_to?: string;
+        search?: string;
     };
 }
 
 const props = defineProps<Props>();
 
-const columns = [
-    { key: 'created_at', label: 'Date' },
-    { key: 'log_name', label: 'Type' },
-    { key: 'causer', label: 'User' },
-    { key: 'description', label: 'Description' },
-    { key: 'properties', label: 'Details' },
-];
+const cols = ref([
+    { field: "created_at", title: "Date" },
+    { field: "log_name", title: "Type" },
+    { field: "causer", title: "User" },
+    { field: "description", title: "Description" },
+    { field: "properties", title: "Details" },
+]);
+
+const params = {
+    page: 1,
+    per_page: 15,
+    sortColumn: 'created_at',
+    sortDirection: 'desc',
+    search: '',
+};
 
 const formatDate = (date: string) => {
     return new Date(date).toLocaleString();

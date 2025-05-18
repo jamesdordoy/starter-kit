@@ -8,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
-
 import { LoaderCircle } from 'lucide-vue-next';
 
 defineProps<{

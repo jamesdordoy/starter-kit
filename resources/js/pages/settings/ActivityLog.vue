@@ -16,7 +16,7 @@
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="log_name">Log Type</Label>
-                                        <Select v-model="filters.log_name">
+                                        <Select v-model="filters.log_name" @update:modelValue="updateFilters">
                                             <option value="">All Types</option>
                                             <option value="login">Login</option>
                                             <option value="logout">Logout</option>

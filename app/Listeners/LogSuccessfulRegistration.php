@@ -10,6 +10,6 @@ class LogSuccessfulRegistration
     {
         activity()->causedBy($event->user->id)
             ->withProperties(['ip' => request()->ip()])
-            ->log('User registered');
+            ->log('User registered', ['placeholder' =>  $event->user->name]);
     }
 } 

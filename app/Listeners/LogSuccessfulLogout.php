@@ -10,6 +10,6 @@ class LogSuccessfulLogout
     {
         activity()->causedBy($event->user->id)
             ->withProperties(['ip' => request()->ip()])
-            ->log('User logged out');
+            ->log('User logged out', ['placeholder' =>  $event->user->name]);
     }
 } 

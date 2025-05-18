@@ -9,19 +9,19 @@ enum AuditLogEnum: string
     case UPDATE = 'update';
     case DELETE = 'delete';
     case RESTORE = 'restore';
-    case LOGIN = 'view_settings';
-    case LOGOUT = 'view_activity_log';
+    case LOGIN = 'login';
+    case LOGOUT = 'logout';
 
     public function description(): string
     {
         return match ($this) {
-            self::VIEW => 'Tools',
-            self::CREATE => 'Consumables',
-            self::UPDATE => 'Hardware',
-            self::DELETE => 'Equipment',
-            self::RESTORE => 'Product',
-            self::LOGIN => 'Equipment',
-            self::LOGOUT => 'Product',
+            self::VIEW => 'View',
+            self::CREATE => 'Create',
+            self::UPDATE => 'Update',
+            self::DELETE => 'Delete',
+            self::RESTORE => 'Restore',
+            self::LOGIN => 'Login',
+            self::LOGOUT => 'Log Out',
         };
     }
 }

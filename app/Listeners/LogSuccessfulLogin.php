@@ -10,6 +10,6 @@ class LogSuccessfulLogin
     {
         activity()->causedBy($event->user->id)
             ->withProperties(['ip' => request()->ip()])
-            ->log('User logged in');
+            ->log(__('audit.login', ['placeholder' =>  $event->user->name]));
     }
 }

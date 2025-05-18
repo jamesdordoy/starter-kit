@@ -52,7 +52,6 @@ class UserData extends Data
             StringType,
             Lowercase,
             Max(255),
-            Unique('users', 'email'),
         ]
         public string $email,
 

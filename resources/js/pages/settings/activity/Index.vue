@@ -85,7 +85,12 @@
                                 {{ data.value.description }}
                             </template>
                             <template #properties="data">
-                                <pre class="text-xs whitespace-pre-wrap">{{ JSON.stringify(data.value.properties, null, 2) }}</pre>
+                                <Link
+                                    :href="route('settings.activity-log.show', data.value.id)"
+                                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                                >
+                                    View Changes
+                                </Link>
                             </template>
                         </Datatable>
                     </div>
@@ -108,6 +113,8 @@ import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import type { BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
+import type { Collection } from '@/types/collection';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -118,8 +125,8 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 interface Props {
     activities: PaginatedCollection<App.Data.ActivityData>;
-    users: App.Data.UserData[];
-    filters: {
+    users: Collection<App.Data.UserData>;
+    params: {
         filter?: string[];
     };
 }
@@ -131,11 +138,11 @@ const cols = ref([
     { field: "log_name", title: "Type" },
     { field: "causer", title: "User" },
     { field: "description", title: "Description" },
-    { field: "properties", title: "Details" },
+    { field: "properties", title: "", sort: false },
 ]);
 
 const params = ref({
-    filter: props.filters.length > 0 || {
+    filter: props.params.length > 0 || {
         description: '',
         causer_id: '',
         date_from: '',

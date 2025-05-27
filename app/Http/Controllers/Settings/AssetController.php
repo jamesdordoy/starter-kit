@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use Illuminate\Support\Facades\Auth;
 use App\Data\ActivityData;
 use App\Data\UserData;
 use App\Http\Resources\ActivityResource;
@@ -11,12 +12,9 @@ use App\QueryBuilder\Queries\ActivityQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ActivityLogController
+
+class AssetController
 {
-    public function __construct()
-    {
-        // $this->middleware('permission:' . PermissionEnum::VIEW_ACTIVITY_LOG->value);
-    }
 
     public function index(Request $request)
     {
@@ -26,18 +24,25 @@ class ActivityLogController
             ->withQueryString()
             ->appends(request()->query());
 
-        $users = User::has('activities')->get();
 
-        return Inertia::render('settings/activity/Index', [
+        return Inertia::render('settings/assets/Index', [
             ActivityData::COLLECTION_NAME => ActivityResource::collection($activities),
-            UserData::COLLECTION_NAME => UserResource::collection($users),
             'params' => $request->only(['filter']),
         ]);
     }
 
-    public function show()
+    public function update(Request $request)
     {
-        return Inertia::render('settings/activity/Show', [
-        ]);
+        // dd('hit');
+        // $request->validate([
+        //     'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+
+        // $user = Auth::user();
+
+        // $user->addMediaFromRequest('avatar')
+        //     ->toMediaCollection('avatars');
+
+        // return back()->with('status', 'profile-updated');
     }
 }

@@ -10,11 +10,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -72,5 +74,10 @@ class User extends Authenticatable
             ->setDescriptionForEvent(fn(string $eventName) => "User has been {$eventName}")
             ->logUnguarded()
             ->logOnlyDirty();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatars')->singleFile();
     }
 }

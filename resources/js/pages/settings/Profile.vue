@@ -11,6 +11,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { useForm } from 'laravel-precognition-vue-inertia';
+import { useForm as intertiaForm } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
+
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -35,6 +38,39 @@ const form = useForm('patch', route('profile.update', { profile: props.user }), 
 const submit = async () => {
     await form.submit();
 };
+
+
+
+const avatarForm = intertiaForm({
+  avatar: null,
+  _method: 'PUT',
+
+})
+
+const handleFileChange = (event) => {
+    avatarForm.avatar = event.target.files[0]
+}
+
+
+
+// import { Inertia } from '@inertiajs/inertia';
+
+
+const uploadAvatar = async () => {
+    try {
+        form.put(route('profile.avatar'), {
+        forceFormData: true,
+        preserveScroll: true,
+    });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+
+
 </script>
 
 <template>
@@ -44,6 +80,16 @@ const submit = async () => {
         <ProfileLayout :user="props.user">
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
+
+                <form @submit.prevent="uploadAvatar">
+                    <input type="text" v-model="form.name" />
+                    <input type="file" @input="avatarForm.avatar = $event.target.files[0]" />
+                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ avatarForm.progress.percentage }}%
+                    </progress>
+                    <button type="submit">Submit</button>
+                </form>
+
 
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">

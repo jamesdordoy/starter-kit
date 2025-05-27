@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-data": "^4.15",
+        "spatie/laravel-medialibrary": "^11.13",
         "spatie/laravel-permission": "^6.18",
         "spatie/laravel-query-builder": "^6.3",
         "spatie/laravel-settings": "^3.4",

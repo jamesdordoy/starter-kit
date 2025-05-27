@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, useSlots, watch} from "vue";
 import { router } from '@inertiajs/vue3';
-import { type PaginatedCollection, type DatatableColumn } from '@/types';
 import Vue3Datatable from "@bhplugin/vue3-datatable";
 import "@bhplugin/vue3-datatable/dist/style.css";
+import type { PaginatedCollection } from '@/types/paginated-collection';
 
 interface Props {
     endpoint?: string;
-    columns: DatatableColumn[];
-    data?: PaginatedCollection;
+    columns: any[];
+    data?: PaginatedCollection<any>;
     showColumns?: string[];
     params?: Record<string, any>;
     filters?: any[];
@@ -81,8 +81,15 @@ const handleChange = (e) => {
             console.log(e.change_type, e);
             break;
     }
+
+    // console.log(props.params)
+    console.log(params)
+
     router.reload({
-        data: params,
+        data: {
+            ...props.params,
+            ...params,
+        },
         only: props.reload,
     });
 };

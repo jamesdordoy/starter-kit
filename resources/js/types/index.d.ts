@@ -26,19 +26,4 @@ export interface SharedData extends PageProps {
     sidebarOpen: boolean;
 }
 
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface DatatableColumn {
-    field: string;
-    title: string;
-}
-
 export type BreadcrumbItemType = BreadcrumbItem;

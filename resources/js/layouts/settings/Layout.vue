@@ -18,6 +18,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Activity Log',
         href: route('settings.activity-log.index'),
     },
+    {
+        title: 'Assets',
+        href: route('settings.assets.index'),
+    },
 ];
 
 const page = usePage();

@@ -18,12 +18,13 @@ class UserController
     public function index(Request $request): Response
     {
         $users = (new UserQuery($request))
-            ->paginate(15)
-            ->withQueryString();
+            ->paginate($request->input('per_page', 15))
+            ->withQueryString()
+            ->appends(request()->query());
 
         return Inertia::render('settings/users/Index', [
             UserData::COLLECTION_NAME => UserResource::collection($users),
-            'filters' => $request->only(['filter']),
+            'params' => request()->query(),
         ]);
     }
 

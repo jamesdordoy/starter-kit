@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
-import { type BreadcrumbItem, type PaginatedCollection } from '@/types';
+import { type BreadcrumbItem } from '@/types';
+import type { PaginatedCollection } from '@/types/paginated-collection';
 import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
@@ -14,11 +15,17 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ];
 
 interface Props {
-    users: PaginatedCollection;
+    users: PaginatedCollection<App.Data.UserData>;
+    params: {
+        page: number;
+        per_page: number;
+        sortColumn: string;
+        sortDirection: string;
+        search: string;
+    };
 }
 
 const props = defineProps<Props>();
-
 
 const cols = ref([
     { field: "id", title: "ID", width: "90px", sort: false },
@@ -27,13 +34,13 @@ const cols = ref([
     { field: "email_verified_at", title: "Email Verified At" },
 ]);
 
-const params = {
-    page: 1,
-    per_page: 15,
-    sortColumn: 'id',
-    sortDirection: 'asc',
-    search: '',
-};
+// const params = {
+//     page: 1,
+//     per_page: 15,
+//     sortColumn: 'id',
+//     sortDirection: 'asc',
+//     search: '',
+// };
 </script>
 
 <template>

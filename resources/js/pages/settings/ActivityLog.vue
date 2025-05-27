@@ -16,7 +16,7 @@
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="log_name">Log Type</Label>
-                                        <Select v-model="filters.log_name" @update:modelValue="updateFilters">
+                                        <Select v-model="params.filter.description">
                                             <option value="">All Types</option>
                                             <option value="login">Login</option>
                                             <option value="logout">Logout</option>
@@ -29,11 +29,11 @@
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="user">User</Label>
-                                        <Select v-model="filters.causer_id">
+                                        <Select v-model="params.filter.causer_id">
                                             <option value="">All Users</option>
                                             <option 
-                                                v-for="user in activities.data.filter(activity => activity.causer).map(activity => activity.causer)" 
-                                                :key="user.id" 
+                                                v-for="user in users.data" 
+                                                :key="user.id?.toString()" 
                                                 :value="user.id"
                                             >
                                                 {{ user.name }}
@@ -46,7 +46,7 @@
                                         <Label for="date_from">Date From</Label>
                                         <Input
                                             id="date_from"
-                                            v-model="filters.date_from"
+                                            v-model="params.filter.date_from"
                                             type="date"
                                             class="mt-1 block w-full"
                                         />
@@ -57,7 +57,7 @@
                                         <Label for="date_to">Date To</Label>
                                         <Input
                                             id="date_to"
-                                            v-model="filters.date_to"
+                                            v-model="params.filter.date_to"
                                             type="date"
                                             class="mt-1 block w-full"
                                         />
@@ -96,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
@@ -106,9 +106,8 @@ import { Head } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
-import type { ActivityLog } from '@/types/activity-log';
 import type { BreadcrumbItem } from '@/types';
-import type { PaginatedCollection } from '@/types/datatable';
+import type { PaginatedCollection } from '@/types/paginated-collection';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -118,13 +117,10 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ];
 
 interface Props {
-    activities: PaginatedCollection<ActivityLog>;
+    activities: PaginatedCollection<App.Data.ActivityData>;
+    users: App.Data.UserData[];
     filters: {
-        log_name?: string;
-        causer_id?: string;
-        date_from?: string;
-        date_to?: string;
-        search?: string;
+        filter?: string[];
     };
 }
 
@@ -138,23 +134,28 @@ const cols = ref([
     { field: "properties", title: "Details" },
 ]);
 
-const params = {
+const params = ref({
+    filter: props.filters.length > 0 || {
+        description: '',
+        causer_id: '',
+        date_from: '',
+        date_to: '',
+    },
     page: 1,
     per_page: 15,
-    sortColumn: 'created_at',
-    sortDirection: 'desc',
-    search: '',
-};
+    sort: 'created_at',
+});
 
 const formatDate = (date: string) => {
     return new Date(date).toLocaleString();
 };
 
-const updateFilters = (newFilters: typeof props.filters) => {
+watch(params, (newParams) => {
+    console.log(newParams)
     router.get(
-        route('settings.activity-log'),
-        newFilters,
+        route('settings.activity-log.index'),
+        newParams,
         { preserveState: true, preserveScroll: true }
     );
-};
+}, { deep: true });
 </script> 

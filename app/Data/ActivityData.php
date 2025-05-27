@@ -4,11 +4,10 @@ namespace App\Data;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
+use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
@@ -37,6 +36,5 @@ class ActivityData extends Data
         #[WithCast(DateTimeInterfaceCast::class)]
         public Carbon $updatedAt,
         public ?string $formattedCreatedAt,
-    ) {
-    }
-} 
+    ) {}
+}

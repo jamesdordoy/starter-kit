@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
-
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,5 +59,18 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn () => $this->email_verified_at?->format('d/m/Y'),
         );
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'causer');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->setDescriptionForEvent(fn(string $eventName) => "User has been {$eventName}")
+            ->logUnguarded()
+            ->logOnlyDirty();
     }
 }

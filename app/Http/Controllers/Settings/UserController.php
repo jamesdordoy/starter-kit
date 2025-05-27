@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Data\UserData;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\QueryBuilder\Queries\UserQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -16,8 +17,13 @@ class UserController
      */
     public function index(Request $request): Response
     {
+        $users = (new UserQuery($request))
+            ->paginate(15)
+            ->withQueryString();
+
         return Inertia::render('settings/users/Index', [
-            UserData::COLLECTION_NAME => UserResource::collection(User::paginate($request->input('per_page', 15))),
+            UserData::COLLECTION_NAME => UserResource::collection($users),
+            'filters' => $request->only(['filter']),
         ]);
     }
 

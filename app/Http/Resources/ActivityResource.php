@@ -19,4 +19,4 @@ class ActivityResource extends JsonResource
             ...ActivityData::from($this->resource)->toArray(),
         ];
     }
-} 
+}

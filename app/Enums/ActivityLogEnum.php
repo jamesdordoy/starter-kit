@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum AuditLogEnum: string
+enum ActivityLogEnum: string
 {
     case VIEW = 'view';
     case CREATE = 'create';
@@ -11,6 +11,7 @@ enum AuditLogEnum: string
     case RESTORE = 'restore';
     case LOGIN = 'login';
     case LOGOUT = 'logout';
+    case REGISTER = 'register';
 
     public function description(): string
     {
@@ -22,6 +23,7 @@ enum AuditLogEnum: string
             self::RESTORE => 'Restore',
             self::LOGIN => 'Login',
             self::LOGOUT => 'Log Out',
+            self::REGISTER => 'Register',
         };
     }
 }

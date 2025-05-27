@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Settings;
 
 use App\Actions\Users\DestroyUser;
 use App\Data\UserData;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

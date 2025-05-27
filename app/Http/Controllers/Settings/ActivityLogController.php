@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Data\ActivityData;
-use App\Http\Controllers\Controller;
+use App\Data\UserData;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\QueryBuilder\Queries\ActivityQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,9 +24,12 @@ class ActivityLogController
             ->paginate(15)
             ->withQueryString();
 
+        $users = User::has('activities')->get();
+
         return Inertia::render('settings/ActivityLog', [
             'activities' => ActivityResource::collection($activities),
-            'filters' => $request->only(['log_name', 'causer_id', 'date', 'date_from', 'date_to', 'search']),
+            UserData::COLLECTION_NAME => UserResource::collection($users),
+            'filters' => $request->only(['filter']),
         ]);
     }
-} 
+}

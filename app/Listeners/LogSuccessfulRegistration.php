@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enums\ActivityLogEnum;
 use Illuminate\Auth\Events\Registered;
 
 class LogSuccessfulRegistration
@@ -10,6 +11,6 @@ class LogSuccessfulRegistration
     {
         activity()->causedBy($event->user->id)
             ->withProperties(['ip' => request()->ip()])
-            ->log('User registered', ['placeholder' =>  $event->user->name]);
+            ->log(ActivityLogEnum::REGISTER->value);
     }
-} 
+}

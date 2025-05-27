@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 final class SettingController
 {
@@ -13,7 +12,7 @@ final class SettingController
     public function index()
     {
         return inertia('settings/Index', [
-            
+
         ]);
     }
 

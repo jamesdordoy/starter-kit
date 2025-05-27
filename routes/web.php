@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ActivityLogController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');

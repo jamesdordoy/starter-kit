@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -44,7 +43,7 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $user,
-                'can' => !is_null($user) ? $user->loadMissing('roles.permissions')
+                'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')
                     ->roles->flatMap(function ($role) {
                         return $role->permissions;
                     })->map(function ($permission) use ($user) {

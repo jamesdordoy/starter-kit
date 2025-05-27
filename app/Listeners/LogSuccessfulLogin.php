@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enums\ActivityLogEnum;
 use Illuminate\Auth\Events\Login;
 
 class LogSuccessfulLogin
@@ -10,6 +11,6 @@ class LogSuccessfulLogin
     {
         activity()->causedBy($event->user->id)
             ->withProperties(['ip' => request()->ip()])
-            ->log(__('audit.login', ['placeholder' =>  $event->user->name]));
+            ->log(ActivityLogEnum::LOGIN->value);
     }
 }

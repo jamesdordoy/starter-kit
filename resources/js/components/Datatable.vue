@@ -67,8 +67,11 @@ const handleChange = (e) => {
             params.per_page = e.pagesize;
             break;
         case 'sort':
-            params.sortColumn = e.sort_column;
-            params.sortDirection = e.sort_direction;
+            if (e.sort_direction === 'desc') {
+                params.sort = `-${e.sort_column}`;
+            } else {
+                params.sort = e.sort_column;
+            }
             break;
         case 'search':
             params.search = e.value;

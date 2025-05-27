@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);
-        Route::put('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar');
+        Route::post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar');
 
         Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
         Route::put('/password', [PasswordController::class, 'update'])->name('password.update');

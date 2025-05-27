@@ -29,14 +29,14 @@ class Media extends SpatieMedia
     public function generateClientMeta(): self
     {
         if ($this->client_name) {
-            $this->client_name =  Str::beforeLast($this->client_name, ':upload:');
+            $this->client_name = Str::beforeLast($this->client_name, ':upload:');
             $this->client_extension = pathinfo($this->client_name, PATHINFO_EXTENSION);
         }
 
         return $this;
     }
 
-    public function createMediaActivity($action = 'uploaded', Model $related = null)
+    public function createMediaActivity($action = 'uploaded', ?Model $related = null)
     {
         activity()
             ->performedOn($this)
@@ -45,10 +45,10 @@ class Media extends SpatieMedia
                 'attributes' => [
                     $this->toArray(),
                     ...[
-                        'related' => $related?->toArray() ?? []
-                    ]
-                ]
+                        'related' => $related?->toArray() ?? [],
+                    ],
+                ],
             ])
-            ->log($this->client_name . ' ' . $action);
+            ->log($this->client_name.' '.$action);
     }
 }

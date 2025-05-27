@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
@@ -11,9 +11,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { useForm } from 'laravel-precognition-vue-inertia';
-import { useForm as intertiaForm } from '@inertiajs/vue3'
-import { router } from '@inertiajs/vue3'
-
+import { useForm as intertiaForm, router } from '@inertiajs/vue3'
+import { computed } from 'vue';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { getInitials } from '@/composables/useInitials';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -22,6 +23,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const page = usePage();
+const auth = computed(() => page.props.auth);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -39,37 +43,24 @@ const submit = async () => {
     await form.submit();
 };
 
-
-
 const avatarForm = intertiaForm({
   avatar: null,
-  _method: 'PUT',
-
 })
-
-const handleFileChange = (event) => {
-    avatarForm.avatar = event.target.files[0]
-}
-
-
-
-// import { Inertia } from '@inertiajs/inertia';
-
 
 const uploadAvatar = async () => {
     try {
-        form.put(route('profile.avatar'), {
-        forceFormData: true,
-        preserveScroll: true,
-    });
+        const res = await avatarForm.post(route('profile.avatar'), {
+            forceFormData: true,
+            preserveScroll: true,
+        });
+
+        avatarForm.reset();
+
+        router.reload();
     } catch (error) {
         console.error(error);
     }
 }
-
-
-
-
 
 </script>
 
@@ -81,14 +72,50 @@ const uploadAvatar = async () => {
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
-                <form @submit.prevent="uploadAvatar">
-                    <input type="text" v-model="form.name" />
-                    <input type="file" @input="avatarForm.avatar = $event.target.files[0]" />
-                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                    {{ avatarForm.progress.percentage }}%
-                    </progress>
-                    <button type="submit">Submit</button>
-                </form>
+                <div class="flex">
+                    <Avatar class="size-20 overflow-hidden rounded-full">
+                        <AvatarImage v-if="auth.user.avatar" :src="auth.user.avatar" :alt="auth.user.name" />
+                        <AvatarFallback class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white">
+                            {{ getInitials(auth.user?.name) }}
+                        </AvatarFallback>
+                    </Avatar>
+                    <form @submit.prevent="uploadAvatar">
+                        <div class="ml-4 flex flex-col space-y-4">
+                            <div class="relative">
+                                <input 
+                                    type="file" 
+                                    @input="avatarForm.avatar = $event.target.files[0]"
+                                    class="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                                    accept="image/*"
+                                />
+                                <div class="flex h-10 items-center justify-center rounded-md border border-neutral-200 bg-white px-4 text-sm text-neutral-600 transition-colors hover:bg-neutral-50 peer-hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
+                                    <span>{{ avatarForm.avatar ? avatarForm.avatar.name : 'Choose avatar' }}</span>
+                                </div>
+                            </div>
+
+                            <div v-if="avatarForm.progress" class="w-full">
+                                <div class="mb-1 flex justify-between text-sm">
+                                    <span class="text-neutral-600 dark:text-neutral-300">Uploading...</span>
+                                    <span class="text-neutral-600 dark:text-neutral-300">{{ avatarForm.progress.percentage }}%</span>
+                                </div>
+                                <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
+                                    <div 
+                                        class="h-full rounded-full bg-primary transition-all duration-300 ease-in-out"
+                                        :style="{ width: `${avatarForm.progress.percentage}%` }"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <Button 
+                                :disabled="avatarForm.processing" 
+                                class="w-full"
+                            >
+                                <span v-if="avatarForm.processing">Uploading...</span>
+                                <span v-else>Save Avatar</span>
+                            </Button>
+                        </div>
+                    </form>
+                </div>
 
 
                 <form @submit.prevent="submit" class="space-y-6">

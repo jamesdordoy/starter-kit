@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Settings;
 
 use App\Data\UserData;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\QueryBuilder\Queries\UserQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Data\UserData;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -42,7 +43,10 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $user,
+                'user' => ! is_null($user) ? UserData::from([
+                    ...$user->toArray() ?? null,
+                    'avatar' => $user->getFirstMediaUrl('avatars') ?? null,
+                ]) : null,
                 'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')
                     ->roles->flatMap(function ($role) {
                         return $role->permissions;

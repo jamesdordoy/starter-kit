@@ -13,11 +13,9 @@ class QueryBuilderParams extends Data
         public ?array $filter = [
             //
         ],
-        public ?string $direction = 'asc',
         public ?string $sort = 'id',
         public ?array $include = [
             //
         ],
-    ) {
-    }
+    ) {}
 }

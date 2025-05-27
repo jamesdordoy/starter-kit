@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\ActivityLogEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 

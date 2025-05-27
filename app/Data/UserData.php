@@ -61,7 +61,7 @@ class UserData extends Data
             Confirmed,
             Password
         ]
-        public string $password,
+        public ?string $password,
 
         public ?string $avatar,
 

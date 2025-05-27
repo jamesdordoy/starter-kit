@@ -21,7 +21,7 @@ final class ProfileController
     public function edit(Request $request, User $profile): Response
     {
         return Inertia::render('settings/Profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail && empty($request->user()->email_verified_at),
             'status' => $request->session()->get('status'),
             UserData::DATA_NAME => UserData::from($profile),
         ]);

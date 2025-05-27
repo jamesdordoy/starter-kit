@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
-import { type BreadcrumbItem } from '@/types';
-import type { PaginatedCollection } from '@/types/paginated-collection';
-import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-
+import { type BreadcrumbItem } from '@/types';
+import type { PaginatedCollection } from '@/types/paginated-collection';
+import { Head } from '@inertiajs/vue3';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -24,15 +22,11 @@ interface Props {
         search: string;
     };
 }
-
-
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="General settings" />
-        <SettingsLayout>
-            
-        </SettingsLayout>
+        <SettingsLayout> </SettingsLayout>
     </AppLayout>
 </template>

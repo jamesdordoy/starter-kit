@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
 import { type BreadcrumbItem } from '@/types';
+import { Head, usePage } from '@inertiajs/vue3';
 
+import Filepond from '@/components/ui/filepond/Filepond.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import Filepond from '@/components/ui/filepond/Filepond.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -72,10 +71,10 @@ const sections = [
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 p-6 text-sm text-neutral-700 dark:text-neutral-300">
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-4 p-6 text-sm text-neutral-700 md:grid-cols-2 dark:text-neutral-300">
                         <template v-for="(value, key) in section.data" :key="key">
                             <div v-if="typeof value !== 'object' || value === null">
-                                <dt class="font-medium capitalize text-neutral-600 dark:text-neutral-400">
+                                <dt class="font-medium text-neutral-600 capitalize dark:text-neutral-400">
                                     {{ key.replace(/_/g, ' ') }}
                                 </dt>
                                 <dd class="mt-1 text-neutral-900 dark:text-white">
@@ -84,11 +83,8 @@ const sections = [
                             </div>
 
                             <template v-else>
-                                <div
-                                    v-for="(subValue, subKey) in value"
-                                    :key="subKey"
-                                >
-                                    <dt class="font-medium capitalize text-neutral-600 dark:text-neutral-400">
+                                <div v-for="(subValue, subKey) in value" :key="subKey">
+                                    <dt class="font-medium text-neutral-600 capitalize dark:text-neutral-400">
                                         {{ key.replace(/_/g, ' ') }} – {{ subKey.replace(/_/g, ' ') }}
                                     </dt>
                                     <dd class="mt-1 text-neutral-900 dark:text-white">

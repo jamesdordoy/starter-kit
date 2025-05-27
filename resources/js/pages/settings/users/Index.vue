@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
-import { type BreadcrumbItem } from '@/types';
-import type { PaginatedCollection } from '@/types/paginated-collection';
-import { ref } from 'vue';
+import Datatable from '@/components/Datatable.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import Datatable from '@/components/Datatable.vue';
+import { type BreadcrumbItem } from '@/types';
+import type { PaginatedCollection } from '@/types/paginated-collection';
+import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -28,10 +28,10 @@ interface Props {
 const props = defineProps<Props>();
 
 const cols = ref([
-    { field: "id", title: "ID", width: "90px", sort: false },
-    { field: "name", title: "Name" },
-    { field: "email", title: "Email" },
-    { field: "email_verified_at", title: "Email Verified At" },
+    { field: 'id', title: 'ID', width: '90px', sort: false },
+    { field: 'name', title: 'Name' },
+    { field: 'email', title: 'Email' },
+    { field: 'email_verified_at', title: 'Email Verified At' },
 ]);
 
 // const params = {
@@ -47,12 +47,7 @@ const cols = ref([
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="General settings" />
         <SettingsLayout>
-            <Datatable
-                :columns="cols"
-                :data="props.users"
-                :reload="['users']"
-                :params="params">
-
+            <Datatable :columns="cols" :data="props.users" :reload="['users']" :params="params">
                 <template #id="data">
                     {{ data.value.id }}
                 </template>

@@ -1,4 +1,3 @@
-
 export interface PaginatedCollection<T> {
     data: Array<T>;
     meta: Array<{

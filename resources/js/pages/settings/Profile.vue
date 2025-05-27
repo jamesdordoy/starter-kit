@@ -4,17 +4,17 @@ import { Head, Link, usePage } from '@inertiajs/vue3';
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { getInitials } from '@/composables/useInitials';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
+import { useForm as intertiaForm, router } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
-import { useForm as intertiaForm, router } from '@inertiajs/vue3'
 import { computed } from 'vue';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getInitials } from '@/composables/useInitials';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -44,8 +44,8 @@ const submit = async () => {
 };
 
 const avatarForm = intertiaForm({
-  avatar: null,
-})
+    avatar: null,
+});
 
 const uploadAvatar = async () => {
     try {
@@ -60,8 +60,7 @@ const uploadAvatar = async () => {
     } catch (error) {
         console.error(error);
     }
-}
-
+};
 </script>
 
 <template>
@@ -82,13 +81,15 @@ const uploadAvatar = async () => {
                     <form @submit.prevent="uploadAvatar">
                         <div class="ml-4 flex flex-col space-y-4">
                             <div class="relative">
-                                <input 
-                                    type="file" 
+                                <input
+                                    type="file"
                                     @input="avatarForm.avatar = $event.target.files[0]"
                                     class="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
                                     accept="image/*"
                                 />
-                                <div class="flex h-10 items-center justify-center rounded-md border border-neutral-200 bg-white px-4 text-sm text-neutral-600 transition-colors hover:bg-neutral-50 peer-hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
+                                <div
+                                    class="flex h-10 items-center justify-center rounded-md border border-neutral-200 bg-white px-4 text-sm text-neutral-600 transition-colors peer-hover:border-neutral-300 hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                                >
                                     <span>{{ avatarForm.avatar ? avatarForm.avatar.name : 'Choose avatar' }}</span>
                                 </div>
                             </div>
@@ -99,24 +100,20 @@ const uploadAvatar = async () => {
                                     <span class="text-neutral-600 dark:text-neutral-300">{{ avatarForm.progress.percentage }}%</span>
                                 </div>
                                 <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
-                                    <div 
-                                        class="h-full rounded-full bg-primary transition-all duration-300 ease-in-out"
+                                    <div
+                                        class="bg-primary h-full rounded-full transition-all duration-300 ease-in-out"
                                         :style="{ width: `${avatarForm.progress.percentage}%` }"
                                     ></div>
                                 </div>
                             </div>
 
-                            <Button 
-                                :disabled="avatarForm.processing" 
-                                class="w-full"
-                            >
+                            <Button :disabled="avatarForm.processing" class="w-full">
                                 <span v-if="avatarForm.processing">Uploading...</span>
                                 <span v-else>Save Avatar</span>
                             </Button>
                         </div>
                     </form>
                 </div>
-
 
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">

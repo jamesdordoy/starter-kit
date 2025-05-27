@@ -4,7 +4,7 @@ import { ref, watch } from 'vue';
 type Theme = 'light' | 'dark' | 'system';
 
 export const useAppearanceStore = defineStore('appearance', () => {
-    const theme = ref<Theme>(localStorage.getItem('theme') as Theme || 'system');
+    const theme = ref<Theme>((localStorage.getItem('theme') as Theme) || 'system');
     const sidebarCollapsed = ref(localStorage.getItem('sidebarCollapsed') === 'true');
     const fontSize = ref(localStorage.getItem('fontSize') || 'medium');
 
@@ -21,10 +21,14 @@ export const useAppearanceStore = defineStore('appearance', () => {
     };
 
     // Watch for theme changes and update localStorage and document
-    watch(theme, (newTheme) => {
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-    }, { immediate: true });
+    watch(
+        theme,
+        (newTheme) => {
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        },
+        { immediate: true },
+    );
 
     // Watch for system theme changes
     if (typeof window !== 'undefined') {
@@ -41,10 +45,14 @@ export const useAppearanceStore = defineStore('appearance', () => {
     });
 
     // Watch for font size changes
-    watch(fontSize, (newSize) => {
-        localStorage.setItem('fontSize', newSize);
-        document.documentElement.setAttribute('data-font-size', newSize);
-    }, { immediate: true });
+    watch(
+        fontSize,
+        (newSize) => {
+            localStorage.setItem('fontSize', newSize);
+            document.documentElement.setAttribute('data-font-size', newSize);
+        },
+        { immediate: true },
+    );
 
     function setTheme(newTheme: Theme) {
         theme.value = newTheme;
@@ -66,4 +74,4 @@ export const useAppearanceStore = defineStore('appearance', () => {
         toggleSidebar,
         setFontSize,
     };
-}); 
+});

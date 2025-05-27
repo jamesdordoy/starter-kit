@@ -50,4 +50,4 @@ export const usePreferencesStore = defineStore('preferences', () => {
         setTimezone,
         setDateFormat,
     };
-}); 
+});

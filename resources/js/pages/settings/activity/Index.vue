@@ -4,15 +4,12 @@
 
         <SettingsLayout>
             <div class="space-y-6">
-                <HeadingSmall 
-                    title="Activity Log" 
-                    description="View and filter system activity logs"
-                />
+                <HeadingSmall title="Activity Log" description="View and filter system activity logs" />
 
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="mb-6">
-                            <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex flex-col gap-4 sm:flex-row">
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="log_name">Log Type</Label>
@@ -31,11 +28,7 @@
                                         <Label for="user">User</Label>
                                         <Select v-model="params.filter.causer_id">
                                             <option value="">All Users</option>
-                                            <option 
-                                                v-for="user in users.data" 
-                                                :key="user.id?.toString()" 
-                                                :value="user.id"
-                                            >
+                                            <option v-for="user in users.data" :key="user.id?.toString()" :value="user.id">
                                                 {{ user.name }}
                                             </option>
                                         </Select>
@@ -44,34 +37,19 @@
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="date_from">Date From</Label>
-                                        <Input
-                                            id="date_from"
-                                            v-model="params.filter.date_from"
-                                            type="date"
-                                            class="mt-1 block w-full"
-                                        />
+                                        <Input id="date_from" v-model="params.filter.date_from" type="date" class="mt-1 block w-full" />
                                     </div>
                                 </div>
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="date_to">Date To</Label>
-                                        <Input
-                                            id="date_to"
-                                            v-model="params.filter.date_to"
-                                            type="date"
-                                            class="mt-1 block w-full"
-                                        />
+                                        <Input id="date_to" v-model="params.filter.date_to" type="date" class="mt-1 block w-full" />
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <Datatable
-                            :columns="cols"
-                            :data="activities"
-                            :reload="['activities']"
-                            :params="params"
-                        >
+                        <Datatable :columns="cols" :data="activities" :reload="['activities']" :params="params">
                             <template #created_at="data">
                                 {{ formatDate(data.value.created_at) }}
                             </template>
@@ -87,7 +65,7 @@
                             <template #properties="data">
                                 <Link
                                     :href="route('settings.activity-log.show', data.value.id)"
-                                    class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                                    class="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 >
                                     View Changes
                                 </Link>
@@ -101,20 +79,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Datatable from '@/components/Datatable.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
-import { Head } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
+import AppLayout from '@/layouts/AppLayout.vue';
+import SettingsLayout from '@/layouts/settings/Layout.vue';
 import type { BreadcrumbItem } from '@/types';
-import type { PaginatedCollection } from '@/types/paginated-collection';
 import type { Collection } from '@/types/collection';
-import { Link, usePage } from '@inertiajs/vue3';
+import type { PaginatedCollection } from '@/types/paginated-collection';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -134,11 +110,11 @@ interface Props {
 const props = defineProps<Props>();
 
 const cols = ref([
-    { field: "created_at", title: "Date" },
-    { field: "log_name", title: "Type" },
-    { field: "causer", title: "User" },
-    { field: "description", title: "Description" },
-    { field: "properties", title: "", sort: false },
+    { field: 'created_at', title: 'Date' },
+    { field: 'log_name', title: 'Type' },
+    { field: 'causer', title: 'User' },
+    { field: 'description', title: 'Description' },
+    { field: 'properties', title: '', sort: false },
 ]);
 
 const params = ref({
@@ -157,12 +133,12 @@ const formatDate = (date: string) => {
     return new Date(date).toLocaleString();
 };
 
-watch(params, (newParams) => {
-    console.log(newParams)
-    router.get(
-        route('settings.activity-log.index'),
-        newParams,
-        { preserveState: true, preserveScroll: true }
-    );
-}, { deep: true });
-</script> 
+watch(
+    params,
+    (newParams) => {
+        console.log(newParams);
+        router.get(route('settings.activity-log.index'), newParams, { preserveState: true, preserveScroll: true });
+    },
+    { deep: true },
+);
+</script>

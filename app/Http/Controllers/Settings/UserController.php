@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Data\UserData;
 use App\Http\Resources\UserResource;
+use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\UserQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,7 +24,7 @@ class UserController
 
         return Inertia::render('settings/users/Index', [
             UserData::COLLECTION_NAME => UserResource::collection($users),
-            'params' => request()->query(),
+            'params' => QueryBuilderParams::from(request()->query()),
         ]);
     }
 

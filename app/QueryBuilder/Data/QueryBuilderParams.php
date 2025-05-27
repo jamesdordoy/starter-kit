@@ -9,7 +9,7 @@ class QueryBuilderParams extends Data
     public const PROPERTY_NAME = 'params';
 
     public function __construct(
-        public ?string $length = '10',
+        public ?string $per_page = '15',
         public ?array $filter = [
             //
         ],

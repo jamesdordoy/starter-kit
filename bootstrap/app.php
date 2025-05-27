@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckRoutePermission;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             HandlePrecognitiveRequests::class,
+            CheckRoutePermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

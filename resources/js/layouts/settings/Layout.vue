@@ -52,7 +52,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
 
             <Separator class="my-6 md:hidden" />
 
-            <div class="flex-1 md:max-w-2xl lg:max-w-none w-full">
+            <div class="w-full flex-1 md:max-w-2xl lg:max-w-none">
                 <section class="max-w space-y-12">
                     <slot />
                 </section>

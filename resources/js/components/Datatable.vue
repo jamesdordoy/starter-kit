@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, useSlots, watch} from "vue";
-import { router } from '@inertiajs/vue3';
-import Vue3Datatable from "@bhplugin/vue3-datatable";
-import "@bhplugin/vue3-datatable/dist/style.css";
 import type { PaginatedCollection } from '@/types/paginated-collection';
+import Vue3Datatable from '@bhplugin/vue3-datatable';
+import '@bhplugin/vue3-datatable/dist/style.css';
+import { router } from '@inertiajs/vue3';
+import { ref, useSlots, watch } from 'vue';
 
 interface Props {
     endpoint?: string;
@@ -21,16 +21,15 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showColumns: () => [],
-  params: () => ({}),
-  filters: () => [],
-  scopes: () => [],
-  showColumnSelector: false,
-  showSearch: false,
-  defaultOrderBy: '',
-  defaultOrderByDir: 'asc',
+    showColumns: () => [],
+    params: () => ({}),
+    filters: () => [],
+    scopes: () => [],
+    showColumnSelector: false,
+    showSearch: false,
+    defaultOrderBy: '',
+    defaultOrderByDir: 'asc',
 });
-
 
 const emits = defineEmits(['row-click']);
 
@@ -47,14 +46,13 @@ const handleRowClick = (e) => {
     emits('row-click', e);
 };
 
-props.columns.forEach(column => {
+props.columns.forEach((column) => {
     column.hide = props.showColumns.length !== 0 && props.showColumns.indexOf(column.field) === -1;
 });
 
-const slots = useSlots()
+const slots = useSlots();
 
 const handleChange = (e) => {
-
     const params = {
         ...props.params,
     };
@@ -83,7 +81,7 @@ const handleChange = (e) => {
     }
 
     // console.log(props.params)
-    console.log(params)
+    console.log(params);
 
     router.reload({
         data: {
@@ -119,6 +117,4 @@ const handleChange = (e) => {
     </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

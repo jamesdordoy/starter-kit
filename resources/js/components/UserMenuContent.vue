@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import UserInfo from '@/components/UserInfo.vue';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { Link, router } from '@inertiajs/vue3';
-import { LogOut, Settings } from 'lucide-vue-next';
-import { usePage } from '@inertiajs/vue3';
 import { type SharedData } from '@/types';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { LogOut, Settings } from 'lucide-vue-next';
 
 const handleLogout = () => {
     router.flushAll();
@@ -14,7 +13,7 @@ const user = page.props.auth.user as App.Data.UserData;
 </script>
 
 <template>
-    <DropdownMenuLabel class="p-0 font-normal hover:bg-accent">
+    <DropdownMenuLabel class="hover:bg-accent p-0 font-normal">
         <Link class="flex items-center gap-2 px-1 py-1.5 text-left text-sm" :href="route('profile.edit', { profile: user })" prefetch as="button">
             <UserInfo :user="user" :show-email="true" />
         </Link>

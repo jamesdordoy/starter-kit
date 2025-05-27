@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
 import Logo from '#/assets/images/softvize-logo.svg';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
     inheritAttrs: false,

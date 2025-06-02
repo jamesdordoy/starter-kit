@@ -6,7 +6,7 @@ return [
      * is an array, it will try to convert from the first format that works,
      * and will serialize dates using the first format from the array.
      */
-    'date_format' => [DATE_ATOM, 'Y-m-d\TH:i:s.u\Z'],
+    'date_format' => [DATE_ATOM, 'Y-m-d', 'd/m/Y', 'Y-m-d\TH:i:s.u\Z'],
 
     /*
      * When transforming or casting dates, the following timezone will be used to
@@ -182,7 +182,7 @@ return [
              * to conflict with other related classes, controllers or models with a similar name without resorting
              * to adding an alias for the Data object. Set to a blank string (not null) to disable.
              */
-            'suffix' => 'Data',
+            'suffix' => '',
         ],
     ],
 

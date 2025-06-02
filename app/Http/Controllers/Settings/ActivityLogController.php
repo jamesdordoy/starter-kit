@@ -7,6 +7,7 @@ use App\Data\UserData;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\ActivityQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,7 +32,7 @@ class ActivityLogController
         return Inertia::render('settings/activity/Index', [
             ActivityData::COLLECTION_NAME => ActivityResource::collection($activities),
             UserData::COLLECTION_NAME => UserResource::collection($users),
-            'params' => $request->only(['filter']),
+            'params' => QueryBuilderParams::from($request->only(['filter'])),
         ]);
     }
 

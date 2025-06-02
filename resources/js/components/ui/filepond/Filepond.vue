@@ -6,48 +6,72 @@
             class="my-pond"
             label-idle="Drop files here or click to browse"
             allow-multiple="true"
-            accepted-file-types="image/jpeg, image/png"
+            accepted-file-types="image/jpeg, image/png, image/jpg"
             v-on:init="handleFilePondInit"
+            :files="pondFiles"
             @updatefiles="handleFilePondUpdate"
+            
         />
 
-        <button @click="uploadFiles">Upload</button>
-
+        <button 
+            v-if="selectedFiles.length > 0"
+            @click="uploadFiles"
+            class="mt-4 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400"
+        >
+            Upload
+        </button>
     </div>
 </template>
 
 <script setup lang="ts">
-// Import FilePond
 import vueFilePond from 'vue-filepond';
-
-// Import plugins
+import { router } from '@inertiajs/vue3';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
-
-// Import styles
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import { ref, useTemplateRef } from 'vue';
 
-// Create FilePond component
+// Add type declarations for FilePond plugins
+declare module 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
+declare module 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
+
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
-const myFiles = ref(['index.html']);
+interface Props {
+    files?: App.Data.MediaData[];
+}
+
+const props = defineProps<Props>();
+
+// Transform MediaData to FilePond file format
+const transformMediaToFilePond = (media: App.Data.MediaData) => ({
+    source: route('settings.media-items.show', {media_item:  media}), //`/settings/media-items/${media.id}`,
+    options: {
+        type: 'remote',
+        metadata: {
+            url: route('settings.media-items.show', {media_item:  media}),
+            created_at: media.created_at,
+            updated_at: media.updated_at
+        }
+    }
+});
+
+// Initialize files in FilePond format
+const pondFiles = ref(props.files?.map(transformMediaToFilePond) ?? []);
 
 const handleFilePondInit = function () {
     console.log('FilePond has initialized');
     const files = useTemplateRef('pond');
 }
 
-
-import { router } from '@inertiajs/vue3'; // Make sure you're using @inertiajs/vue3
+const handleFilePondUpdate = (fileItems: any) => {
+    // Only handle new files, not the existing ones
+    const newFiles = fileItems.filter((item: any) => !item.source);
+    selectedFiles.value = newFiles.map((fileItem: any) => fileItem.file);
+};
 
 const selectedFiles = ref<File[]>([]);
-
-const handleFilePondUpdate = (fileItems: any) => {
-    // Extract raw File objects from FilePond items
-    selectedFiles.value = fileItems.map((fileItem: any) => fileItem.file);
-};
 
 const uploadFiles = () => {
     if (selectedFiles.value.length === 0) {
@@ -55,7 +79,7 @@ const uploadFiles = () => {
     }
 
     const formData = new FormData();
-    selectedFiles.value.forEach((file, index) => {
+    selectedFiles.value.forEach((file) => {
         formData.append('files[]', file);
     });
 
@@ -63,17 +87,14 @@ const uploadFiles = () => {
         onStart: () => console.log('Uploading...'),
         onSuccess: () => {
             console.log('Upload successful');
-            selectedFiles.value = []; // Reset files
+            selectedFiles.value = []; // Reset new files
         },
         onError: (errors) => {
             console.error('Upload failed:', errors);
         },
     });
 };
-
-
 </script>
 
 <style>
-
 </style>

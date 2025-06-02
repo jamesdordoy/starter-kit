@@ -5,6 +5,7 @@ namespace App\Data;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
@@ -12,8 +13,9 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[
-    TypeScript,
-    MapName(SnakeCaseMapper::class)
+    TypeScript(),
+    MapName(SnakeCaseMapper::class),
+    MapOutputName(SnakeCaseMapper::class)
 ]
 class MediaData extends Data
 {

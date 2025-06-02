@@ -51,6 +51,7 @@ formattedEmailVerifiedAt: string | null;
 }
 declare namespace App.Enums {
 export type ActivityLogEnum = 'view' | 'create' | 'update' | 'delete' | 'restore' | 'login' | 'logout' | 'register';
+export type MediaCollectionEnum = 'avatars';
 export type PermissionEnum = 'view_users' | 'create_users' | 'update_users' | 'delete_users' | 'restore_users' | 'view_settings' | 'view_activity_log';
 export type RoleEnum = 'manager' | 'staff' | 'admin';
 }

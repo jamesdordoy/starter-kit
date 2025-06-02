@@ -14,6 +14,9 @@ use App\QueryBuilder\Queries\MediaQuery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
+
 
 class MediaController
 {
@@ -56,10 +59,20 @@ class MediaController
         // return new MediaResource($media->load('user'));
     }
     
-    public function show(Media $mediaItem)
-    {
-        return response()->download($mediaItem->getPath(), $mediaItem->file_name);
+
+public function show(Media $mediaItem)
+{
+    $path = $mediaItem->getPath(); // This should return a real file path
+
+    if (!\Illuminate\Support\Facades\File::exists($path)) {
+        abort(404);
     }
+
+    return response()->file($path, [
+        'Content-Disposition' => 'inline; filename="' . $mediaItem->file_name . '"'
+    ]);
+}
+
 
     public function update(Request $request)
     {

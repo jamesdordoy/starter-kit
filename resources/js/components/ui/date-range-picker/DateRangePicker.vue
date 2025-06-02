@@ -22,7 +22,8 @@ import {
 } from 'reka-ui';
 import type { DateRange } from 'reka-ui';
 
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon, XMarkIcon  } from '@heroicons/vue/24/outline';
+
 
 interface Props {
   modelValue?: DateRange;
@@ -99,9 +100,12 @@ const emit = defineEmits(['update:modelValue']);
           </template>
         </div>
 
-        <DateRangePickerTrigger class="ml-2 focus:shadow-[0_0_0_2px] focus:shadow-black dark:focus:shadow-white focus:outline-none rounded p-1">
-          <CalendarIcon class="w-4 h-4 text-gray-500 dark:text-gray-400" />
-        </DateRangePickerTrigger>
+        <div class="flex">
+          <DateRangePickerTrigger class="ml-2 focus:shadow-[0_0_0_2px] focus:shadow-black dark:focus:shadow-white focus:outline-none rounded p-1">
+            <CalendarIcon class="w-4 h-4 text-gray-500 dark:text-gray-400" />
+          </DateRangePickerTrigger>
+          <XMarkIcon v-show="modelValue" @click="emit('update:modelValue', null)" class="w-4 h-4 mt-1 ml-1 text-gray-500 dark:text-gray-400" />
+        </div>
       </DateRangePickerField>
 
       <DateRangePickerContent

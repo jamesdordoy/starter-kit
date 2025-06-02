@@ -5,6 +5,7 @@ import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head } from '@inertiajs/vue3';
 import Filepond from '@/components/ui/filepond/Filepond.vue';
+import { Pagination } from '@/components/ui/pagination';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -91,49 +92,8 @@ defineProps<Props>();
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 dark:border-gray-800 sm:px-6">
-                    <div class="flex flex-1 justify-between sm:hidden">
-                        <Button variant="outline" :disabled="assets.meta.current_page === 1">
-                            Previous
-                        </Button>
-                        <Button variant="outline" :disabled="assets.meta.current_page === assets.meta.last_page">
-                            Next
-                        </Button>
-                    </div>
-                    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                        <div>
-                            <p class="text-sm text-gray-700 dark:text-gray-300">
-                                Showing
-                                <span class="font-medium">{{ assets.meta.from }}</span>
-                                to
-                                <span class="font-medium">{{ assets.meta.to }}</span>
-                                of
-                                <span class="font-medium">{{ assets.meta.total }}</span>
-                                results
-                            </p>
-                        </div>
-                        <div>
-                            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                                <!-- <Button 
-                                    variant="outline"
-                                    :disabled="assets.meta.current_page === 1"
-                                    @click="goToPage(assets.meta.current_page - 1)"
-                                >
-                                    Previous
-                                </Button>
-                                <Button 
-                                    variant="outline"
-                                    :disabled="assets.meta.current_page === assets.meta.last_page"
-                                    @click="goToPage(assets.meta.current_page + 1)"
-                                >
-                                    Next
-                                </Button> -->
-                            </nav>
-                        </div>
-                    </div>
-                </div>
+                <Pagination :data="assets" />
             </div>
-            
         </SettingsLayout>
     </AppLayout>
 </template>

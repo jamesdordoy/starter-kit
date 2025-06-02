@@ -70,7 +70,6 @@
 <script setup lang="ts">
 import Datatable from '@/components/Datatable.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
@@ -132,13 +131,7 @@ const userOptions = ref(
 );
 
 const params = ref({
-    filter: props.params.length > 0 || {
-        description: '',
-        causer_id: '',
-        date_from: '',
-        date_to: '',
-        date_range: null,
-    },
+    filter: props.params.filter,
     page: 1,
     per_page: 15,
     sort: 'created_at',

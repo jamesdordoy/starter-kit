@@ -1,30 +1,31 @@
 /* Example overrides */
 .vue3-datatable table {
     @apply w-full text-left text-sm text-gray-800 dark:text-gray-200;
-  }
-  
-  .vue3-datatable thead {
+}
+
+.vue3-datatable thead {
     @apply bg-gray-100 dark:bg-gray-800;
-  }
-  
-  .vue3-datatable th, .vue3-datatable td {
-    @apply px-4 py-2 border-b border-gray-200 dark:border-gray-700;
-  }
-  
-  .bh-datatable-header {
-    @apply bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between;
+}
+
+.vue3-datatable th,
+.vue3-datatable td {
+    @apply border-b border-gray-200 px-4 py-2 dark:border-gray-700;
+}
+
+.bh-datatable-header {
+    @apply flex items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900;
 }
 
 .bh-datatable-pagination {
-    @apply bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between;
+    @apply flex items-center justify-between border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900;
 }
 
 .bh-datatable-pagination_button {
-    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-3 py-1 text-sm rounded hover:bg-gray-50 dark:hover:bg-gray-700;
+    @apply rounded border border-gray-300 bg-white px-3 py-1 text-sm text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700;
 }
 
 .bh-datatable-pagination_button.active {
-    @apply bg-blue-50 dark:bg-blue-900 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-200;
+    @apply border-blue-500 bg-blue-50 text-blue-600 dark:border-blue-400 dark:bg-blue-900 dark:text-blue-200;
 }
 
 .bh-datatable-search {
@@ -32,7 +33,7 @@
 }
 
 .bh-datatable-search input {
-    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded px-3 py-1;
+    @apply rounded border border-gray-300 bg-white px-3 py-1 text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200;
 }
 
 .bh-datatable-page-size {
@@ -40,7 +41,7 @@
 }
 
 .bh-datatable-page-size select {
-    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded px-3 py-1;
+    @apply rounded border border-gray-300 bg-white px-3 py-1 text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200;
 }
 
 .bh-pagination-info {
@@ -53,7 +54,8 @@
     @apply dark:bg-gray-900 dark:text-white;
 }
 
-.bh-table-responsive table tfoot tr, .bh-table-responsive table thead tr {
+.bh-table-responsive table tfoot tr,
+.bh-table-responsive table thead tr {
     @apply bg-gray-300 dark:bg-neutral-900 dark:text-white;
 }
 

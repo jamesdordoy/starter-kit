@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Settings\ActivityLogController;
+use App\Http\Controllers\Settings\LogoController;
 use App\Http\Controllers\Settings\MediaController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileAvatarController;
@@ -15,6 +16,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('users', UserController::class);
             Route::resource('activity-log', ActivityLogController::class)->only(['index', 'show']);
             Route::resource('media-items', MediaController::class);
+            Route::post('logo', [LogoController::class, 'update'])->name('logo.update');
         });
 
         Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);

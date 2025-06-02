@@ -4,7 +4,6 @@ namespace App\QueryBuilder\Queries;
 
 use App\Models\Media;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MediaQuery extends QueryBuilder
@@ -35,23 +34,23 @@ class MediaQuery extends QueryBuilder
             'created_at',
             'updated_at',
         ])
-        ->allowedIncludes($this->includes)
-        ->allowedSorts([
-            'id',
-            'model_type',
-            'model_id',
-            'uuid',
-            'collection_name',
-            'name',
-            'file_name',
-            'mime_type',
-            'disk',
-            'conversions_disk',
-            'size',
-            'order_column',
-            'created_at',
-            'updated_at',
-        ]);
+            ->allowedIncludes($this->includes)
+            ->allowedSorts([
+                'id',
+                'model_type',
+                'model_id',
+                'uuid',
+                'collection_name',
+                'name',
+                'file_name',
+                'mime_type',
+                'disk',
+                'conversions_disk',
+                'size',
+                'order_column',
+                'created_at',
+                'updated_at',
+            ]);
     }
 
     // You can add methods for including relations if needed

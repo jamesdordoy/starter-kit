@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon, XMarkIcon, ArrowLeftIcon, ArrowRightIcon  } from '@heroicons/vue/24/outline';
 import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, PaginationListItem, PaginationNext, PaginationPrev, PaginationRoot } from 'reka-ui'
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 
 interface Props {
@@ -12,7 +12,7 @@ const props = defineProps<Props>();
 
 // Compute pagination values from Laravel data
 const total = computed(() => props.data?.meta?.total ?? 0);
-const currentPage = computed(() => props.data?.meta?.current_page ?? 1);
+const currentPage = ref(props.data.meta.current_page ?? 1);
 const perPage = computed(() => props.data?.meta?.per_page ?? 10);
 
 // Emit page change events
@@ -26,8 +26,8 @@ const handlePageChange = (page: number) => {
 </script>
 
 <template>
-  <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-    <div>
+  <div class="sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div class="hidden sm:block">
       <p class="text-sm text-gray-700 dark:text-gray-300">
         Showing
         <span class="font-medium">{{ data?.meta?.from }}</span>

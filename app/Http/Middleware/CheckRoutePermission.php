@@ -13,20 +13,20 @@ class CheckRoutePermission
         $user = $request->user();
         $route = $request->route();
 
-        if (!$route) {
+        if (! $route) {
             return $next($request);
         }
 
         $routeName = $route->getName();
 
-        if (!$routeName) {
+        if (! $routeName) {
             return $next($request);
         }
 
         $routeModel = \App\Models\Route::with('permissions')->where('name', $routeName)->first();
 
         // Handle missing route mapping
-        if (!$routeModel) {
+        if (! $routeModel) {
             Log::warning("Unregistered route: {$routeName}");
 
             // Uncomment to block by default:
@@ -38,7 +38,7 @@ class CheckRoutePermission
         $requiredPermissions = $routeModel->permissions->pluck('name');
 
         foreach ($requiredPermissions as $permission) {
-            if (!$user || !$user->can($permission)) {
+            if (! $user || ! $user->can($permission)) {
                 abort(403, "Access denied: missing permission '{$permission}'.");
             }
         }

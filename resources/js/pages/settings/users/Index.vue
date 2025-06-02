@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Datatable from '@/components/Datatable.vue';
+import HeadingSmall from '@/components/HeadingSmall.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {

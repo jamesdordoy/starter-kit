@@ -61,12 +61,12 @@ class Activity extends SpatieActivity
     {
         $fromDate = Carbon::createFromDate(...collect($from)
             ->only(['year', 'month', 'day'])
-            ->map(fn($value) => (int) $value)
+            ->map(fn ($value) => (int) $value)
             ->values());
 
         $toDate = Carbon::createFromDate(...collect($to)
             ->only(['year', 'month', 'day'])
-            ->map(fn($value) => (int) $value)
+            ->map(fn ($value) => (int) $value)
             ->values());
 
         return $query->whereDate('created_at', '>=', $fromDate)

@@ -14,11 +14,6 @@ use Inertia\Inertia;
 
 class ActivityLogController
 {
-    public function __construct()
-    {
-        // $this->middleware('permission:' . PermissionEnum::VIEW_ACTIVITY_LOG->value);
-    }
-
     public function index(Request $request)
     {
         $activities = (new ActivityQuery($request))
@@ -32,7 +27,13 @@ class ActivityLogController
         return Inertia::render('settings/activity/Index', [
             ActivityData::COLLECTION_NAME => ActivityResource::collection($activities),
             UserData::COLLECTION_NAME => UserResource::collection($users),
-            'params' => QueryBuilderParams::from($request->only(['filter'])),
+            'params' => QueryBuilderParams::from([
+                'filter' => [
+                    'description' => null,
+                    'causer_id' => null,
+                    'date_range' => null,
+                ],
+            ]),
         ]);
     }
 

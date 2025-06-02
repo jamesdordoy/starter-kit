@@ -49,6 +49,6 @@ class Media extends SpatieMedia
                     ],
                 ],
             ])
-            ->log($this->client_name.' '.$action);
+            ->log($this->name.' '.$action);
     }
 }

@@ -122,6 +122,4 @@ const handleChange = (e) => {
     </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

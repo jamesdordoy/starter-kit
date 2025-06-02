@@ -49,7 +49,7 @@ const avatarForm = intertiaForm({
 
 const uploadAvatar = async () => {
     try {
-        const res = await avatarForm.post(route('profile.avatar'), {
+        await avatarForm.post(route('profile.avatar'), {
             forceFormData: true,
             preserveScroll: true,
         });

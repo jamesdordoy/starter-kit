@@ -5,16 +5,13 @@
             ref="pond"
             class="my-pond"
             label-idle="Drop files here or click to browse"
-            allow-multiple="true"
+            :allowMultiple="!single"
             accepted-file-types="image/jpeg, image/png, image/jpg"
-            v-on:init="handleFilePondInit"
             :files="pondFiles"
             @updatefiles="handleFilePondUpdate"
             
         />
-
         <button 
-            v-if="selectedFiles.length > 0"
             @click="uploadFiles"
             class="mt-4 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400"
         >
@@ -40,9 +37,14 @@ const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImage
 
 interface Props {
     files?: App.Data.MediaData[];
+    single: false,
+    route: String,
+
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    route: route('settings.media-items.store')
+});
 
 // Transform MediaData to FilePond file format
 const transformMediaToFilePond = (media: App.Data.MediaData) => ({
@@ -60,14 +62,8 @@ const transformMediaToFilePond = (media: App.Data.MediaData) => ({
 // Initialize files in FilePond format
 const pondFiles = ref(props.files?.map(transformMediaToFilePond) ?? []);
 
-const handleFilePondInit = function () {
-    console.log('FilePond has initialized');
-    const files = useTemplateRef('pond');
-}
-
 const handleFilePondUpdate = (fileItems: any) => {
-    // Only handle new files, not the existing ones
-    const newFiles = fileItems.filter((item: any) => !item.source);
+    const newFiles = fileItems.filter((item: any) => typeof item.source !== 'string');
     selectedFiles.value = newFiles.map((fileItem: any) => fileItem.file);
 };
 
@@ -79,11 +75,16 @@ const uploadFiles = () => {
     }
 
     const formData = new FormData();
-    selectedFiles.value.forEach((file) => {
-        formData.append('files[]', file);
-    });
 
-    router.post('/settings/media-items', formData, {
+    if (props.single) {
+        formData.append('file', selectedFiles.value[0]);
+    } else {
+        selectedFiles.value.forEach((file) => {
+            formData.append('files[]', file);
+        });
+    }
+    
+    router.post(props.route, formData, {
         onStart: () => console.log('Uploading...'),
         onSuccess: () => {
             console.log('Upload successful');

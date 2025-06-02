@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
+import HeadingSmall from '@/components/HeadingSmall.vue';
 import Filepond from '@/components/ui/filepond/Filepond.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -14,38 +14,48 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
-const { system, database, cache, queue, storage, mail } = usePage().props;
+interface Props {
+    logo: App.Data.MediaData;
+    system: object;
+    database: object;
+    cache: object;
+    queue: object;
+    storage: object;
+    mail: object;
+}
+
+const props = defineProps<Props>();
 
 const sections = [
     {
         title: 'System Overview',
         description: 'Details about your application environment',
-        data: system,
+        data: props.system,
     },
     {
         title: 'Database',
         description: 'Connection and driver details',
-        data: database,
+        data: props.database,
     },
     {
         title: 'Cache',
         description: 'Current cache driver',
-        data: cache,
+        data: props.cache,
     },
     {
         title: 'Queue',
         description: 'Current queue driver',
-        data: queue,
+        data: props.queue,
     },
     {
         title: 'Storage',
         description: 'Disk usage and config',
-        data: storage,
+        data: props.storage,
     },
     {
         title: 'Mail',
         description: 'Mail driver and connection details',
-        data: mail,
+        data: props.mail,
     },
 ];
 </script>
@@ -59,7 +69,7 @@ const sections = [
                 <HeadingSmall title="Website Logo" description="Update your website logo" />
 
                 <div class="flex flex-col space-y-4 sm:w-full md:w-1/2">
-                    <Filepond />
+                    <Filepond :files="[logo]" :single="true" :route="route('settings.logo.update')" />
                 </div>
             </section>
 

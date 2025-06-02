@@ -3,7 +3,11 @@
 namespace App\QueryBuilder\Data;
 
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[
+    TypeScript(),
+]
 class QueryBuilderParams extends Data
 {
     public const PROPERTY_NAME = 'params';

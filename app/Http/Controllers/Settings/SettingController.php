@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
-
 
 final class SettingController
 {
@@ -18,6 +14,10 @@ final class SettingController
      */
     public function index()
     {
+        $logo = DB::table('media')
+            ->where('collection_name', 'site_logo')
+            ->first();
+
         $dbConnection = DB::connection();
         $database = $dbConnection->getDatabaseName();
 
@@ -26,6 +26,7 @@ final class SettingController
         $diskTotalSpace = disk_total_space(base_path());
 
         return inertia('settings/Index', [
+            'logo' => $logo,
             'system' => [
                 'app_name' => config('app.name'),
                 'app_env' => App::environment(),

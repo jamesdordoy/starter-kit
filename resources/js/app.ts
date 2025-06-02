@@ -7,13 +7,11 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-
-library.add(faUserSecret)
-
+library.add(faUserSecret);
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -37,11 +35,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
 
-        app.use(plugin)
-            .use(ZiggyVue)
-            .use(pinia)
-            .component('font-awesome-icon', FontAwesomeIcon)
-            .mount(el);
+        app.use(plugin).use(ZiggyVue).use(pinia).component('font-awesome-icon', FontAwesomeIcon).mount(el);
     },
     progress: {
         color: '#4B5563',

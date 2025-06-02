@@ -1,17 +1,12 @@
-
-
 .my-pond .filepond--drop-label {
-
 }
 
 .my-pond .filepond--panel-root {
-
-
 }
 
 .dark .filepond--panel-root {
-    @apply  text-white;
-    background: var(--color-neutral-900);  
+    @apply text-white;
+    background: var(--color-neutral-900);
 }
 
 .dark .filepond--drop-label {
@@ -43,4 +38,3 @@
 [data-filepond-item-state='processing-complete'] .filepond--item-panel {
     @apply bg-green-500;
 }
-

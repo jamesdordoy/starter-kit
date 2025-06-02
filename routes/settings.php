@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Settings\ActivityLogController;
-use App\Http\Controllers\Settings\AssetController;
+use App\Http\Controllers\Settings\MediaController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileAvatarController;
 use App\Http\Controllers\Settings\ProfileController;
@@ -14,7 +14,7 @@ Route::middleware('auth')->group(function () {
         Route::name('settings.')->group(function () {
             Route::resource('users', UserController::class);
             Route::resource('activity-log', ActivityLogController::class)->only(['index', 'show']);
-            Route::resource('assets', AssetController::class);
+            Route::resource('media-items', MediaController::class);
         });
 
         Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);

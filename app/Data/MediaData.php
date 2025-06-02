@@ -17,9 +17,9 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 ]
 class MediaData extends Data
 {
-    public const DATA_NAME = 'media';
+    public const DATA_NAME = 'asset';
 
-    public const COLLECTION_NAME = 'media_items';
+    public const COLLECTION_NAME = 'assets';
 
     public function __construct(
         public int $id,

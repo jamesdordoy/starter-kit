@@ -9,7 +9,8 @@ use Spatie\Activitylog\Models\Activity as SpatieActivity;
 
 class Activity extends SpatieActivity
 {
-    public function scopeSearch(Builder $query, ?string $search): Builder
+    #[Scope]
+    public function search(Builder $query, ?string $search): Builder
     {
         if (! $search) {
             return $query;
@@ -25,7 +26,8 @@ class Activity extends SpatieActivity
         });
     }
 
-    public function scopeDate(Builder $query, ?string $date): Builder
+    #[Scope]
+    public function date(Builder $query, ?string $date): Builder
     {
         if (! $date) {
             return $query;
@@ -34,7 +36,8 @@ class Activity extends SpatieActivity
         return $query->whereDate('created_at', $date);
     }
 
-    public function scopeDateFrom(Builder $query, ?string $date): Builder
+    #[Scope]
+    public function dateFrom(Builder $query, ?string $date): Builder
     {
         if (! $date) {
             return $query;
@@ -43,7 +46,8 @@ class Activity extends SpatieActivity
         return $query->whereDate('created_at', '>=', $date);
     }
 
-    public function scopeDateTo(Builder $query, ?string $date): Builder
+    #[Scope]
+    public function dateTo(Builder $query, ?string $date): Builder
     {
         if (! $date) {
             return $query;
@@ -53,7 +57,7 @@ class Activity extends SpatieActivity
     }
 
     #[Scope]
-    public function dateRange(Builder $query, ?array $from, array $to): Builder
+    public function dateRange(Builder $query, ?array $from, ?array $to): Builder
     {
         $fromDate = Carbon::createFromDate(...collect($from)
             ->only(['year', 'month', 'day'])

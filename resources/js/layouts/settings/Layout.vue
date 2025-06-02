@@ -11,7 +11,7 @@ const sidebarNavItems: NavItem[] = [
         href: route('settings.index'),
     },
     {
-        title: 'Staff',
+        title: 'Site Users',
         href: route('settings.users.index'),
     },
     {
@@ -20,7 +20,7 @@ const sidebarNavItems: NavItem[] = [
     },
     {
         title: 'Assets',
-        href: route('settings.assets.index'),
+        href: route('settings.media-items.index'),
     },
 ];
 

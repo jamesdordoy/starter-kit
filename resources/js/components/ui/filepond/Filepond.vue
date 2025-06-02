@@ -10,6 +10,9 @@
             v-on:init="handleFilePondInit"
             @updatefiles="handleFilePondUpdate"
         />
+
+        <button @click="uploadFiles">Upload</button>
+
     </div>
 </template>
 
@@ -36,9 +39,38 @@ const handleFilePondInit = function () {
     const files = useTemplateRef('pond');
 }
 
-const handleFilePondUpdate = (files: any) => {
-    console.log('hit');
+
+import { router } from '@inertiajs/vue3'; // Make sure you're using @inertiajs/vue3
+
+const selectedFiles = ref<File[]>([]);
+
+const handleFilePondUpdate = (fileItems: any) => {
+    // Extract raw File objects from FilePond items
+    selectedFiles.value = fileItems.map((fileItem: any) => fileItem.file);
 };
+
+const uploadFiles = () => {
+    if (selectedFiles.value.length === 0) {
+        return;
+    }
+
+    const formData = new FormData();
+    selectedFiles.value.forEach((file, index) => {
+        formData.append('files[]', file);
+    });
+
+    router.post('/settings/media-items', formData, {
+        onStart: () => console.log('Uploading...'),
+        onSuccess: () => {
+            console.log('Upload successful');
+            selectedFiles.value = []; // Reset files
+        },
+        onError: (errors) => {
+            console.error('Upload failed:', errors);
+        },
+    });
+};
+
 
 </script>
 

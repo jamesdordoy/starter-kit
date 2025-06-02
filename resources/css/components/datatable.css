@@ -1,0 +1,62 @@
+/* Example overrides */
+.vue3-datatable table {
+    @apply w-full text-left text-sm text-gray-800 dark:text-gray-200;
+  }
+  
+  .vue3-datatable thead {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+  
+  .vue3-datatable th, .vue3-datatable td {
+    @apply px-4 py-2 border-b border-gray-200 dark:border-gray-700;
+  }
+  
+  .bh-datatable-header {
+    @apply bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between;
+}
+
+.bh-datatable-pagination {
+    @apply bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between;
+}
+
+.bh-datatable-pagination_button {
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-3 py-1 text-sm rounded hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+.bh-datatable-pagination_button.active {
+    @apply bg-blue-50 dark:bg-blue-900 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-200;
+}
+
+.bh-datatable-search {
+    @apply bg-white dark:bg-gray-900;
+}
+
+.bh-datatable-search input {
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded px-3 py-1;
+}
+
+.bh-datatable-page-size {
+    @apply bg-white dark:bg-gray-900;
+}
+
+.bh-datatable-page-size select {
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded px-3 py-1;
+}
+
+.bh-pagination-info {
+    @apply dark:text-white;
+}
+
+.bh-pagesize {
+    color: inherit !important;
+    background-color: inherit !important;
+    @apply dark:bg-gray-900 dark:text-white;
+}
+
+.bh-table-responsive table tfoot tr, .bh-table-responsive table thead tr {
+    @apply bg-gray-300 dark:bg-neutral-900 dark:text-white;
+}
+
+.bh-pagination .bh-page-item {
+    @apply dark:bg-gray-700 dark:text-white;
+}

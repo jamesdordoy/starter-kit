@@ -6,45 +6,34 @@
             <div class="space-y-6">
                 <HeadingSmall title="Activity Log" description="View and filter system activity logs" />
 
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+                <div class="overflow-hidden  shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="mb-6">
                             <div class="flex flex-col gap-4 sm:flex-row">
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="log_name">Log Type</Label>
-                                        <Select v-model="params.filter.description">
-                                            <option value="">All Types</option>
-                                            <option value="login">Login</option>
-                                            <option value="logout">Logout</option>
-                                            <option value="created">Created</option>
-                                            <option value="updated">Updated</option>
-                                            <option value="deleted">Deleted</option>
+                                        <Select :options="activityOptions" v-model="params.filter.description">
+                
                                         </Select>
                                     </div>
                                 </div>
                                 <div class="flex-1">
                                     <div class="grid gap-2">
                                         <Label for="user">User</Label>
-                                        <Select v-model="params.filter.causer_id">
-                                            <option value="">All Users</option>
-                                            <option v-for="user in users.data" :key="user.id?.toString()" :value="user.id">
-                                                {{ user.name }}
-                                            </option>
+                                        <Select :options="userOptions" v-model="params.filter.causer_id">
+                                            
                                         </Select>
                                     </div>
                                 </div>
                                 <div class="flex-1">
                                     <div class="grid gap-2">
-                                        <Label for="date_from">Date From</Label>
-                                        <Input id="date_from" v-model="params.filter.date_from" type="date" class="mt-1 block w-full" />
+                                        <Label for="date_from">Date Range</Label>
+                                        <DateRangePicker v-model="params.filter.date_range" />
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="grid gap-2">
-                                        <Label for="date_to">Date To</Label>
-                                        <Input id="date_to" v-model="params.filter.date_to" type="date" class="mt-1 block w-full" />
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -65,7 +54,7 @@
                             <template #properties="data">
                                 <Link
                                     :href="route('settings.activity-log.show', data.value.id)"
-                                    class="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                    class="ring-offset-background focus-visible:ring-ring bg-gray-300 text-gray-800 hover:bg-primary/90 dark:bg-neutral-900 dark:text-white inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                                 >
                                     View Changes
                                 </Link>
@@ -84,6 +73,7 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import type { BreadcrumbItem } from '@/types';
@@ -117,12 +107,37 @@ const cols = ref([
     { field: 'properties', title: '', sort: false },
 ]);
 
+const activityOptions = ref([
+    { value: null, label: 'All' },
+    { value: 'created', label: 'Created' },
+    { value: 'updated', label: 'Updated' },
+    { value: 'deleted', label: 'Deleted' },
+    { value: 'restored', label: 'Restored' },
+    { value: 'forceDeleted', label: 'Force Deleted' },
+    { value: 'login', label: 'Login' },
+    { value: 'logout', label: 'Logout' },
+]);
+
+const userOptions = ref(
+  [
+    {
+        value: null,
+        label: 'All Users',
+    },
+    ...props.users.data.map((user) => ({
+        value: user.id,
+        label: user.name,
+    })), 
+  ]
+);
+
 const params = ref({
     filter: props.params.length > 0 || {
         description: '',
         causer_id: '',
         date_from: '',
         date_to: '',
+        date_range: null,
     },
     page: 1,
     per_page: 15,

@@ -101,7 +101,12 @@ const handleChange = (e) => {
             :columns="columns"
             :total-rows="props.data?.meta.total"
             is-server-mode
-            skin="bh-table-striped bh-table-hover bh-table-bordered bh-table-compact"
+            skin="table-auto w-full border border-gray-200 dark:border-gray-700 
+            [&>thead>tr]:bg-gray-100 dark:[&>thead>tr]:bg-gray-800 
+            [&>tbody>tr:hover]:bg-gray-50 dark:[&>tbody>tr:hover]:bg-neutral-900
+            [&>thead>tr>th]:px-4 [&>thead>tr>th]:py-3 [&>thead>tr>th]:text-left [&>thead>tr>th]:text-sm [&>thead>tr>th]:font-medium [&>thead>tr>th]:text-gray-500 dark:[&>thead>tr>th]:text-gray-400
+            [&>tbody>tr>td]:px-4 [&>tbody>tr>td]:py-3 [&>tbody>tr>td]:text-sm [&>tbody>tr>td]:text-gray-900 dark:[&>tbody>tr>td]:text-gray-100
+            [&>tbody>tr]:border-t [&>tbody>tr]:border-gray-200 dark:[&>tbody>tr]:border-gray-700"
             @change="handleChange"
             @rowClick="handleRowClick"
             :page="props.data?.meta.current_page"
@@ -117,4 +122,6 @@ const handleChange = (e) => {
     </div>
 </template>
 
-<style scoped></style>
+<style>
+
+</style>

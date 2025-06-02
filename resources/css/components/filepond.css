@@ -1,0 +1,46 @@
+
+
+.my-pond .filepond--drop-label {
+
+}
+
+.my-pond .filepond--panel-root {
+
+
+}
+
+.dark .filepond--panel-root {
+    @apply  text-white;
+    background: var(--color-neutral-900);  
+}
+
+.dark .filepond--drop-label {
+    @apply text-white;
+}
+
+.dark .filepond--label-action {
+    @apply text-white;
+}
+
+.dark .filepond--item-panel {
+    @apply bg-gray-800;
+}
+
+.dark .filepond--file-action-button {
+    @apply bg-gray-700/50 text-gray-200;
+}
+
+.dark .filepond--file {
+    @apply text-gray-200;
+}
+
+/* Error states */
+[data-filepond-item-state*='error'] .filepond--item-panel,
+[data-filepond-item-state*='invalid'] .filepond--item-panel {
+    @apply bg-red-500;
+}
+
+[data-filepond-item-state='processing-complete'] .filepond--item-panel {
+    @apply bg-green-500;
+}
+

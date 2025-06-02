@@ -30,6 +30,7 @@ class ActivityQuery extends QueryBuilder
             AllowedFilter::scope('date'),
             AllowedFilter::scope('date_from'),
             AllowedFilter::scope('date_to'),
+            AllowedFilter::scope('date_range'),
             'created_at',
             'updated_at',
         ])

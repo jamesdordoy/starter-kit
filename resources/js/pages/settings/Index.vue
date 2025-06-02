@@ -5,6 +5,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import Filepond from '@/components/ui/filepond/Filepond.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
+import HeadingSmall from '@/components/HeadingSmall.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -54,9 +55,17 @@ const sections = [
         <Head title="General settings" />
 
         <SettingsLayout>
-            <Filepond />
+            <section class="flex flex-col space-y-6">
+                <HeadingSmall title="Website Logo" description="Update your website logo" />
+
+                <div class="flex flex-col space-y-4 sm:w-full md:w-1/2">
+                    <Filepond />
+                </div>
+            </section>
 
             <div class="mt-12 space-y-8">
+                <HeadingSmall title="General Information" description="Update your website information" />
+
                 <section
                     v-for="section in sections"
                     :key="section.title"

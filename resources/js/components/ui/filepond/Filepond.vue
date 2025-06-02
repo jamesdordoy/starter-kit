@@ -1,14 +1,16 @@
 <template>
-    <file-pond
-        name="test"
-        ref="pond"
-        class="my-pond"
-        label-idle="Drop files here or click to browse"
-        allow-multiple="true"
-        accepted-file-types="image/jpeg, image/png"
-        v-on:init="handleFilePondInit"
-        @updatefiles="handleFilePondUpdate"
-    />
+    <div class="filepond-wrapper">
+        <file-pond
+            name="test"
+            ref="pond"
+            class="my-pond"
+            label-idle="Drop files here or click to browse"
+            allow-multiple="true"
+            accepted-file-types="image/jpeg, image/png"
+            v-on:init="handleFilePondInit"
+            @updatefiles="handleFilePondUpdate"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -40,23 +42,6 @@ const handleFilePondUpdate = (files: any) => {
 
 </script>
 
-<style lang="postcss">
-.my-pond {
-    --filepond-background: theme('colors.gray.50');
-    --filepond-panel-background: theme('colors.gray.50');
-    --filepond-item-background: theme('colors.gray.50');
-    --filepond-item-panel-background: theme('colors.gray.50');
-    --filepond-drop-label-color: theme('colors.gray.500');
-    --filepond-drop-label-color-dark: theme('colors.gray.400');
-    --filepond-panel-background-dark: theme('colors.gray.800');
-    --filepond-item-background-dark: theme('colors.gray.800');
-    --filepond-item-panel-background-dark: theme('colors.gray.800');
-}
+<style>
 
-.dark .my-pond {
-    --filepond-background: theme('colors.gray.800');
-    --filepond-panel-background: theme('colors.gray.800');
-    --filepond-item-background: theme('colors.gray.800');
-    --filepond-item-panel-background: theme('colors.gray.800');
-}
 </style>

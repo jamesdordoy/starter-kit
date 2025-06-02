@@ -1,0 +1,4 @@
+/* styles.css */
+.SelectTrigger[data-placeholder] {
+    color: "gainsboro";
+}

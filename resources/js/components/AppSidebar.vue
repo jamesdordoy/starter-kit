@@ -16,7 +16,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Kitchen Sink',
-        href: '/dashboard',
+        href: route('sink'),
         icon: LayoutGrid,
     },
 ];

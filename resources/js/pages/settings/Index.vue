@@ -68,8 +68,15 @@ const sections = [
             <section class="flex flex-col space-y-6">
                 <HeadingSmall title="Website Logo" description="Update your website logo" />
 
-                <div class="flex flex-col space-y-4 sm:w-full md:w-1/2">
-                    <Filepond :files="[logo]" :single="true" :route="route('settings.logo.update')" />
+                <div class="flex flex-col space-y-4 w-full max-w-md">
+                    <div class="rounded-2xl border-2 border-dashed border-neutral-200 bg-white p-4 sm:p-6 shadow-sm transition-all hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-neutral-600">
+                        <Filepond 
+                            :files="[logo]" 
+                            :single="true" 
+                            :route="route('settings.logo.update')"
+                            class="filepond--circular w-full" 
+                        />
+                    </div>
                 </div>
             </section>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Data\UserData;
+use App\Settings\SiteSettings;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -17,6 +18,11 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    public function __construct(
+        protected SiteSettings $settings,
+    ) {
+    }
 
     /**
      * Determines the current asset version.
@@ -47,17 +53,17 @@ class HandleInertiaRequests extends Middleware
                     ...$user->toArray() ?? null,
                     'avatar' => $user->getFirstMediaUrl('avatars') ?? null,
                 ]) : null,
-                'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')
-                    ->roles->flatMap(function ($role) {
-                        return $role->permissions;
-                    })->map(function ($permission) use ($user) {
-                        return [$permission->name => $user->can($permission->name)];
-                    })->collapse()->all() : [],
+                'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')->roles
+                        ->flatMap(fn ($role) => $role->permissions)
+                        ->map(fn ($permission) => [$permission->name => $user->can($permission->name)])
+                        ->collapse()
+                        ->all() : [],
             ],
             'ziggy' => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'settings' => $this->settings->toArray(),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Logo from '#/assets/images/softvize-logo.svg';
 import type { HTMLAttributes } from 'vue';
 
 defineOptions({
@@ -8,11 +7,12 @@ defineOptions({
 
 interface Props {
     className?: HTMLAttributes['class'];
+    href: string,
 }
 
 defineProps<Props>();
 </script>
 
 <template>
-    <img :src="Logo" />
+    <img :src="href" />
 </template>

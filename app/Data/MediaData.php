@@ -12,9 +12,7 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[
-    TypeScript(),
     MapName(SnakeCaseMapper::class),
-    MapOutputName(SnakeCaseMapper::class)
 ]
 class MediaData extends Data
 {

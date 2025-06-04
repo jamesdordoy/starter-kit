@@ -8,13 +8,14 @@ return [
     'collectors' => [
         Spatie\TypeScriptTransformer\Collectors\DefaultCollector::class,
         Spatie\TypeScriptTransformer\Collectors\EnumCollector::class,
+        Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptCollector::class,
     ],
 
     'transformers' => [
         Spatie\LaravelTypeScriptTransformer\Transformers\SpatieStateTransformer::class,
         Spatie\TypeScriptTransformer\Transformers\EnumTransformer::class,
-        Spatie\LaravelTypeScriptTransformer\Transformers\DtoTransformer::class,
         Spatie\LaravelData\Support\TypeScriptTransformer\DataTypeScriptTransformer::class,
+        Spatie\LaravelTypeScriptTransformer\Transformers\DtoTransformer::class,
     ],
 
     'default_type_replacements' => [
@@ -35,3 +36,4 @@ return [
 
     'transform_null_to_optional' => false,
 ];
+

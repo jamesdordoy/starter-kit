@@ -123,7 +123,7 @@ const userOptions = ref([
 
 const params = ref({
     ...props.params,
-});
+} as App.QueryBuilder.Data.QueryBuilderParams); 
 
 const formatDate = (date: string) => {
     return new Date(date).toLocaleString();

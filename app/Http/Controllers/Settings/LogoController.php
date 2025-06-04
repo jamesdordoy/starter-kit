@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Requests\Settings\Media\StoreRequest;
 use App\Models\Setting;
+use App\Settings\SiteSettings;
 
 final class LogoController
 {
-    public function update(StoreRequest $request)
+    public function update(StoreRequest $request, SiteSettings $settings)
     {
-        $setting = Setting::where('name', 'site_logo')->first();
+        $setting = Setting::where('name', 'logo_media_id')->first();
 
-        $setting->addMediaFromRequest('file')
+        $media = $setting->addMediaFromRequest('file')
             ->toMediaCollection('site_logo');
+
+        $settings->logo_media_id = $media->id;
+        $settings->save();
 
         return back()->with('status', 'logo-updated');
     }

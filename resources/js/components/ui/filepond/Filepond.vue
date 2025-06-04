@@ -37,18 +37,16 @@ const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImage
 
 interface Props {
     files?: App.Data.MediaData[];
-    single: false,
-    route: String,
-
+    single?: boolean,
+    route?: string,
 }
 
 const props = withDefaults(defineProps<Props>(), {
     route: route('settings.media-items.store')
 });
 
-// Transform MediaData to FilePond file format
 const transformMediaToFilePond = (media: App.Data.MediaData) => ({
-    source: route('settings.media-items.show', {media_item:  media}), //`/settings/media-items/${media.id}`,
+    source: route('settings.media-items.show', {media_item:  media}),
     options: {
         type: 'remote',
         metadata: {
@@ -60,7 +58,7 @@ const transformMediaToFilePond = (media: App.Data.MediaData) => ({
 });
 
 // Initialize files in FilePond format
-const pondFiles = ref(props.files?.map(transformMediaToFilePond) ?? []);
+const pondFiles = ref(props.files?.filter(Boolean).map(transformMediaToFilePond) ?? []);
 
 const handleFilePondUpdate = (fileItems: any) => {
     const newFiles = fileItems.filter((item: any) => typeof item.source !== 'string');

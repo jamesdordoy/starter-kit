@@ -6,6 +6,6 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('general.logo_media_id', null);
+        $this->migrator->add('site.logo_media_id', null);
     }
 };

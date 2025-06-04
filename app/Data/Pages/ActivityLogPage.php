@@ -16,7 +16,6 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[
-    TypeScript,
     MapName(SnakeCaseMapper::class)
 ]
 class ActivityLogPage extends Data

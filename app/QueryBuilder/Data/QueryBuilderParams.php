@@ -3,6 +3,7 @@
 namespace App\QueryBuilder\Data;
 
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\LiteralTypeScriptType;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[
@@ -14,11 +15,12 @@ class QueryBuilderParams extends Data
 
     public function __construct(
         public ?string $per_page = '15',
-        public ?array $filter = [
+
+        public array $filter = [
             //
         ],
         public ?string $sort = 'id',
-        public ?array $include = [
+        public array $include = [
             //
         ],
     ) {}

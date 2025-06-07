@@ -6,7 +6,7 @@
             class="my-pond"
             label-idle="Drop files here or click to browse"
             :allowMultiple="!single"
-            accepted-file-types="image/jpeg, image/png, image/jpg"
+            accepted-file-types="image/jpeg, image/png, image/jpg, application/pdf"
             :files="pondFiles"
             @updatefiles="handleFilePondUpdate"
             
@@ -60,7 +60,6 @@ const transformMediaToFilePond = (media: App.Data.MediaData) => ({
     }
 });
 
-// Initialize files in FilePond format
 const pondFiles = ref(props.files?.filter(Boolean).map(transformMediaToFilePond) ?? []);
 
 const handleFilePondUpdate = (fileItems: any) => {

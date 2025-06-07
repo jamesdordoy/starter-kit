@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'file' => [
                 'sometimes',
                 'file',
-                'max:2000',
+                sprintf('max:%s', config('media-library.max_file_size', 2000)),
                 'mimes:'.collect(explode(',', $this->get('mimes', self::MIMES)))
                     ->filter(fn ($mime) => in_array($mime, explode(',', self::MIMES)))
                     ->implode(','),
@@ -38,7 +38,7 @@ class StoreRequest extends FormRequest
             ],
             'files.*' => [
                 'file',
-                'max:2000',
+                sprintf('max:%s', config('media-library.max_file_size', 2000)),
                 'mimes:'.collect(explode(', ', $this->get('mimes', self::MIMES)))
                     ->filter(fn ($mime) => in_array($mime, explode(', ', self::MIMES)))
                     ->implode(', '),

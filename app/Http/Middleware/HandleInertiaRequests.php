@@ -65,7 +65,10 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-            'settings' => $this->settings->toArray(),
+            'settings' => [
+                ...$this->settings->toArray(),
+                'max_file_size' => config('media-library.max_file_size')
+            ]
         ];
     }
 }

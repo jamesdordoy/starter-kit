@@ -36,6 +36,15 @@ class MediaController
     {
         $user = $request->user();
 
+        if (!is_null($request->file('file', null))) {
+            $user->addMedia($request->file('file')->getRealPath())
+                ->withCustomProperties([
+                    'client_name' => $request->file('file')->getClientOriginalName(),
+                    ...['user_id' => $user->id],
+                ])
+                ->toMediaCollection();
+        }
+
         collect($request->file('files'), [])
             ->map(fn ($file) => $user->addMedia($file->getRealPath())
                 ->withCustomProperties([

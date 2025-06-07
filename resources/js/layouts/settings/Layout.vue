@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
+import type { SharedData } from '@/types';
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -16,7 +17,7 @@ const sidebarNavItems: NavItem[] = [
     },
     {
         title: 'Activity Log',
-        href: route('settings.activity-log.index'),
+        href: route('settings.activity.index'),
     },
     {
         title: 'Assets',
@@ -24,7 +25,7 @@ const sidebarNavItems: NavItem[] = [
     },
 ];
 
-const page = usePage();
+const page = usePage<SharedData>();
 
 const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
 </script>

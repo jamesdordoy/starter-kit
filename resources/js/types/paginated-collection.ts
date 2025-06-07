@@ -1,6 +1,6 @@
 export interface PaginatedCollection<T> {
     data: Array<T>;
-    meta: Array<{
+    meta: {
         current_page: number;
         first_page_url: string;
         from: number;
@@ -9,7 +9,7 @@ export interface PaginatedCollection<T> {
         last_page: number;
         last_page_url: string;
         next_page_url: string | null;
-    }>;
+    };
     links: Array<{
         label: string;
         url: string | null;

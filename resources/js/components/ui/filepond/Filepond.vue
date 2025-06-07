@@ -21,11 +21,6 @@
 </template>
 
 <script setup lang="ts">
-
-// Add type declarations for FilePond plugins
-declare module 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
-declare module 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
-
 import vueFilePond from 'vue-filepond';
 import { router } from '@inertiajs/vue3';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
@@ -33,8 +28,6 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filep
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import { ref, useTemplateRef } from 'vue';
-
-
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 

@@ -42,7 +42,7 @@ watch(search, () => {
     });
 });
 
-const handleRowClick = (e) => {
+const handleRowClick = (e: { row: any; index: number }) => {
     emits('row-click', e);
 };
 
@@ -52,7 +52,14 @@ props.columns.forEach((column) => {
 
 const slots = useSlots();
 
-const handleChange = (e) => {
+const handleChange = (e: { 
+    change_type: string;
+    current_page?: number;
+    pagesize?: number;
+    sort_column?: string;
+    sort_direction?: string;
+    value?: string;
+}) => {
     const params = {
         ...props.params,
     };

@@ -48,7 +48,7 @@
                             </template>
                             <template #properties="data">
                                 <Link
-                                    :href="route('settings.activity-log.show', data.value.id)"
+                                    :href="route('settings.activity.show', data.value.id)"
                                     class="ring-offset-background focus-visible:ring-ring hover:bg-primary/90 inline-flex h-10 items-center justify-center rounded-md bg-gray-300 px-4 py-2 text-sm font-medium text-gray-800 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-900 dark:text-white"
                                 >
                                     View Details
@@ -79,7 +79,7 @@ import { ref, watch } from 'vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Activity Log',
-        href: '/settings/activity-log',
+        href: '/settings/activity',
     },
 ];
 
@@ -132,7 +132,7 @@ const formatDate = (date: string) => {
 watch(
     params,
     (newParams) => {
-        router.get(route('settings.activity-log.index'), newParams, { preserveState: true, preserveScroll: true });
+        router.get(route('settings.activity.index'), newParams, { preserveState: true, preserveScroll: true });
     },
     { deep: true },
 );

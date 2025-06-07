@@ -38,7 +38,7 @@ const isImageFile = (mimeType: string | null): boolean => {
     return mimeType?.startsWith('image/') ?? false;
 };
 
-const searchValue = ref(null);
+const searchValue = ref('');
 
 watch(searchValue, (value) => {
     router.get(

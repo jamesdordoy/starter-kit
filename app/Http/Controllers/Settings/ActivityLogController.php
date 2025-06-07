@@ -6,6 +6,7 @@ use App\Data\ActivityData;
 use App\Data\UserData;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\UserResource;
+use App\Models\Activity;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\ActivityQuery;
@@ -37,9 +38,10 @@ class ActivityLogController
         ]);
     }
 
-    public function show()
+    public function show(Activity $activity)
     {
         return Inertia::render('settings/activity/Show', [
+            ActivityData::DATA_NAME => new ActivityResource($activity->load('causer')),
         ]);
     }
 }

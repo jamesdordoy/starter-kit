@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -36,19 +38,15 @@ class Media extends SpatieMedia
         return $this;
     }
 
-    public function createMediaActivity($action = 'uploaded', ?Model $related = null)
+    #[Scope]
+    public function search(Builder $query, ?string $search): Builder
     {
-        activity()
-            ->performedOn($this)
-            ->causedBy(Auth::user())
-            ->withProperties([
-                'attributes' => [
-                    $this->toArray(),
-                    ...[
-                        'related' => $related?->toArray() ?? [],
-                    ],
-                ],
-            ])
-            ->log($this->name.' '.$action);
+        if (! $search) {
+            return $query;
+        }
+
+        return $query->where(function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        });
     }
 }

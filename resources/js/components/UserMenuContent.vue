@@ -12,9 +12,8 @@ const page = usePage<SharedData>();
 const user = page.props.auth.user as App.Data.UserData;
 
 const stopImpersonate = () => {
-    window.location.href = route('settings.impersonate.leave')
+    window.location.href = route('settings.impersonate.leave');
 };
-
 </script>
 
 <template>
@@ -24,7 +23,7 @@ const stopImpersonate = () => {
         </Link>
     </DropdownMenuLabel>
     <DropdownMenuSeparator v-if="page.props.auth.can.view_settings || page.props.auth.impersonator" />
-    <DropdownMenuGroup >
+    <DropdownMenuGroup>
         <DropdownMenuItem :as-child="true" v-if="page.props.auth.can.view_settings">
             <Link class="block w-full" :href="route('settings.index')" prefetch as="button">
                 <Settings class="mr-2 h-4 w-4" />
@@ -33,12 +32,11 @@ const stopImpersonate = () => {
         </DropdownMenuItem>
 
         <DropdownMenuItem :as-child="true" v-if="page.props.auth.impersonator">
-            <a @click="stopImpersonate" class="block w-full" >
+            <a @click="stopImpersonate" class="block w-full">
                 <font-awesome-icon icon="user-secret" class="mr-2" />
                 Stop Impersonation
             </a>
         </DropdownMenuItem>
-        
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">

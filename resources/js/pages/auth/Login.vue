@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
 import { LoaderCircle } from 'lucide-vue-next';
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 defineProps<{
     status?: string;
@@ -43,28 +43,41 @@ const submit = async () => {
     <div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-gray-950">
         <!-- Animated background elements -->
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -left-1/2 -top-1/2 h-[1000px] w-[1000px] animate-blob rounded-full bg-blue-300/30 blur-3xl dark:bg-blue-500/20"></div>
-            <div class="absolute -right-1/2 -bottom-1/2 h-[1000px] w-[1000px] animate-blob animation-delay-2000 rounded-full bg-indigo-300/30 blur-3xl dark:bg-indigo-500/20"></div>
-            <div class="absolute left-1/2 top-1/2 h-[1000px] w-[1000px] animate-blob animation-delay-4000 rounded-full bg-sky-300/30 blur-3xl dark:bg-sky-500/20"></div>
+            <div
+                class="animate-blob absolute -top-1/2 -left-1/2 h-[1000px] w-[1000px] rounded-full bg-blue-300/30 blur-3xl dark:bg-blue-500/20"
+            ></div>
+            <div
+                class="animate-blob animation-delay-2000 absolute -right-1/2 -bottom-1/2 h-[1000px] w-[1000px] rounded-full bg-indigo-300/30 blur-3xl dark:bg-indigo-500/20"
+            ></div>
+            <div
+                class="animate-blob animation-delay-4000 absolute top-1/2 left-1/2 h-[1000px] w-[1000px] rounded-full bg-sky-300/30 blur-3xl dark:bg-sky-500/20"
+            ></div>
         </div>
 
         <Head title="Log in" />
 
         <main class="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-12 lg:px-8">
             <div class="mx-auto w-full max-w-md">
-                <div class="text-center mb-8 transform transition-all duration-1000"
-                    :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'">
+                <div
+                    class="mb-8 transform text-center transition-all duration-1000"
+                    :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'"
+                >
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome back</h2>
                     <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Enter your credentials to access your account</p>
                 </div>
 
-                <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600 transform transition-all duration-1000"
-                    :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'">
+                <div
+                    v-if="status"
+                    class="mb-4 transform text-center text-sm font-medium text-green-600 transition-all duration-1000"
+                    :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'"
+                >
                     {{ status }}
                 </div>
 
-                <div class="rounded-2xl border border-blue-100 bg-white/50 p-8 backdrop-blur-sm dark:border-blue-900 dark:bg-gray-900/50 transform transition-all duration-1000"
-                    :class="contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'">
+                <div
+                    class="transform rounded-2xl border border-blue-100 bg-white/50 p-8 backdrop-blur-sm transition-all duration-1000 dark:border-blue-900 dark:bg-gray-900/50"
+                    :class="contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'"
+                >
                     <form @submit.prevent="submit" class="flex flex-col gap-6">
                         <div class="grid gap-6">
                             <div class="grid gap-2">
@@ -158,7 +171,8 @@ const submit = async () => {
 }
 
 /* Add smooth transitions for all interactive elements */
-a, button {
+a,
+button {
     transition: all 0.3s ease;
 }
 </style>

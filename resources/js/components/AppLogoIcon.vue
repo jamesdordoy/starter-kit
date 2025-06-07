@@ -7,7 +7,7 @@ defineOptions({
 
 interface Props {
     className?: HTMLAttributes['class'];
-    href: string,
+    href: string;
 }
 
 defineProps<Props>();

@@ -76,7 +76,7 @@ const reloadAssets = (page: number) => {
                         <!-- File Info -->
                         <div class="mt-4 space-y-2">
                             <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {{ item.file_name }}
+                                {{ item.custom_properties.client_name ?? item.file_name }}
                             </h3>
                             <p class="text-xs text-gray-500 dark:text-gray-400">
                                 {{ item.size }}

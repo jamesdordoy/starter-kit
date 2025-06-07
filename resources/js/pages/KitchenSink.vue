@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
+import { Filepond } from '@/components/ui/filepond';
+import { Input } from '@/components/ui/input';
+import { Pagination } from '@/components/ui/pagination';
+import { Select } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
 import type { PaginatedCollection } from '@/types/paginated-collection';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select } from '@/components/ui/select';
-import { DateRangePicker } from '@/components/ui/date-range-picker';
-import { Pagination } from '@/components/ui/pagination';
-import { Filepond } from '@/components/ui/filepond';
-import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import type { DateRange } from 'reka-ui';
+import { ref } from 'vue';
 
 interface Props {
     users: PaginatedCollection<App.Data.UserData>;
@@ -34,10 +34,10 @@ const currentPage = ref(1);
 // Example options for Select
 const userOptions = [
     { label: 'Select a user', value: null },
-    ...props.users.data.map(user => ({
+    ...props.users.data.map((user) => ({
         label: user.name,
-        value: user.id
-    }))
+        value: user.id,
+    })),
 ];
 </script>
 
@@ -45,13 +45,11 @@ const userOptions = [
     <Head title="Kitchen Sink" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="container mx-auto py-8 space-y-12">
+        <div class="container mx-auto space-y-12 py-8">
             <!-- Section Headers -->
             <div class="space-y-2">
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Kitchen Sink</h1>
-                <p class="text-lg text-gray-500 dark:text-gray-400">
-                    A showcase of all UI components
-                </p>
+                <p class="text-lg text-gray-500 dark:text-gray-400">A showcase of all UI components</p>
             </div>
 
             <!-- Form Controls Section -->
@@ -60,7 +58,7 @@ const userOptions = [
                     <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Form Controls</h2>
                     <div class="text-sm text-gray-500 dark:text-gray-400">Interactive form elements</div>
                 </div>
-                
+
                 <div class="grid gap-8 md:grid-cols-2">
                     <!-- Input Examples -->
                     <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
@@ -69,19 +67,9 @@ const userOptions = [
                             <p class="text-sm text-gray-500 dark:text-gray-400">Text input fields with various types</p>
                         </div>
                         <div class="space-y-4">
-                            <Input 
-                                v-model="searchQuery"
-                                type="text"
-                                placeholder="Search users..."
-                            />
-                            <Input 
-                                type="email"
-                                placeholder="Email address"
-                            />
-                            <Input 
-                                type="password"
-                                placeholder="Password"
-                            />
+                            <Input v-model="searchQuery" type="text" placeholder="Search users..." />
+                            <Input type="email" placeholder="Email address" />
+                            <Input type="password" placeholder="Password" />
                         </div>
                     </div>
 
@@ -91,11 +79,7 @@ const userOptions = [
                             <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Select</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Dropdown selection with custom options</p>
                         </div>
-                        <Select
-                            v-model="selectedUser"
-                            :options="userOptions"
-                            placeholder="Select a user"
-                        />
+                        <Select v-model="selectedUser" :options="userOptions" placeholder="Select a user" />
                     </div>
 
                     <!-- DateRangePicker Example -->
@@ -104,10 +88,7 @@ const userOptions = [
                             <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Date Range Picker</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Select a range of dates</p>
                         </div>
-                        <DateRangePicker
-                            v-model="dateRange"
-                            placeholder="Select date range"
-                        />
+                        <DateRangePicker v-model="dateRange" placeholder="Select date range" />
                     </div>
 
                     <!-- Filepond Example -->
@@ -116,11 +97,7 @@ const userOptions = [
                             <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">File Upload</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Drag and drop file uploader</p>
                         </div>
-                        <Filepond
-                            :files="[]"
-                            :single="false"
-                            route="settings.media-items.store"
-                        />
+                        <Filepond :files="[]" :single="false" route="settings.media-items.store" />
                     </div>
                 </div>
             </section>
@@ -150,10 +127,7 @@ const userOptions = [
                     <div class="text-sm text-gray-500 dark:text-gray-400">Page navigation with data</div>
                 </div>
                 <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-                    <Pagination 
-                        :data="users"
-                        @update:page="currentPage = $event"
-                    />
+                    <Pagination :data="users" @update:page="currentPage = $event" />
                 </div>
             </section>
 
@@ -177,7 +151,9 @@ const userOptions = [
                             </div>
                             <div class="space-y-2">
                                 <p class="text-gray-500 dark:text-gray-400">Date Range</p>
-                                <p class="font-medium text-gray-900 dark:text-gray-100">{{ dateRange ? `${dateRange.start} to ${dateRange.end}` : 'Not selected' }}</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100">
+                                    {{ dateRange ? `${dateRange.start} to ${dateRange.end}` : 'Not selected' }}
+                                </p>
                             </div>
                             <div class="space-y-2">
                                 <p class="text-gray-500 dark:text-gray-400">Current Page</p>

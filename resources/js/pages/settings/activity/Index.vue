@@ -83,12 +83,11 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
-
 interface Props {
     activities: PaginatedCollection<App.Data.ActivityData>;
     users: Collection<App.Data.UserData>;
     params: App.QueryBuilder.Data.QueryBuilderParams;
-};
+}
 
 const props = defineProps<Props>();
 
@@ -124,7 +123,7 @@ const userOptions = ref([
 
 const params = ref({
     ...props.params,
-} as App.QueryBuilder.Data.QueryBuilderParams); 
+} as App.QueryBuilder.Data.QueryBuilderParams);
 
 const formatDate = (date: string) => {
     return new Date(date).toLocaleString();

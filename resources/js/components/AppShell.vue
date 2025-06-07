@@ -9,7 +9,6 @@ interface Props {
 defineProps<Props>();
 
 const appearanceStore = useAppearanceStore();
-
 </script>
 
 <template>

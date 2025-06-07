@@ -4,11 +4,11 @@ namespace App\QueryBuilder\Queries;
 
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class MediaQuery extends QueryBuilder
 {
-    // You can add any allowed includes here if needed, e.g. ['model']
     protected array $includes = [];
 
     public function __construct(?Request $request = null)
@@ -33,6 +33,7 @@ class MediaQuery extends QueryBuilder
             'order_column',
             'created_at',
             'updated_at',
+            AllowedFilter::scope('search'),
         ])
             ->allowedIncludes($this->includes)
             ->allowedSorts([
@@ -52,6 +53,4 @@ class MediaQuery extends QueryBuilder
                 'updated_at',
             ]);
     }
-
-    // You can add methods for including relations if needed
 }

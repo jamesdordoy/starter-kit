@@ -5,9 +5,8 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -38,7 +37,7 @@ const cols = ref([
 ]);
 
 const handleImpersonate = (data) => {
-    window.location.href = route('settings.impersonate', { id: data.value.id })
+    window.location.href = route('settings.impersonate', { id: data.value.id });
 };
 
 // const params = {
@@ -73,15 +72,11 @@ const handleImpersonate = (data) => {
                 </template>
 
                 <template #actions="data">
-                    <a  class="z-10 cursor-pointer text-blue-500 underline"
-                        @click="handleImpersonate(data)">
+                    <a class="z-10 cursor-pointer text-blue-500 underline" @click="handleImpersonate(data)">
                         <font-awesome-icon icon="user-secret" />
                         Impersonate
                     </a>
-                    <Link :href="route('settings.users.show', {user: data.value})">
-                        View
-                    </Link>
-
+                    <Link :href="route('settings.users.show', { user: data.value })"> View </Link>
                 </template>
             </Datatable>
         </SettingsLayout>

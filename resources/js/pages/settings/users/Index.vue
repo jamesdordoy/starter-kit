@@ -36,17 +36,12 @@ const cols = ref([
     { field: 'actions', title: 'Actions', sort: false },
 ]);
 
-const handleImpersonate = (data) => {
+const handleImpersonate = (data: any) => {
     window.location.href = route('settings.impersonate', { id: data.value.id });
 };
 
-// const params = {
-//     page: 1,
-//     per_page: 15,
-//     sortColumn: 'id',
-//     sortDirection: 'asc',
-//     search: '',
-// };
+const params = ref(props.params);
+
 </script>
 
 <template>

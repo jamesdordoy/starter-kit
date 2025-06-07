@@ -36,4 +36,3 @@ return [
 
     'transform_null_to_optional' => false,
 ];
-

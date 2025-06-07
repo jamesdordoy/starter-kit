@@ -4,7 +4,8 @@ import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: App.Data.UserData;
-    can: (permission: App.Enums.PermissionEnum) => boolean;
+    can: Record<App.Enums.PermissionEnum, boolean>;
+    impersonator: App.Data.UserData | null;
 }
 
 export interface BreadcrumbItem {

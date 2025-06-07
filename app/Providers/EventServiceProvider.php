@@ -35,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
             LogLeaveImpersonation::class,
         ],
         MediaHasBeenAddedEvent::class => [
-            LogMediaAdded::class
+            LogMediaAdded::class,
         ],
     ];
 

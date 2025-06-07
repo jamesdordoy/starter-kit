@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { SharedData } from '@/types';
-import { usePage } from '@inertiajs/vue3';
+import { useAppearanceStore } from '@/stores/appearance';
 
 interface Props {
     variant?: 'header' | 'sidebar';
@@ -9,14 +8,15 @@ interface Props {
 
 defineProps<Props>();
 
-const isOpen = usePage<SharedData>().props.sidebarOpen;
+const appearanceStore = useAppearanceStore();
+
 </script>
 
 <template>
     <div v-if="variant === 'header'" class="flex min-h-screen w-full flex-col">
         <slot />
     </div>
-    <SidebarProvider v-else :default-open="isOpen">
+    <SidebarProvider v-else :default-open="!appearanceStore.sidebarCollapsed">
         <slot />
     </SidebarProvider>
 </template>

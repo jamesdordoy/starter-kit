@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Enums\ActivityLogEnum;
-use Illuminate\Auth\Events\Login;
 use Lab404\Impersonate\Events\LeaveImpersonation;
 
 class LogLeaveImpersonation

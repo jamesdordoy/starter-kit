@@ -4,10 +4,7 @@ namespace App\Listeners;
 
 use App\Enums\ActivityLogEnum;
 use App\Models\User;
-use Illuminate\Auth\Events\Login;
-use Lab404\Impersonate\Events\TakeImpersonation;
 use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
-
 
 class LogMediaAdded
 {
@@ -27,6 +24,5 @@ class LogMediaAdded
                 ->log(ActivityLogEnum::MEDIA_ADDED->value);
         }
 
-        
     }
 }

@@ -27,7 +27,7 @@ class ActivityLogController
         return Inertia::render('settings/activity/Index', [
             ActivityData::COLLECTION_NAME => ActivityResource::collection($activities),
             UserData::COLLECTION_NAME => UserResource::collection($users),
-            'params' => QueryBuilderParams::from([
+            QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from([
                 'filter' => [
                     'description' => null,
                     'causer_id' => null,

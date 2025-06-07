@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Data\UserData;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\UserQuery;
 use Illuminate\Http\Request;
@@ -47,9 +48,12 @@ class UserController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return Inertia::render('settings/users/Show', [
+            UserData::DATA_NAME => $user,
+            QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from(request()->query()),
+        ]);
     }
 
     /**

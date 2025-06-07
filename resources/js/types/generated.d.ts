@@ -49,13 +49,6 @@ updated_at: string | null;
 formatted_email_verified_at: string | null;
 };
 }
-declare namespace App.Data.Pages {
-export type ActivityLogPage = {
-activities: Array<App.Data.ActivityData>;
-users: Array<App.Data.UserData>;
-params: App.QueryBuilder.Data.QueryBuilderParams;
-};
-}
 declare namespace App.Enums {
 export type ActivityLogEnum = 'view' | 'create' | 'update' | 'delete' | 'restore' | 'login' | 'logout' | 'register';
 export type MediaCollectionEnum = 'avatars';

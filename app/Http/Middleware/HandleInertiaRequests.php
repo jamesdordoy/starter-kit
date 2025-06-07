@@ -21,8 +21,7 @@ class HandleInertiaRequests extends Middleware
 
     public function __construct(
         protected SiteSettings $settings,
-    ) {
-    }
+    ) {}
 
     /**
      * Determines the current asset version.
@@ -45,6 +44,8 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
 
+        $manager = app('impersonate');
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -54,10 +55,11 @@ class HandleInertiaRequests extends Middleware
                     'avatar' => $user->getFirstMediaUrl('avatars') ?? null,
                 ]) : null,
                 'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')->roles
-                        ->flatMap(fn ($role) => $role->permissions)
-                        ->map(fn ($permission) => [$permission->name => $user->can($permission->name)])
-                        ->collapse()
-                        ->all() : [],
+                    ->flatMap(fn ($role) => $role->permissions)
+                    ->map(fn ($permission) => [$permission->name => $user->can($permission->name)])
+                    ->collapse()
+                    ->all() : [],
+                'impersonator' => $manager->isImpersonating() ? UserData::from($manager->getImpersonator()) : null,
             ],
             'ziggy' => [
                 ...(new Ziggy)->toArray(),

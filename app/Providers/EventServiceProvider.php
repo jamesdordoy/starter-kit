@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogImpersonation;
+use App\Listeners\LogLeaveImpersonation;
+use App\Listeners\LogMediaAdded;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
 use App\Listeners\LogSuccessfulRegistration;
@@ -9,6 +12,9 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\ServiceProvider;
+use Lab404\Impersonate\Events\LeaveImpersonation;
+use Lab404\Impersonate\Events\TakeImpersonation;
+use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,6 +27,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         Registered::class => [
             LogSuccessfulRegistration::class,
+        ],
+        TakeImpersonation::class => [
+            LogImpersonation::class,
+        ],
+        LeaveImpersonation::class => [
+            LogLeaveImpersonation::class,
+        ],
+        MediaHasBeenAddedEvent::class => [
+            LogMediaAdded::class
         ],
     ];
 

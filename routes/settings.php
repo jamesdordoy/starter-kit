@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
             Route::resource('activity-log', ActivityLogController::class)->only(['index', 'show']);
             Route::resource('media-items', MediaController::class);
             Route::post('logo', [LogoController::class, 'update'])->name('logo.update');
+
+            Route::impersonate();
         });
 
         Route::resource('profile', ProfileController::class)->only(['edit', 'update', 'destroy']);

@@ -4,12 +4,10 @@ namespace App\Data;
 
 use Carbon\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[
     MapName(SnakeCaseMapper::class),

@@ -12,6 +12,9 @@ enum ActivityLogEnum: string
     case LOGIN = 'login';
     case LOGOUT = 'logout';
     case REGISTER = 'register';
+    case IMPERSONATE = 'impersonate';
+    case LEAVE_IMPERSONATE = 'leave_impersonate';
+    case MEDIA_ADDED = 'media_added';
 
     public function description(): string
     {
@@ -24,6 +27,9 @@ enum ActivityLogEnum: string
             self::LOGIN => 'Login',
             self::LOGOUT => 'Log Out',
             self::REGISTER => 'Register',
+            self::IMPERSONATE => 'Impersonate',
+            self::LEAVE_IMPERSONATE => 'Leave Impersonate',
+            self::MEDIA_ADDED => 'Media Added',
         };
     }
 }

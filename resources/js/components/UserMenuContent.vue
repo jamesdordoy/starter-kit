@@ -10,6 +10,11 @@ const handleLogout = () => {
 };
 const page = usePage<SharedData>();
 const user = page.props.auth.user as App.Data.UserData;
+
+const stopImpersonate = () => {
+    window.location.href = route('settings.impersonate.leave')
+};
+
 </script>
 
 <template>
@@ -18,14 +23,22 @@ const user = page.props.auth.user as App.Data.UserData;
             <UserInfo :user="user" :show-email="true" />
         </Link>
     </DropdownMenuLabel>
-    <DropdownMenuSeparator v-if="page.props.auth.can.view_settings" />
-    <DropdownMenuGroup v-if="page.props.auth.can.view_settings">
-        <DropdownMenuItem :as-child="true">
+    <DropdownMenuSeparator v-if="page.props.auth.can.view_settings || page.props.auth.impersonator" />
+    <DropdownMenuGroup >
+        <DropdownMenuItem :as-child="true" v-if="page.props.auth.can.view_settings">
             <Link class="block w-full" :href="route('settings.index')" prefetch as="button">
                 <Settings class="mr-2 h-4 w-4" />
                 Settings
             </Link>
         </DropdownMenuItem>
+
+        <DropdownMenuItem :as-child="true" v-if="page.props.auth.impersonator">
+            <a @click="stopImpersonate" class="block w-full" >
+                <font-awesome-icon icon="user-secret" class="mr-2" />
+                Stop Impersonation
+            </a>
+        </DropdownMenuItem>
+        
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">

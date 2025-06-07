@@ -10,7 +10,6 @@ use App\Models\User;
 use App\QueryBuilder\Queries\MediaQuery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 
 class MediaController
@@ -40,20 +39,14 @@ class MediaController
                 ])
                 ->toMediaCollection());
 
+        // $files->each(fn(\Spatie\MediaLibrary\MediaCollections\Models\Media $file) => $file->createMediaActivity());
+
         return redirect()->back();
     }
 
     public function show(Media $mediaItem)
     {
-        $path = $mediaItem->getPath(); // This should return a real file path
-
-        if (! \Illuminate\Support\Facades\File::exists($path)) {
-            abort(404);
-        }
-
-        return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="'.$mediaItem->file_name.'"',
-        ]);
+        return $mediaItem;
     }
 
     public function update(Request $request)

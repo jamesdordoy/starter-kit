@@ -26,7 +26,7 @@ declare module 'vite/client' {
     }
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'Softvize';
+const appName = import.meta.env.VITE_APP_NAME || 'Starter Kit';
 const pinia = createPinia();
 
 createInertiaApp({

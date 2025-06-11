@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Enums\ActivityLogEnum;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
 
 class LogMediaAdded
@@ -15,7 +16,7 @@ class LogMediaAdded
 
         if ($media->model_type == User::class) {
             activity()
-                ->causedBy(auth()->user()->id)
+                ->causedBy(Auth::id())
                 ->withProperties(['path' => $path])
                 ->log(ActivityLogEnum::MEDIA_ADDED->value);
         } else {

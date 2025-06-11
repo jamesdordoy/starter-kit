@@ -20,6 +20,7 @@ class SyncRoutes extends Command
                 return collect($route->methods())
                     ->reject(fn ($method) => $method === 'HEAD')
                     ->map(fn ($method) => [
+
                         'name' => $route->getName(),
                         'uri' => $route->uri(),
                         'method' => $method,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Actions\Users\DestroyUser;
+use App\Actions\Users\UpdateUserProfile;
 use App\Data\UserData;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
@@ -33,13 +34,10 @@ final class ProfileController
      */
     public function update(ProfileUpdateRequest $request, User $profile): RedirectResponse
     {
-        $profile->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $profile->email_verified_at = null;
-        }
-
-        $profile->save();
+        app(UpdateUserProfile::class)(
+            user: $profile,
+            data: $request->validated()
+        );
 
         return to_route('profile.edit', [
             'profile' => $profile,

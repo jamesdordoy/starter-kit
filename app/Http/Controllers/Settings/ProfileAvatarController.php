@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Requests\Settings\ProfileAvatarUpdateRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileAvatarController
 {
     public function update(ProfileAvatarUpdateRequest $request)
     {
-        $user = Auth::user();
+        $user = User::find(Auth::id());
 
         $user->addMediaFromRequest('avatar')
             ->toMediaCollection('avatars');

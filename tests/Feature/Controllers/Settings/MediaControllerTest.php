@@ -53,6 +53,8 @@ test('it can paginate media items', function () {
             'mime_type' => 'image/jpeg',
             'disk' => 'public',
             'size' => 100,
+            'manipulations' => [],
+            'custom_properties' => [],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -103,6 +105,8 @@ test('it can show media item', function () {
         'mime_type' => 'image/jpeg',
         'disk' => 'public',
         'size' => 100,
+        'manipulations' => [],
+        'custom_properties' => [],
         'created_at' => now(),
         'updated_at' => now(),
     ]);
@@ -127,6 +131,8 @@ test('it requires authentication to show media', function () {
         'mime_type' => 'image/jpeg',
         'disk' => 'public',
         'size' => 100,
+        'manipulations' => [],
+        'custom_properties' => [],
         'created_at' => now(),
         'updated_at' => now(),
     ]);

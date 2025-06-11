@@ -1,23 +1,19 @@
 <?php
 
-namespace Tests\Feature\Controllers\Settings;
-
 use App\Models\Media;
 use App\Models\Setting;
 use App\Models\User;
 use App\Settings\SiteSettings;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Enums\RoleEnum;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
 
-uses(RefreshDatabase::class);
-
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->user->assignRole('admin');
+    $this->user->assignRole(RoleEnum::ADMIN->value);
     $this->setting = Setting::create([
         'name' => 'logo_media_id',
         'group' => 'site',

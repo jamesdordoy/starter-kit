@@ -27,22 +27,29 @@ uses(RefreshDatabase::class)->in('Feature');
 uses(RefreshDatabase::class)->in('Unit');
 
 beforeEach(function () {
-    
     Config::set('app.env', 'testing');
     
-    // Artisan::call('migrate:fresh');
-    
+    // Create permissions with web guard
     collect(PermissionEnum::cases())
-        ->each(fn ($permission) => Permission::firstOrCreate(['name' => $permission->value, 'guard_name' => 'web']));
+        ->each(fn ($permission) => Permission::firstOrCreate(
+            ['name' => $permission->value],
+            ['guard_name' => 'web']
+        ));
     
+    // Create roles with web guard and sync permissions
     collect(RoleEnum::cases())->each(function ($roleEnum) {
         $role = Role::firstOrCreate(
-            ['name' => $roleEnum->value, 'guard_name' => 'web']
+            ['name' => $roleEnum->value],
+            ['guard_name' => 'web']
         );
         
         $permissions = $roleEnum === RoleEnum::ADMIN
-            ? Permission::all()
-            : collect($roleEnum->getPermissions())->map(fn ($permissionEnum) => $permissionEnum->value);
+            ? Permission::where('guard_name', 'web')->get()
+            : collect($roleEnum->getPermissions())
+                ->map(fn ($permissionEnum) => Permission::where('name', $permissionEnum->value)
+                    ->where('guard_name', 'web')
+                    ->first())
+                ->filter();
         
         $role->syncPermissions($permissions);
     });

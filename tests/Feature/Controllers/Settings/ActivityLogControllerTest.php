@@ -114,8 +114,16 @@ test('it can filter activities by date range', function () {
         ->get(route('settings.activity.index', [
             'filter' => [
                 'date_range' => [
-                    'from' => now()->subDay()->format('Y-m-d'),
-                    'to' => now()->addDay()->format('Y-m-d'),
+                    'from' => [
+                        'year' => now()->subDay()->year,
+                        'month' => now()->subDay()->month,
+                        'day' => now()->subDay()->day,
+                    ],
+                    'to' => [
+                        'year' => now()->addDay()->year,
+                        'month' => now()->addDay()->month,
+                        'day' => now()->addDay()->day,
+                    ],
                 ],
             ],
         ]));

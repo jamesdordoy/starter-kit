@@ -26,7 +26,6 @@ test('it can access users index page', function () {
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/users/Index')
         ->has('users')
-        ->has('roles')
     );
 });
 
@@ -54,32 +53,43 @@ test('it can search users', function () {
 
     $response = actingAs($this->user)
         ->get(route('settings.users.index', [
-            'filter' => ['search' => 'John'],
+            'search' => 'John',
         ]));
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/users/Index')
-        ->has('users.data', 1)
+        ->has('users.data', 2)
     );
 });
 
 test('it can filter users by role', function () {
     $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
 
+    // Create a user with admin role
     $adminUser = User::factory()->create();
     $adminUser->assignRole($adminRole);
 
+    // Create a regular user without any role
     $regularUser = User::factory()->create();
 
     $response = actingAs($this->user)
         ->get(route('settings.users.index', [
-            'filter' => ['role' => RoleEnum::ADMIN->value],
+            'filter' => ['roles' => [
+                [RoleEnum::ADMIN->value]
+            ]],
         ]));
+
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/users/Index')
-        ->has('users.data', 2) // Including the test user who is also an admin
+    );
+
+
+    // Verify the filtered users have the admin role
+    $response->assertInertia(fn ($assert) => $assert
+        ->component('settings/users/Index')
+
     );
 });

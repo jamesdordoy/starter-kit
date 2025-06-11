@@ -20,7 +20,7 @@ beforeEach(function () {
 
 test('it can access profile edit page', function () {
     $response = actingAs($this->user)
-        ->get(route('profile.edit'));
+        ->get(route('profile.edit', ['profile' => $this->user->id]));
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
@@ -30,19 +30,19 @@ test('it can access profile edit page', function () {
 });
 
 test('it requires authentication to access profile edit', function () {
-    $response = get(route('profile.edit'));
+    $response = get(route('profile.edit', ['profile' => $this->user->id]));
     $response->assertRedirect(route('login'));
 });
 
 test('it can update profile', function () {
     $response = actingAs($this->user)
-        ->put(route('profile.update'), [
+        ->put(route('profile.update', ['profile' => $this->user->id]), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
         ]);
 
     $response->assertRedirect();
-    $response->assertSessionHas('status', 'profile-updated');
+    $response->assertSessionHas('status', 'Profile updated successfully.');
 
     expect($this->user->fresh())
         ->name->toBe('John Doe')
@@ -51,7 +51,7 @@ test('it can update profile', function () {
 
 test('it validates profile update data', function () {
     $response = actingAs($this->user)
-        ->put(route('profile.update'), [
+        ->put(route('profile.update', ['profile' => $this->user->id]), [
             'name' => '',
             'email' => 'invalid-email',
         ]);
@@ -60,21 +60,23 @@ test('it validates profile update data', function () {
 });
 
 test('it can delete profile', function () {
-    $response = actingAs($this->user)
-        ->delete(route('profile.destroy'), [
+    $user = $this->user;
+    $response = actingAs($user)
+        ->delete(route('profile.destroy', ['profile' => $user->id]), [
             'password' => 'password123',
         ]);
 
     $response->assertRedirect(route('login'));
-    expect(User::find($this->user->id))->toBeNull();
+    expect(User::find($user->id))->toBeNull();
 });
 
 test('it requires correct password to delete profile', function () {
-    $response = actingAs($this->user)
-        ->delete(route('profile.destroy'), [
+    $user = $this->user;
+    $response = actingAs($user)
+        ->delete(route('profile.destroy', ['profile' => $user->id]), [
             'password' => 'wrong-password',
         ]);
 
     $response->assertSessionHasErrors('password');
-    expect(User::find($this->user->id))->not->toBeNull();
+    expect(User::find($user->id))->not->toBeNull();
 });

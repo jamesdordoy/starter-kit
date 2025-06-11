@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,6 +16,7 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -82,5 +84,27 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(MediaCollectionEnum::AVATARS->value)->singleFile();
+    }
+
+    public function scopeRoles(Builder $query, $roles)
+    {
+
+        // dd($roles);
+        return $query->whereHas('roles', function ($query) use ($roles) {
+            $query->whereIn('name', $roles)
+                ->where('guard_name', 'web');
+        });
+    }
+
+    #[Scope]
+    public function hasAllRoles(Builder $query, $roles)
+    {
+        foreach ($roles as $role) {
+            $query->whereHas('roles', function ($query) use ($role) {
+                $query->where('name', $role)
+                    ->where('guard_name', 'web');
+            });
+        }
+        return $query;
     }
 }

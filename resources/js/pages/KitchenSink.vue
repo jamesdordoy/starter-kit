@@ -5,6 +5,7 @@ import { Filepond } from '@/components/ui/filepond';
 import { Input } from '@/components/ui/input';
 import { Pagination } from '@/components/ui/pagination';
 import { Select } from '@/components/ui/select';
+import TagsInput from '@/components/ui/tags-input/TagsInput.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
@@ -30,13 +31,23 @@ const searchQuery = ref('');
 const selectedUser = ref('');
 const dateRange = ref<DateRange>();
 const currentPage = ref(1);
+const selectedUsers = ref<App.Data.UserData[]>([]);
+const selectedFruits = ref<{ id: number | null; name: string; email?: string }[]>([]);
+
+const fruits = [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+    { id: 3, name: 'Orange' },
+    { id: 4, name: 'Mango' },
+    { id: 5, name: 'Strawberry' },
+];
 
 // Example options for Select
 const userOptions = [
     { label: 'Select a user', value: null },
     ...props.users.data.map((user) => ({
         label: user.name,
-        value: user.id,
+        value: user.id?.toString() ?? '',
     })),
 ];
 </script>
@@ -99,6 +110,17 @@ const userOptions = [
                         </div>
                         <Filepond :files="[]" :single="false" route="settings.media-items.store" />
                     </div>
+
+                    <!-- TagsInput Examples -->
+                    <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                        <div class="space-y-2">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">User Selection</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Select multiple users</p>
+                        </div>
+                        <TagsInput v-model="selectedUsers" :items="props.users.data" placeholder="Search users by name or email..." />
+                    </div>
+
+                    
                 </div>
             </section>
 
@@ -158,6 +180,18 @@ const userOptions = [
                             <div class="space-y-2">
                                 <p class="text-gray-500 dark:text-gray-400">Current Page</p>
                                 <p class="font-medium text-gray-900 dark:text-gray-100">{{ currentPage }}</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-gray-500 dark:text-gray-400">Selected Users</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100">
+                                    {{ selectedUsers.length ? selectedUsers.map(user => user.name).join(', ') : 'None' }}
+                                </p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-gray-500 dark:text-gray-400">Selected Fruits</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100">
+                                    {{ selectedFruits.length ? selectedFruits.map(fruit => fruit.name).join(', ') : 'None' }}
+                                </p>
                             </div>
                         </div>
                     </div>

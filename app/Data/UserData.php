@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use Carbon\Carbon;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\Validation\Confirmed;
 use Spatie\LaravelData\Attributes\Validation\Email;
@@ -17,6 +18,7 @@ use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[
@@ -80,6 +82,12 @@ class UserData extends Data
 
         #[WithCast(DateTimeInterfaceCast::class)]
         public ?Carbon $updatedAt,
+
+        #[DataCollectionOf(PermissionData::class)]
+        public ?DataCollection $permissions,
+
+        #[DataCollectionOf(RoleData::class)]
+        public ?DataCollection $roles,
 
         public ?string $formattedEmailVerifiedAt,
     ) {}

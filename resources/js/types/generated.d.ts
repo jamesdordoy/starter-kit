@@ -33,6 +33,20 @@ order_column: number | null;
 created_at: string | null;
 updated_at: string | null;
 };
+export type PermissionData = {
+id: number;
+name: string;
+guard_name: string;
+created_at: string;
+updated_at: string;
+};
+export type RoleData = {
+id: number;
+name: string;
+guard_name: string;
+created_at: string;
+updated_at: string;
+};
 export type UserData = {
 id: number | null;
 name: string;
@@ -46,6 +60,8 @@ two_factor_confirmed_at: string | null;
 email_verified_at: string | null;
 created_at: string | null;
 updated_at: string | null;
+permissions: Array<App.Data.PermissionData> | null;
+roles: Array<App.Data.RoleData> | null;
 formatted_email_verified_at: string | null;
 };
 }

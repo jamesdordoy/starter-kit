@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Data\PermissionData;
+use App\Data\RoleData;
 use App\Data\UserData;
+use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
@@ -10,6 +13,8 @@ use App\QueryBuilder\Queries\UserQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController
 {
@@ -51,7 +56,13 @@ class UserController
     public function show(User $user)
     {
         return Inertia::render('settings/users/Show', [
-            UserData::DATA_NAME => $user,
+            UserData::DATA_NAME => UserData::from([
+                ...$user->toArray(),
+                'permissions' => $user->getAllPermissions()->toArray(),
+                'roles' => $user->roles->toArray(),
+            ]),
+            PermissionData::COLLECTION_NAME => PermissionResource::collection(Permission::get()),
+            RoleData::COLLECTION_NAME => Role::get(),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from(request()->query()),
         ]);
     }

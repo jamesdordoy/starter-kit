@@ -10,8 +10,8 @@
 * [Vite](https://vitejs.dev/)
 * [Spatie Permissions](#)
 * [Spatie Media Library](#)
-* [Spatie Laravel Data](#)
-* [Spatie Typescript Transformer](#)
+* [Spatie Laravel Data](https://spatie.be/docs/laravel-data/)
+* [Spatie Typescript Transformer](https://spatie.be/docs/typescript-transformer/)
 * [Spatie Laravel Query Builder](#)
 * [Spatie Laravel Activity Log](#)
 

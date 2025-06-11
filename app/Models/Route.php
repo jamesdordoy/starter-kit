@@ -7,8 +7,6 @@ use Spatie\Permission\Models\Permission;
 
 class Route extends Model
 {
-    protected $fillable = ['name', 'uri', 'method', 'label'];
-
     public function permissions()
     {
         return $this->belongsToMany(Permission::class, 'route_permission');

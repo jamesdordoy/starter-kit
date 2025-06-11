@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
         ]);
 
-        $james = User::factory()->create([
-            'email' => 'jamesdordoy@gmail.com',
+        $admin = User::factory()->create([
+            'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
-            'name' => 'James Dordoy',
+            'name' => 'Admin',
         ]);
 
-        $james->assignRole('admin');
+        $admin->assignRole('admin');
     }
 }

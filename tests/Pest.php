@@ -15,6 +15,39 @@ pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use App\Enums\RoleEnum;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Enums\PermissionEnum;
+
+uses(RefreshDatabase::class)->in('Feature');
+uses(RefreshDatabase::class)->in('Unit');
+
+beforeEach(function () {
+    
+    Config::set('app.env', 'testing');
+    
+    // Artisan::call('migrate:fresh');
+    
+    collect(PermissionEnum::cases())
+        ->each(fn ($permission) => Permission::firstOrCreate(['name' => $permission->value, 'guard_name' => 'web']));
+    
+    collect(RoleEnum::cases())->each(function ($roleEnum) {
+        $role = Role::firstOrCreate(
+            ['name' => $roleEnum->value, 'guard_name' => 'web']
+        );
+        
+        $permissions = $roleEnum === RoleEnum::ADMIN
+            ? Permission::all()
+            : collect($roleEnum->getPermissions())->map(fn ($permissionEnum) => $permissionEnum->value);
+        
+        $role->syncPermissions($permissions);
+    });
+});
+
 /*
 |--------------------------------------------------------------------------
 | Expectations

@@ -21,7 +21,7 @@ class ActivityData extends Data
 
     public function __construct(
         public int $id,
-        public string $logName,
+        public ?string $logName,
         public string $description,
         public ?string $subjectType,
         public ?int $subjectId,
@@ -30,9 +30,9 @@ class ActivityData extends Data
         public ?UserData $causer,
         public Collection $properties,
         #[WithCast(DateTimeInterfaceCast::class)]
-        public Carbon $createdAt,
+        public ?Carbon $createdAt,
         #[WithCast(DateTimeInterfaceCast::class)]
-        public Carbon $updatedAt,
+        public ?Carbon $updatedAt,
         public ?string $formattedCreatedAt,
     ) {}
 }

@@ -20,12 +20,12 @@ class RoleData extends Data
     public const COLLECTION_NAME = 'roles';
 
     public function __construct(
-        public int $id,
-        public string $name,
-        public string $guardName,
+        public ?int $id,
+        public ?string $name,
+        public ?string $guardName,
         #[WithCast(DateTimeInterfaceCast::class)]
-        public Carbon $createdAt,
+        public ?Carbon $createdAt,
         #[WithCast(DateTimeInterfaceCast::class)]
-        public Carbon $updatedAt,
+        public ?Carbon $updatedAt,
     ) {}
 }

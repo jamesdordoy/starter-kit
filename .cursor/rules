@@ -25,6 +25,7 @@ PHP/Laravel
 - Use Laravel's query builder for complex database queries.
 - Implement proper database migrations and seeders.
 - Use Data objects from https://spatie.be/docs/laravel-data/ so we can use https://spatie.be/docs/typescript-transformer/ for code generation
+- Use closures where possible
 
 Dependencies
 - Laravel (latest stable version)

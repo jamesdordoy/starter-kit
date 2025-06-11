@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Actions\Users\DestroyUser;
 use App\Data\UserData;
+use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -48,15 +49,11 @@ final class ProfileController
     /**
      * Delete the user's profile.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(ProfileDeleteRequest $request, User $profile): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
         Auth::logout();
 
-        app(DestroyUser::class)(user: $request->user());
+        app(DestroyUser::class)(user: $profile);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

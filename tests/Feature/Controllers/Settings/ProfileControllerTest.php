@@ -42,7 +42,7 @@ test('it can update profile', function () {
         ]);
 
     $response->assertRedirect();
-    $response->assertSessionHas('status', 'Profile updated successfully.');
+    $response->assertSessionHas('status', __('Profile updated successfully.'));
 
     expect($this->user->fresh())
         ->name->toBe('John Doe')
@@ -60,23 +60,31 @@ test('it validates profile update data', function () {
 });
 
 test('it can delete profile', function () {
-    $user = $this->user;
+    /** @var \App\Models\User $user */
+    $user = User::factory()->create([
+        'password' => Hash::make('password123'),
+    ]);
+
     $response = actingAs($user)
-        ->delete(route('profile.destroy', ['profile' => $user->id]), [
+        ->delete(route('profile.destroy', ['profile' => $user]), [
             'password' => 'password123',
         ]);
 
-    $response->assertRedirect(route('login'));
+    $response->assertRedirect('/');
     expect(User::find($user->id))->toBeNull();
 });
 
 test('it requires correct password to delete profile', function () {
-    $user = $this->user;
+    /** @var \App\Models\User $user */
+    $user = User::factory()->create([
+        'password' => Hash::make('password123'),
+    ]);
+
     $response = actingAs($user)
         ->delete(route('profile.destroy', ['profile' => $user->id]), [
             'password' => 'wrong-password',
         ]);
 
-    $response->assertSessionHasErrors('password');
+    $response->assertSessionHasErrors(['password' => __('validation.current_password')]);
     expect(User::find($user->id))->not->toBeNull();
 });

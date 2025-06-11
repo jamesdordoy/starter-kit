@@ -21,7 +21,7 @@ class UserQuery extends QueryBuilder
             'id',
             'name',
             'email',
-            // AllowedFilter::scope('search'),
+            AllowedFilter::scope('search'),
             AllowedFilter::scope('roles'),
             AllowedFilter::scope('hasAllRoles'),
             'created_at',

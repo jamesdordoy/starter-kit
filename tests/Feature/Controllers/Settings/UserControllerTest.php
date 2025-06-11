@@ -53,13 +53,13 @@ test('it can search users', function () {
 
     $response = actingAs($this->user)
         ->get(route('settings.users.index', [
-            'search' => 'John',
+            'filter' => ['search' => 'John'],
         ]));
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/users/Index')
-        ->has('users.data', 2)
+        ->has('users.data', 1)
     );
 });
 

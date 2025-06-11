@@ -42,31 +42,34 @@ test('it requires authentication to access media', function () {
 });
 
 test('it can paginate media items', function () {
-    // Create media items manually since we don't have a factory
     for ($i = 0; $i < 10; $i++) {
         Media::create([
             'model_id' => $this->user->id,
             'model_type' => User::class,
             'collection_name' => 'default',
-            'name' => 'test'.$i,
-            'file_name' => 'test'.$i.'.jpg',
+            'name' => "test{$i}",
+            'file_name' => "test{$i}.jpg",
             'mime_type' => 'image/jpeg',
             'disk' => 'public',
             'size' => 100,
             'manipulations' => [],
             'custom_properties' => [],
-            'created_at' => now(),
-            'updated_at' => now(),
+            'generated_conversions' => [],
+            'responsive_images' => [],
         ]);
     }
 
     $response = actingAs($this->user)
-        ->get(route('settings.media-items.index', ['per_page' => 5]));
+        ->get(route('settings.media-items.index', [
+            'page' => 2,
+            'per_page' => 5,
+        ]));
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
-        ->component('settings/assets/Index')
-        ->has(MediaData::COLLECTION_NAME.'.data', 5)
+        ->component('settings/media-items/Index')
+        ->has('media.data', 5)
+        ->has('media.meta.current_page', 2)
     );
 });
 
@@ -107,18 +110,18 @@ test('it can show media item', function () {
         'size' => 100,
         'manipulations' => [],
         'custom_properties' => [],
-        'created_at' => now(),
-        'updated_at' => now(),
+        'generated_conversions' => [],
+        'responsive_images' => [],
     ]);
 
     $response = actingAs($this->user)
         ->get(route('settings.media-items.show', $media));
 
     $response->assertStatus(200);
-    $response->assertJson([
-        'id' => $media->id,
-        'file_name' => $media->file_name,
-    ]);
+    $response->assertInertia(fn ($assert) => $assert
+        ->component('settings/media-items/Show')
+        ->has('media')
+    );
 });
 
 test('it requires authentication to show media', function () {
@@ -133,10 +136,11 @@ test('it requires authentication to show media', function () {
         'size' => 100,
         'manipulations' => [],
         'custom_properties' => [],
-        'created_at' => now(),
-        'updated_at' => now(),
+        'generated_conversions' => [],
+        'responsive_images' => [],
     ]);
 
     $response = get(route('settings.media-items.show', $media));
+
     $response->assertRedirect(route('login'));
 });

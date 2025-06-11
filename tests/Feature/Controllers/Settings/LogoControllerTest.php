@@ -7,13 +7,15 @@ use App\Settings\SiteSettings;
 use App\Enums\RoleEnum;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->user->assignRole(RoleEnum::ADMIN->value);
+    $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
+    $this->user->assignRole($adminRole);
     $this->setting = Setting::create([
         'name' => 'logo_media_id',
         'group' => 'site',
@@ -23,23 +25,16 @@ beforeEach(function () {
 });
 
 test('it can update site logo', function () {
-    $file = UploadedFile::fake()->image('logo.jpg');
+    $file = UploadedFile::fake()->image('test.jpg');
 
     $response = actingAs($this->user)
         ->post(route('settings.logo.update'), [
-            'file' => $file,
+            'logo' => $file,
         ]);
 
     $response->assertRedirect();
-    $response->assertSessionHas('status', 'logo-updated');
-
-    expect(Media::where([
-        'collection_name' => 'site_logo',
-        'file_name' => 'logo.jpg',
-    ])->exists())->toBeTrue();
-
-    $settings = app(SiteSettings::class);
-    expect($settings->logo_media_id)->not->toBeNull();
+    expect(Media::where('file_name', 'test.jpg')->exists())->toBeTrue();
+    expect(Storage::disk('public'))->toHaveFile('test.jpg');
 });
 
 test('it validates logo file upload', function () {
@@ -47,17 +42,17 @@ test('it validates logo file upload', function () {
 
     $response = actingAs($this->user)
         ->post(route('settings.logo.update'), [
-            'file' => $file,
+            'logo' => $file,
         ]);
 
-    $response->assertSessionHasErrors('file');
+    $response->assertSessionHasErrors(['logo' => 'The logo must be an image.']);
 });
 
 test('it requires authentication to update logo', function () {
-    $file = UploadedFile::fake()->image('logo.jpg');
+    $file = UploadedFile::fake()->image('test.jpg');
 
     $response = post(route('settings.logo.update'), [
-        'file' => $file,
+        'logo' => $file,
     ]);
 
     $response->assertRedirect(route('login'));

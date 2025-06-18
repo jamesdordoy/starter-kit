@@ -82,6 +82,8 @@ const updateRolesAndPermissions = () => {
         router.put(route('settings.users.roles-permissions.update', props.user.id), {
             roles: selectedRoles.value,
             permissions: selectedPermissions.value,
+        }, {
+            preserveScroll: true
         });
     }
 };

@@ -3,13 +3,13 @@ import { Button } from '@/components/ui/button';
 import Filepond from '@/components/ui/filepond/Filepond.vue';
 import { Input } from '@/components/ui/input';
 import { Pagination } from '@/components/ui/pagination';
+import { useFileSize } from '@/composables/useFileSize';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head, router } from '@inertiajs/vue3';
 import { FileIcon, FileTextIcon, ImageIcon } from 'lucide-vue-next';
-import { useFileSize } from '@/composables/useFileSize';
 import { ref, watch } from 'vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
@@ -26,7 +26,7 @@ interface Props {
         per_page: number;
         sortColumn: string;
         sortDirection: string;
-        filter:  Record<App.Enums.FilterEnum, string>
+        filter: Record<App.Enums.FilterEnum, string>;
     };
 }
 
@@ -50,11 +50,11 @@ watch(searchValue, (value) => {
             preserveScroll: true,
         },
     );
-})
+});
 
 const getFileIcon = (mimeType: string | null) => {
     if (!mimeType) return FileIcon;
-    
+
     if (isImageFile(mimeType)) {
         return ImageIcon;
     }
@@ -100,7 +100,7 @@ const reloadAssets = (page: number) => {
                         class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
                     >
                         <!-- Preview Image -->
-                        <div class="aspect-square overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        <div class="flex aspect-square items-center justify-center overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
                             <template v-if="isImageFile(item.mime_type)">
                                 <img
                                     :src="route('settings.media-items.show', { media_item: item.id })"
@@ -109,10 +109,7 @@ const reloadAssets = (page: number) => {
                                 />
                             </template>
                             <template v-else>
-                                <component
-                                    :is="getFileIcon(item.mime_type)"
-                                    class="h-16 w-16 text-gray-400"
-                                />
+                                <component :is="getFileIcon(item.mime_type)" class="h-16 w-16 text-gray-400" />
                             </template>
                         </div>
 

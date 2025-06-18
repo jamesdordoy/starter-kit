@@ -119,8 +119,6 @@ const userOptions = [
                         </div>
                         <TagsInput v-model="selectedUsers" :items="props.users.data" placeholder="Search users by name or email..." />
                     </div>
-
-                    
                 </div>
             </section>
 
@@ -184,13 +182,13 @@ const userOptions = [
                             <div class="space-y-2">
                                 <p class="text-gray-500 dark:text-gray-400">Selected Users</p>
                                 <p class="font-medium text-gray-900 dark:text-gray-100">
-                                    {{ selectedUsers.length ? selectedUsers.map(user => user.name).join(', ') : 'None' }}
+                                    {{ selectedUsers.length ? selectedUsers.map((user) => user.name).join(', ') : 'None' }}
                                 </p>
                             </div>
                             <div class="space-y-2">
                                 <p class="text-gray-500 dark:text-gray-400">Selected Fruits</p>
                                 <p class="font-medium text-gray-900 dark:text-gray-100">
-                                    {{ selectedFruits.length ? selectedFruits.map(fruit => fruit.name).join(', ') : 'None' }}
+                                    {{ selectedFruits.length ? selectedFruits.map((fruit) => fruit.name).join(', ') : 'None' }}
                                 </p>
                             </div>
                         </div>

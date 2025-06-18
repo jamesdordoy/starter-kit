@@ -52,7 +52,7 @@ props.columns.forEach((column) => {
 
 const slots = useSlots();
 
-const handleChange = (e: { 
+const handleChange = (e: {
     change_type: string;
     current_page?: number;
     pagesize?: number;

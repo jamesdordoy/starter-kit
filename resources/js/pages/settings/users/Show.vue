@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import TagsInput from '@/components/ui/tags-input/TagsInput.vue';
+import UserInfo from '@/components/UserInfo.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Select } from '@/components/ui/select';
-import UserInfo from '@/components/UserInfo.vue';
-import { ref } from 'vue';
 import type { Collection } from '@/types/collection';
-import TagsInput from '@/components/ui/tags-input/TagsInput.vue';
+import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -46,18 +45,19 @@ const form = ref({
 
 const selectedRoles = ref<App.Data.RoleData[]>(props.user.roles ?? []);
 const selectedPermissions = ref<Record<string, boolean>>(
-    props.permissions.data.reduce((acc, permission) => ({
-        ...acc,
-        [permission.name]: false
-    }), {})
+    props.permissions.data.reduce(
+        (acc, permission) => ({
+            ...acc,
+            [permission.name]: false,
+        }),
+        {},
+    ),
 );
 
 // Initialize permissions based on user's existing permissions
 const initializePermissions = () => {
-    props.permissions.data.forEach(permission => {
-        selectedPermissions.value[permission.name] = props.user.permissions?.some(
-            userPerm => userPerm.name === permission.name
-        ) ?? false;
+    props.permissions.data.forEach((permission) => {
+        selectedPermissions.value[permission.name] = props.user.permissions?.some((userPerm) => userPerm.name === permission.name) ?? false;
     });
 };
 
@@ -69,7 +69,7 @@ initializePermissions();
         <Head title="User Settings" />
         <SettingsLayout>
             <HeadingSmall title="User" description="View and manage your site Users" />
-            
+
             <div class="mt-6 space-y-6">
                 <Card>
                     <CardHeader>
@@ -111,7 +111,12 @@ initializePermissions();
 
                             <div class="space-y-2">
                                 <Label for="password_confirmation">Confirm Password</Label>
-                                <Input id="password_confirmation" v-model="form.password_confirmation" type="password" placeholder="Confirm new password" />
+                                <Input
+                                    id="password_confirmation"
+                                    v-model="form.password_confirmation"
+                                    type="password"
+                                    placeholder="Confirm new password"
+                                />
                             </div>
                         </form>
                     </CardContent>

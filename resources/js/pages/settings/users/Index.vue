@@ -41,7 +41,6 @@ const handleImpersonate = (data: any) => {
 };
 
 const params = ref(props.params);
-
 </script>
 
 <template>

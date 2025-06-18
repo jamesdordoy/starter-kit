@@ -12,28 +12,9 @@ class Media extends SpatieMedia
 {
     use HasFactory;
 
-    public function __construct(array $attributes = [])
-    {
-        self::creating(function ($media) {
-            $media->generateClientMeta();
-        });
-
-        parent::__construct($attributes);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function generateClientMeta(): self
-    {
-        if ($this->client_name) {
-            $this->client_name = Str::beforeLast($this->client_name, ':upload:');
-            $this->client_extension = pathinfo($this->client_name, PATHINFO_EXTENSION);
-        }
-
-        return $this;
     }
 
     #[Scope]

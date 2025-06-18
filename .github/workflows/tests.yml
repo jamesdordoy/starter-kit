@@ -49,8 +49,5 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: check Vue pages
-        run: find resources/js/pages -type f
-
       - name: Tests
         run: ./vendor/bin/pest

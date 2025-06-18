@@ -26,9 +26,11 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Spatie Laravel Query Builder](https://spatie.be/docs/laravel-query-builder/)
 * [Spatie Laravel Activity Log](https://spatie.be/docs/laravel-activitylog/)
 
+## Frontend vue packages
+* [Vue Multiselect](https://vue-multiselect.js.org/)
+
 ## Testing
 Tests have been included for the backend controllers
-
 
 ### Playwright
 Use `npm run test-ui` to run the playwright tests and `npm run test-generate` to gernerate them.

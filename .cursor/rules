@@ -31,6 +31,9 @@ Dependencies
 - Laravel (latest stable version)
 - Composer for dependency management
 
+Frontend coomponents
+- https://vue-multiselect.js.org/
+
 Laravel Best Practices
 - Use Eloquent ORM instead of raw SQL queries when possible.
 - Implement Repository pattern for data access layer.

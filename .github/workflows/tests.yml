@@ -48,8 +48,8 @@ jobs:
 
       - name: Build Assets
         run: npm run build
-        
-      - name: Debug: check Vue pages
+
+      - name: check Vue pages
         run: find resources/js/Pages -type f
 
       - name: Tests

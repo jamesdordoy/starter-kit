@@ -32,15 +32,6 @@ const selectedUser = ref('');
 const dateRange = ref<DateRange>();
 const currentPage = ref(1);
 const selectedUsers = ref<App.Data.UserData[]>([]);
-const selectedFruits = ref<{ id: number | null; name: string; email?: string }[]>([]);
-
-const fruits = [
-    { id: 1, name: 'Apple' },
-    { id: 2, name: 'Banana' },
-    { id: 3, name: 'Orange' },
-    { id: 4, name: 'Mango' },
-    { id: 5, name: 'Strawberry' },
-];
 
 // Example options for Select
 const userOptions = [
@@ -183,12 +174,6 @@ const userOptions = [
                                 <p class="text-gray-500 dark:text-gray-400">Selected Users</p>
                                 <p class="font-medium text-gray-900 dark:text-gray-100">
                                     {{ selectedUsers.length ? selectedUsers.map((user) => user.name).join(', ') : 'None' }}
-                                </p>
-                            </div>
-                            <div class="space-y-2">
-                                <p class="text-gray-500 dark:text-gray-400">Selected Fruits</p>
-                                <p class="font-medium text-gray-900 dark:text-gray-100">
-                                    {{ selectedFruits.length ? selectedFruits.map((fruit) => fruit.name).join(', ') : 'None' }}
                                 </p>
                             </div>
                         </div>

@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('settings')->group(function () {
         Route::name('settings.')->group(function () {
             Route::resource('users', UserController::class);
+            Route::put('users/{user}/roles-permissions', [UserController::class, 'update'])->name('users.roles-permissions.update');
             Route::resource('activity', ActivityLogController::class)->only(['index', 'show']);
             Route::resource('media-items', MediaController::class);
             Route::post('logo', [LogoController::class, 'update'])->name('logo.update');

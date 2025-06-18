@@ -11,20 +11,20 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import type { Collection } from '@/types/collection';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: route('settings.index'),
+        href: route('settings.users.index'),
     },
 ];
 
 interface Props {
     user: App.Data.UserData;
     permissions: Collection<App.Data.PermissionData>;
-    roles: Collection<App.Data.RoleData>;
+    roles: App.Data.RoleData[];
     params: {
         page: number;
         per_page: number;
@@ -54,6 +54,9 @@ const selectedPermissions = ref<Record<string, boolean>>(
     ),
 );
 
+// Convert roles collection to array for TagsInput
+const rolesArray = ref<App.Data.RoleData[]>(props.roles);
+
 // Initialize permissions based on user's existing permissions
 const initializePermissions = () => {
     props.permissions.data.forEach((permission) => {
@@ -62,6 +65,26 @@ const initializePermissions = () => {
 };
 
 initializePermissions();
+
+// Form submission handlers
+const updateUserInfo = () => {
+    // TODO: Implement user info update
+    console.log('Update user info:', form.value);
+};
+
+const updatePassword = () => {
+    // TODO: Implement password update
+    console.log('Update password:', form.value);
+};
+
+const updateRolesAndPermissions = () => {
+    if (props.user.id) {
+        router.put(route('settings.users.roles-permissions.update', props.user.id), {
+            roles: selectedRoles.value,
+            permissions: selectedPermissions.value,
+        });
+    }
+};
 </script>
 
 <template>
@@ -80,7 +103,7 @@ initializePermissions();
                         <CardDescription>Update the user's information.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form class="space-y-6">
+                        <form class="space-y-6" @submit.prevent="updateUserInfo">
                             <div class="space-y-2">
                                 <Label for="name">Name</Label>
                                 <Input id="name" v-model="form.name" type="text" placeholder="Enter name" />
@@ -93,7 +116,7 @@ initializePermissions();
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit">Save Changes</Button>
+                        <Button type="button" @click="updateUserInfo">Save Changes</Button>
                     </CardFooter>
                 </Card>
 
@@ -103,7 +126,7 @@ initializePermissions();
                         <CardDescription>Update the user's password.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form class="space-y-6">
+                        <form class="space-y-6" @submit.prevent="updatePassword">
                             <div class="space-y-2">
                                 <Label for="password">Password</Label>
                                 <Input id="password" v-model="form.password" type="password" placeholder="Enter new password" />
@@ -121,7 +144,7 @@ initializePermissions();
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit">Update Password</Button>
+                        <Button type="button" @click="updatePassword">Update Password</Button>
                     </CardFooter>
                 </Card>
 
@@ -131,10 +154,10 @@ initializePermissions();
                         <CardDescription>Manage the user's roles and permissions.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form class="space-y-6">
+                        <form class="space-y-6" @submit.prevent="updateRolesAndPermissions">
                             <div class="space-y-2">
                                 <Label for="role">Role</Label>
-                                <TagsInput v-model="selectedRoles" :items="roles" placeholder="Search users by name or email..." />
+                                <TagsInput v-model="selectedRoles" :items="rolesArray" placeholder="Search roles..." />
                             </div>
 
                             <div class="space-y-4">
@@ -149,7 +172,7 @@ initializePermissions();
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit">Update Roles & Permissions</Button>
+                        <Button type="button" @click="updateRolesAndPermissions">Update Roles &amp; Permissions</Button>
                     </CardFooter>
                 </Card>
             </div>

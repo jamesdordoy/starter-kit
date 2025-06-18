@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Actions\Users\UpdateUserRolesAndPermissions;
 use App\Data\PermissionData;
 use App\Data\RoleData;
 use App\Data\UserData;
+use App\Http\Requests\Settings\Users\UpdateRolesAndPermissionsRequest;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -78,9 +80,11 @@ class UserController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRolesAndPermissionsRequest $request, User $user)
     {
-        //
+        $user = app(UpdateUserRolesAndPermissions::class)($user, $request->validated());
+
+        return back()->with('success', 'User roles and permissions updated successfully.');
     }
 
     /**

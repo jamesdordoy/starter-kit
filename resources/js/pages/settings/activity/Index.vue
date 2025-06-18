@@ -3,10 +3,11 @@
         <Head title="Activity Log" />
 
         <SettingsLayout>
-            <div class="space-y-6">
-                <HeadingSmall title="Activity Log" description="View and filter system activity logs" />
-
-                <div class="overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="space-y-8">
+                <div class="rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
+                    <div class="border-b border-neutral-200 px-6 py-4 dark:border-neutral-700">
+                        <HeadingSmall title="Activity Log" description="View and filter system activity logs" />
+                    </div>
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <div class="mb-6">
                             <div class="flex flex-col gap-4 sm:flex-row">
@@ -49,7 +50,7 @@
                             <template #properties="data">
                                 <Link
                                     :href="route('settings.activity.show', data.value.id)"
-                                    class="ring-offset-background focus-visible:ring-ring hover:bg-primary/90 inline-flex h-10 items-center justify-center rounded-md bg-gray-300 px-4 py-2 text-sm font-medium text-gray-800 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-900 dark:text-white"
+                                    class="inline-flex h-10 items-center justify-center rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus:ring-neutral-700 dark:focus:ring-offset-neutral-900 disabled:pointer-events-none disabled:opacity-50"
                                 >
                                     View Details
                                 </Link>

@@ -19,6 +19,8 @@ import {
   DateRangePickerRoot,
   DateRangePickerTrigger,
   Label,
+  DateRangePickerScrollUpButton,
+  DateRangePickerScrollDownButton,
 } from 'reka-ui';
 import type { DateRange } from 'reka-ui';
 
@@ -50,7 +52,7 @@ const emit = defineEmits(['update:modelValue']);
     >
       <DateRangePickerField
         v-slot="{ segments }"
-        class="inline-flex min-w-[160px] items-center justify-between rounded-lg px-[15px] text-xs leading-none h-[35px] gap-[5px] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 shadow-sm focus:shadow-[0_0_0_2px] focus:shadow-black dark:focus:shadow-white data-[placeholder]:text-gray-500 dark:data-[placeholder]:text-gray-400 outline-none"
+        class="inline-flex min-w-[160px] items-center justify-between rounded-lg px-[15px] text-xs leading-none h-[40px] gap-[5px] bg-white dark:bg-neutral-900 text-gray-900 dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm focus:shadow-[0_0_0_2px] focus:shadow-black dark:focus:shadow-white data-[placeholder]:text-gray-500 dark:data-[placeholder]:text-neutral-400 outline-none"
       >
         <div class="flex items-center gap-0.5">
           <template
@@ -110,7 +112,7 @@ const emit = defineEmits(['update:modelValue']);
 
       <DateRangePickerContent
         :side-offset="4"
-        class="min-w-[160px] bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade z-[100]"
+        class="min-w-[160px] bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-sm will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade z-[100]"
       >
         <DateRangePickerArrow class="fill-white dark:fill-gray-800 stroke-gray-200 dark:stroke-gray-700" />
         <DateRangePickerCalendar
@@ -170,6 +172,9 @@ const emit = defineEmits(['update:modelValue']);
             </DateRangePickerGrid>
           </div>
         </DateRangePickerCalendar>
+        <DateRangePickerScrollUpButton class="flex items-center justify-center h-[25px] bg-white dark:bg-neutral-900 text-gray-900 dark:text-white cursor-default" />
+        <DateRangePickerLabel v-if="label" class="px-[25px] text-xs leading-[25px] text-gray-500 dark:text-neutral-400" />
+        <DateRangePickerScrollDownButton class="flex items-center justify-center h-[25px] bg-white dark:bg-neutral-900 text-gray-900 dark:text-white cursor-default" />
       </DateRangePickerContent>
     </DateRangePickerRoot>
   </div>

@@ -81,65 +81,66 @@ const reloadAssets = (page: number) => {
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="General settings" />
         <SettingsLayout>
-            <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-2xl font-semibold tracking-tight">Assets</h2>
-                    <div class="flex items-center gap-2">
-                        <Input type="search" placeholder="Search assets..." class="w-[200px]" v-model="searchValue" />
-                    </div>
-                </div>
-
-                <div class="flex flex-col space-y-4 sm:w-full md:w-1/2">
-                    <Filepond />
-                </div>
-
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    <div
-                        v-for="item in assets.data"
-                        :key="item.id"
-                        class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
-                    >
-                        <!-- Preview Image -->
-                        <div class="flex aspect-square items-center justify-center overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
-                            <template v-if="isImageFile(item.mime_type)">
-                                <img
-                                    :src="route('settings.media-items.show', { media_item: item.id })"
-                                    :alt="item.file_name"
-                                    class="h-full w-full object-cover transition-transform group-hover:scale-105"
-                                />
-                            </template>
-                            <template v-else>
-                                <component :is="getFileIcon(item.mime_type)" class="h-16 w-16 text-gray-400" />
-                            </template>
-                        </div>
-
-                        <!-- File Info -->
-                        <div class="mt-4 space-y-2">
-                            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {{ item.custom_properties.client_name ?? item.file_name }}
-                            </h3>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">
-                                {{ formatFileSize(Number(item.size), true) }}
-                            </p>
-                            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                                <span>{{ item.mime_type }}</span>
-                                <span>•</span>
-                                <span>{{ item.created_at }}</span>
-                            </div>
-                        </div>
-
-                        <!-- Actions -->
-                        <div class="absolute right-5 bottom-5 opacity-0 transition-opacity group-hover:opacity-100">
-                            <div class="flex gap-2">
-                                <a :href="route('settings.media-items.show', { media_item: item.id })" variant="secondary" size="sm"> Download </a>
-                                <Button variant="destructive" size="sm"> Delete </Button>
-                            </div>
+            <div class="space-y-8">
+                <div class="rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
+                    <div class="border-b border-neutral-200 px-6 py-4 flex items-center justify-between dark:border-neutral-700">
+                        <h2 class="text-2xl font-semibold tracking-tight text-neutral-800 dark:text-white">Assets</h2>
+                        <div class="flex items-center gap-2">
+                            <Input type="search" placeholder="Search assets..." class="w-[200px]" v-model="searchValue" />
                         </div>
                     </div>
+                    <div class="p-6 flex flex-col space-y-4 sm:w-full md:w-1/2">
+                        <Filepond />
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            <div
+                                v-for="item in assets.data"
+                                :key="item.id"
+                                class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
+                            >
+                                <!-- Preview Image -->
+                                <div class="flex aspect-square items-center justify-center overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
+                                    <template v-if="isImageFile(item.mime_type)">
+                                        <img
+                                            :src="route('settings.media-items.show', { media_item: item.id })"
+                                            :alt="item.file_name"
+                                            class="h-full w-full object-cover transition-transform group-hover:scale-105"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <component :is="getFileIcon(item.mime_type)" class="h-16 w-16 text-gray-400" />
+                                    </template>
+                                </div>
+                                <!-- File Info -->
+                                <div class="mt-4 space-y-2">
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ item.custom_properties.client_name ?? item.file_name }}
+                                    </h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                        {{ formatFileSize(Number(item.size), true) }}
+                                    </p>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                        <span>{{ item.mime_type }}</span>
+                                        <span>•</span>
+                                        <span>{{ item.created_at }}</span>
+                                    </div>
+                                </div>
+                                <!-- Actions -->
+                                <div class="absolute right-5 bottom-5 opacity-0 transition-opacity group-hover:opacity-100">
+                                    <div class="flex gap-2">
+                                        <a :href="route('settings.media-items.show', { media_item: item.id })" class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-black px-3 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"> Download </a>
+                                        <Button variant="destructive" size="sm"> Delete </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="p-6">
+                        <Pagination :data="assets" @update:page="reloadAssets" />
+                    </div>
                 </div>
-
-                <!-- Pagination -->
-                <Pagination :data="assets" @update:page="reloadAssets" />
             </div>
         </SettingsLayout>
     </AppLayout>

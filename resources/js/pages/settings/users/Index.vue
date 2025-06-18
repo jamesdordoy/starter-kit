@@ -47,43 +47,47 @@ const params = ref(props.params);
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="General settings" />
         <SettingsLayout>
-            <HeadingSmall title="Users" description="View and manage your site Users" />
-            <Datatable :columns="cols" :data="props.users" :reload="['users']" :params="params">
-                <template #id="data">
-                    {{ data.value.id }}
-                </template>
-
-                <template #name="data">
-                    {{ data.value.name }}
-                </template>
-
-                <template #email="data">
-                    {{ data.value.email }}
-                </template>
-
-                <template #email_verified_at="data">
-                    {{ data.value.formatted_email_verified_at }}
-                </template>
-
-                <template #actions="data">
-                    <div class="flex gap-2">
-                        <button
-                            type="button"
-                            class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
-                            @click="handleImpersonate(data)"
-                        >
-                            <font-awesome-icon icon="user-secret" />
-                            Impersonate
-                        </button>
-                        <Link
-                            :href="route('settings.users.show', { user: data.value })"
-                            class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
-                        >
-                            View
-                        </Link>
+            <div class="space-y-8">
+                <div class="rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
+                    <div class="border-b border-neutral-200 px-6 py-4 dark:border-neutral-700">
+                        <HeadingSmall title="Users" description="View and manage your site Users" />
                     </div>
-                </template>
-            </Datatable>
+                    <div class="p-6">
+                        <Datatable :columns="cols" :data="props.users" :reload="['users']" :params="params">
+                            <template #id="data">
+                                {{ data.value.id }}
+                            </template>
+                            <template #name="data">
+                                {{ data.value.name }}
+                            </template>
+                            <template #email="data">
+                                {{ data.value.email }}
+                            </template>
+                            <template #email_verified_at="data">
+                                {{ data.value.formatted_email_verified_at }}
+                            </template>
+                            <template #actions="data">
+                                <div class="flex gap-2">
+                                    <button
+                                        type="button"
+                                        class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-black px-3 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"
+                                        @click="handleImpersonate(data)"
+                                    >
+                                        <font-awesome-icon icon="user-secret" />
+                                        Impersonate
+                                    </button>
+                                    <Link
+                                        :href="route('settings.users.show', { user: data.value })"
+                                        class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-black px-3 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"
+                                    >
+                                        View
+                                    </Link>
+                                </div>
+                            </template>
+                        </Datatable>
+                    </div>
+                </div>
+            </div>
         </SettingsLayout>
     </AppLayout>
 </template>

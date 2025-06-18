@@ -1,3 +1,6 @@
+[![linter](https://github.com/jamesdordoy/starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/jamesdordoy/starter-kit/actions/workflows/lint.yml)
+[![tests](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml)
+
 # My Starter Kit
 
 My personal implementation of a starter kit using best in class packages.

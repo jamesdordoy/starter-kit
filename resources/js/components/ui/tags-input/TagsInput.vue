@@ -48,7 +48,7 @@ const customLabel = (option: T) => {
         :searchable="true"
         :allow-empty="true"
         :track-by="displayField"
-        class="multiselect-custom bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-sm"
+        class="multiselect-custom"
         select-label=""
     >
         <template #caret="{ toggle }">

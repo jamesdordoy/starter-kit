@@ -51,17 +51,17 @@ const handlePageChange = (page: number) => {
           v-slot="{ items }"
           class="flex items-center gap-1"
         >
-          <PaginationFirst class="w-9 h-9 flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition disabled:opacity-50 shadow-sm">
+          <PaginationFirst class="w-9 h-9 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/70 transition disabled:opacity-50">
             <ArrowLeftIcon class="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </PaginationFirst>
-          <PaginationPrev class="w-9 h-9 flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition mr-4 disabled:opacity-50 shadow-sm">
+          <PaginationPrev class="w-9 h-9 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/70 transition mr-4 disabled:opacity-50">
             <ChevronLeftIcon class="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </PaginationPrev>
           <template v-for="(page, index) in items">
             <PaginationListItem
               v-if="page.type === 'page'"
               :key="index"
-              class="w-9 h-9 flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg data-[selected]:!bg-neutral-900 dark:data-[selected]:!bg-white data-[selected]:!text-white dark:data-[selected]:!text-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition shadow-sm"
+              class="w-9 h-9 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg data-[selected]:!bg-gray-900 dark:data-[selected]:!bg-gray-100 data-[selected]:!text-white dark:data-[selected]:!text-gray-900 hover:bg-gray-50 dark:hover:bg-gray-700/70 transition"
               :value="page.value"
             >
               {{ page.value }}
@@ -70,15 +70,15 @@ const handlePageChange = (page: number) => {
               v-else
               :key="page.type"
               :index="index"
-              class="w-9 h-9 flex items-center justify-center text-gray-700 dark:text-white"
+              class="w-9 h-9 flex items-center justify-center text-gray-700 dark:text-gray-300"
             >
               &#8230;
             </PaginationEllipsis>
           </template>
-          <PaginationNext class="w-9 h-9 flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition ml-4 disabled:opacity-50 shadow-sm">
+          <PaginationNext class="w-9 h-9 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/70 transition ml-4 disabled:opacity-50">
             <ChevronRightIcon class="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </PaginationNext>
-          <PaginationLast class="w-9 h-9 flex items-center justify-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition disabled:opacity-50 shadow-sm">
+          <PaginationLast class="w-9 h-9 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/70 transition disabled:opacity-50">
             <ArrowRightIcon class="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </PaginationLast>
         </PaginationList>

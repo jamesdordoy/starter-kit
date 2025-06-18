@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Data\ActivityData;
 use App\Data\PermissionData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

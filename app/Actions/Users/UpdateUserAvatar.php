@@ -14,4 +14,4 @@ readonly class UpdateUserAvatar
 
         return $user;
     }
-} 
+}

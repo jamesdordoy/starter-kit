@@ -79,12 +79,16 @@ const updatePassword = () => {
 
 const updateRolesAndPermissions = () => {
     if (props.user.id) {
-        router.put(route('settings.users.roles-permissions.update', props.user.id), {
-            roles: selectedRoles.value,
-            permissions: selectedPermissions.value,
-        }, {
-            preserveScroll: true
-        });
+        router.put(
+            route('settings.users.roles-permissions.update', props.user.id),
+            {
+                roles: selectedRoles.value,
+                permissions: selectedPermissions.value,
+            },
+            {
+                preserveScroll: true,
+            },
+        );
     }
 };
 </script>

@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
-use App\Enums\RoleEnum;
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
@@ -17,14 +17,14 @@ beforeEach(function () {
             ['name' => $permission->value],
             ['guard_name' => 'web']
         ));
-    
+
     // Create roles
     collect(RoleEnum::cases())->each(function ($roleEnum) {
         $role = Role::firstOrCreate(
             ['name' => $roleEnum->value],
             ['guard_name' => 'web']
         );
-        
+
         $permissions = $roleEnum === RoleEnum::ADMIN
             ? Permission::where('guard_name', 'web')->get()
             : collect($roleEnum->getPermissions())
@@ -32,14 +32,14 @@ beforeEach(function () {
                     ->where('guard_name', 'web')
                     ->first())
                 ->filter();
-        
+
         $role->syncPermissions($permissions);
     });
 
     $this->user = User::factory()->create([
         'password' => Hash::make('password123'),
     ]);
-    
+
     // Get the admin role and assign it
     $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
     $this->user->assignRole($adminRole);
@@ -103,16 +103,14 @@ test('it can filter users by role', function () {
     $response = actingAs($this->user)
         ->get(route('settings.users.index', [
             'filter' => ['roles' => [
-                [RoleEnum::ADMIN->value]
+                [RoleEnum::ADMIN->value],
             ]],
         ]));
-
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/users/Index')
     );
-
 
     // Verify the filtered users have the admin role
     $response->assertInertia(fn ($assert) => $assert
@@ -125,7 +123,7 @@ test('it can update user roles and permissions', function () {
     $userToUpdate = User::factory()->create();
     $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
     $managerRole = Role::where('name', RoleEnum::MANAGER->value)->first();
-    
+
     $response = actingAs($this->user)
         ->put(route('settings.users.roles-permissions.update', $userToUpdate), [
             'roles' => [
@@ -141,11 +139,11 @@ test('it can update user roles and permissions', function () {
 
     $response->assertRedirect();
     $response->assertSessionHas('success');
-    
+
     $userToUpdate->refresh();
     expect($userToUpdate->roles)->toHaveCount(2);
     expect($userToUpdate->roles->pluck('name')->toArray())->toContain('admin', 'manager');
-    
+
     // Since admin role has all permissions, the user will have create_users permission
     // even though we set it to false, because role permissions take precedence
     expect($userToUpdate->hasPermissionTo('view_users'))->toBeTrue();

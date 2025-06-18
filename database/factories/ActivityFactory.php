@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Spatie\Activitylog\LogOptions;
 
 class ActivityFactory extends Factory
 {
@@ -28,4 +27,4 @@ class ActivityFactory extends Factory
             'batch_uuid' => $this->faker->uuid,
         ];
     }
-} 
+}

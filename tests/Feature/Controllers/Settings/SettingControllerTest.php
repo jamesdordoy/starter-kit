@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Enums\RoleEnum;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -12,7 +12,7 @@ beforeEach(function () {
     $this->user = User::factory()->create([
         'password' => Hash::make('password123'),
     ]);
-    
+
     // Get the admin role and assign it
     $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
     $this->user->assignRole($adminRole);

@@ -67,8 +67,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'settings' => [
                 ...$this->settings->toArray(),
-                'max_file_size' => config('media-library.max_file_size')
-            ]
+                'max_file_size' => config('media-library.max_file_size'),
+            ],
         ];
     }
 }

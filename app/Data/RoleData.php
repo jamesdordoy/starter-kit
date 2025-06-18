@@ -3,7 +3,6 @@
 namespace App\Data;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;

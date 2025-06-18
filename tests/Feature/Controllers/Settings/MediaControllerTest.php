@@ -1,9 +1,9 @@
 <?php
 
+use App\Data\MediaData;
+use App\Enums\RoleEnum;
 use App\Models\Media;
 use App\Models\User;
-use App\Enums\RoleEnum;
-use App\Data\MediaData;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -16,11 +16,11 @@ beforeEach(function () {
     $this->user = User::factory()->create([
         'password' => Hash::make('password123'),
     ]);
-    
+
     // Get the admin role and assign it
     $adminRole = Role::where('name', RoleEnum::ADMIN->value)->first();
     $this->user->assignRole($adminRole);
-    
+
     Storage::fake('public');
 });
 

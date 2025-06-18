@@ -46,9 +46,10 @@ const customLabel = (option: T) => {
         :custom-label="customLabel"
         :preselect-first="false"
         :searchable="true"
-        :allow-empty="false"
+        :allow-empty="true"
         :track-by="displayField"
         class="multiselect-custom"
+        select-label=""
     >
         <template #caret="{ toggle }">
             <div class="multiselect__select" @mousedown.stop="toggle">

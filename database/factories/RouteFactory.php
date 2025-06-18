@@ -18,4 +18,4 @@ class RouteFactory extends Factory
             'label' => $this->faker->sentence(3),
         ];
     }
-} 
+}

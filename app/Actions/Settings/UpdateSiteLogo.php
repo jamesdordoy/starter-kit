@@ -19,4 +19,4 @@ readonly class UpdateSiteLogo
         $settings->logo_media_id = $media->id;
         $settings->save();
     }
-} 
+}

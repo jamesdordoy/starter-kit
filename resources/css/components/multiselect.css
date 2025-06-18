@@ -3,37 +3,55 @@
 }
 
 .multiselect-custom .multiselect__tags {
-    @apply min-h-[35px] rounded-lg border border-gray-200 bg-white px-[15px] py-2 shadow-sm dark:border-gray-700 dark:bg-gray-800;
+    @apply flex h-10 min-h-[40px] flex-row items-center rounded-lg border border-gray-200 bg-white px-4 py-0 shadow-sm dark:border-gray-700 dark:bg-black;
 }
 
 .multiselect-custom .multiselect__select {
-    @apply bg-transparent;
+    @apply absolute top-1/2 right-1 m-0 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center p-0;
+}
+
+.multiselect-custom .multiselect__select svg {
+    @apply h-4 w-4;
 }
 
 .multiselect-custom .multiselect__select:before {
     @apply hidden;
 }
 
+.multiselect-custom .multiselect__tags-wrap {
+    @apply flex flex-row items-center gap-2;
+}
+
 .multiselect-custom .multiselect__tag {
-    @apply mb-1 rounded bg-green-400 px-2 py-1 text-xs font-medium text-white;
+    @apply m-0 flex h-6 items-center rounded bg-black px-1.5 py-0.5 pr-6 text-[0.7rem] font-medium text-white dark:bg-white dark:text-black;
 }
 
 .multiselect-custom .multiselect__tag-icon {
-    @apply rounded-r text-white hover:bg-gray-100 dark:hover:bg-gray-700;
+    @apply top-1/2 right-0 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-black text-white transition-colors duration-200;
 }
 
-.multiselect-custom .multiselect__tag-icon:after {
-    @apply text-white;
+.dark .multiselect-custom .multiselect__tag-icon {
+    @apply bg-white text-black;
 }
 
-.multiselect-custom .multiselect__tag-icon:focus,
-.multiselect-custom .multiselect__tag-icon:hover {
-    @apply bg-gray-100 dark:bg-gray-700;
+.multiselect-custom .multiselect__tag-icon:hover,
+.multiselect-custom .multiselect__tag-icon:focus {
+    @apply bg-rose-600 text-white;
+}
+
+.dark .multiselect-custom .multiselect__tag-icon:hover,
+.dark .multiselect-custom .multiselect__tag-icon:focus {
+    @apply bg-black text-white;
+}
+
+.multiselect-custom .multiselect__tag-icon::after {
+    color: inherit !important;
+    font-size: 1.1rem;
 }
 
 .multiselect-custom .multiselect__input,
 .multiselect-custom .multiselect__single {
-    @apply bg-transparent text-xs text-gray-900 dark:text-gray-100;
+    @apply m-0 h-10 bg-transparent px-0 py-0 text-sm leading-10 text-gray-900 dark:text-white;
 }
 
 .multiselect-custom .multiselect__input::placeholder {
@@ -41,23 +59,27 @@
 }
 
 .multiselect-custom .multiselect__content-wrapper {
-    @apply rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800;
+    @apply rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-black;
 }
 
 .multiselect-custom .multiselect__option {
-    @apply text-xs text-gray-900 dark:text-gray-100;
+    @apply flex h-10 items-center bg-white px-4 text-sm text-gray-900 dark:bg-neutral-900 dark:text-white;
+}
+
+.multiselect-custom .multiselect__option:hover {
+    @apply bg-gray-100 dark:bg-neutral-800;
 }
 
 .multiselect-custom .multiselect__option--highlight {
-    @apply bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-100;
+    @apply bg-black text-white;
 }
 
 .multiselect-custom .multiselect__option--selected {
-    @apply bg-green-400 text-white;
+    @apply bg-black text-white;
 }
 
 .multiselect-custom .multiselect__option--selected.multiselect__option--highlight {
-    @apply bg-green-400 text-white;
+    @apply bg-black text-white;
 }
 
 .multiselect-custom .multiselect__spinner {
@@ -66,4 +88,10 @@
 
 .multiselect-custom .multiselect__spinner:after {
     @apply border-t-gray-400 dark:border-t-gray-600;
+}
+
+/* Custom style for the 'press enter to select' hint */
+.multiselect-custom .multiselect__option--highlight::after {
+    @apply bg-black text-white;
+    color: #fff !important;
 }

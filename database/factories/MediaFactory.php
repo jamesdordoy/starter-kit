@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class MediaFactory extends Factory
 {
@@ -13,8 +12,8 @@ class MediaFactory extends Factory
 
     public function definition(): array
     {
-        $fileName = $this->faker->word . '.' . $this->faker->randomElement(['jpg', 'png', 'pdf']);
-        
+        $fileName = $this->faker->word.'.'.$this->faker->randomElement(['jpg', 'png', 'pdf']);
+
         return [
             'model_type' => User::class,
             'model_id' => User::factory(),
@@ -33,4 +32,4 @@ class MediaFactory extends Factory
             'client_extension' => pathinfo($fileName, PATHINFO_EXTENSION),
         ];
     }
-} 
+}

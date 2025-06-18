@@ -6,11 +6,9 @@ use App\Data\MediaData;
 use App\Http\Requests\Settings\Media\StoreRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
-use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\MediaQuery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class MediaController
@@ -36,7 +34,7 @@ class MediaController
     {
         $user = $request->user();
 
-        if (!is_null($request->file('file', null))) {
+        if (! is_null($request->file('file', null))) {
             $user->addMedia($request->file('file')->getRealPath())
                 ->withCustomProperties([
                     'client_name' => $request->file('file')->getClientOriginalName(),

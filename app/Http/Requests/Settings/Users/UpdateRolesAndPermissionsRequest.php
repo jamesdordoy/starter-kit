@@ -42,4 +42,4 @@ class UpdateRolesAndPermissionsRequest extends FormRequest
             'roles.*.name.exists' => 'The selected role is invalid.',
         ];
     }
-} 
+}

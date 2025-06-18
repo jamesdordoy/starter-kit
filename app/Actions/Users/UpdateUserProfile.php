@@ -3,7 +3,6 @@
 namespace App\Actions\Users;
 
 use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UpdateUserProfile
 {
@@ -19,4 +18,4 @@ class UpdateUserProfile
 
         return $user;
     }
-} 
+}

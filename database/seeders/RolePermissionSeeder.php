@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 

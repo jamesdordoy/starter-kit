@@ -3,7 +3,6 @@
 namespace App\Actions\Users;
 
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class UpdateUserRolesAndPermissions
 {
@@ -18,13 +17,13 @@ class UpdateUserRolesAndPermissions
         // Update permissions if provided
         if (isset($data['permissions'])) {
             $permissionNames = collect($data['permissions'])
-                ->filter(fn($value) => $value === true)
+                ->filter(fn ($value) => $value === true)
                 ->keys()
                 ->toArray();
-            
+
             $user->syncPermissions($permissionNames);
         }
 
         return $user->fresh(['roles', 'permissions']);
     }
-} 
+}

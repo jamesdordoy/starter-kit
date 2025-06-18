@@ -15,34 +15,33 @@ pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Config;
-use App\Enums\RoleEnum;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class)->in('Feature');
 uses(RefreshDatabase::class)->in('Unit');
 
 beforeEach(function () {
     Config::set('app.env', 'testing');
-    
+
     // Create permissions with web guard
     collect(PermissionEnum::cases())
         ->each(fn ($permission) => Permission::firstOrCreate(
             ['name' => $permission->value],
             ['guard_name' => 'web']
         ));
-    
+
     // Create roles with web guard and sync permissions
     collect(RoleEnum::cases())->each(function ($roleEnum) {
         $role = Role::firstOrCreate(
             ['name' => $roleEnum->value],
             ['guard_name' => 'web']
         );
-        
+
         $permissions = $roleEnum === RoleEnum::ADMIN
             ? Permission::where('guard_name', 'web')->get()
             : collect($roleEnum->getPermissions())
@@ -50,7 +49,7 @@ beforeEach(function () {
                     ->where('guard_name', 'web')
                     ->first())
                 ->filter();
-        
+
         $role->syncPermissions($permissions);
     });
 });

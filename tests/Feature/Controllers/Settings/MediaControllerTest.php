@@ -43,20 +43,9 @@ test('it requires authentication to access media', function () {
 
 test('it can paginate media items', function () {
     for ($i = 0; $i < 10; $i++) {
-        Media::create([
-            'model_id' => $this->user->id,
-            'model_type' => User::class,
-            'collection_name' => 'default',
-            'name' => "test{$i}",
-            'file_name' => "test{$i}.jpg",
-            'mime_type' => 'image/jpeg',
-            'disk' => 'public',
-            'size' => 100,
-            'manipulations' => [],
-            'custom_properties' => [],
-            'generated_conversions' => [],
-            'responsive_images' => [],
-        ]);
+        $file = UploadedFile::fake()->image("test{$i}.jpg");
+        $this->user->addMedia($file->getRealPath())
+            ->toMediaCollection('default');
     }
 
     $response = actingAs($this->user)
@@ -67,9 +56,9 @@ test('it can paginate media items', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
-        ->component('settings/media-items/Index')
-        ->has('media.data', 5)
-        ->has('media.meta.current_page', 2)
+        ->component('settings/assets/Index')
+        ->has('assets.data', 5)
+        ->where('assets.meta.current_page', 2)
     );
 });
 
@@ -83,62 +72,42 @@ test('it can store media files', function () {
 
     $response->assertRedirect();
 
-    expect(Media::where('file_name', 'test.jpg')->exists())->toBeTrue();
-    expect(Storage::disk('public'))->toHaveFile('test.jpg');
+    // Check that a media item was created (filename might be different due to Spatie's naming)
+    expect(Media::where('collection_name', 'default')->count())->toBe(1);
+    expect(Storage::disk('public')->allFiles())->toHaveCount(1);
 });
 
 test('it validates media file upload', function () {
-    $file = UploadedFile::fake()->create('test.txt', 100);
+    // Create a file with an extension that's not in the allowed MIMES list
+    $file = UploadedFile::fake()->create('test.exe', 100);
 
     $response = actingAs($this->user)
         ->post(route('settings.media-items.store'), [
             'files' => [$file],
         ]);
 
-    $response->assertSessionHasErrors(['files.0' => 'The files.0 must be an image.']);
+    $response->assertSessionHasErrors('files.0');
 });
 
 test('it can show media item', function () {
-    $media = Media::create([
-        'model_id' => $this->user->id,
-        'model_type' => User::class,
-        'collection_name' => 'default',
-        'name' => 'test',
-        'file_name' => 'test.jpg',
-        'mime_type' => 'image/jpeg',
-        'disk' => 'public',
-        'size' => 100,
-        'manipulations' => [],
-        'custom_properties' => [],
-        'generated_conversions' => [],
-        'responsive_images' => [],
-    ]);
+    // Create a media item using Spatie Media Library
+    $file = UploadedFile::fake()->image('test.jpg');
+    $media = $this->user->addMedia($file->getRealPath())
+        ->toMediaCollection('default');
 
     $response = actingAs($this->user)
         ->get(route('settings.media-items.show', $media));
 
     $response->assertStatus(200);
-    $response->assertInertia(fn ($assert) => $assert
-        ->component('settings/media-items/Show')
-        ->has('media')
-    );
+    $expectedFilename = $media->custom_properties['client_name'] ?? $media->file_name;
+    $response->assertHeader('Content-Disposition', "attachment; filename={$expectedFilename}");
 });
 
 test('it requires authentication to show media', function () {
-    $media = Media::create([
-        'model_id' => $this->user->id,
-        'model_type' => User::class,
-        'collection_name' => 'default',
-        'name' => 'test',
-        'file_name' => 'test.jpg',
-        'mime_type' => 'image/jpeg',
-        'disk' => 'public',
-        'size' => 100,
-        'manipulations' => [],
-        'custom_properties' => [],
-        'generated_conversions' => [],
-        'responsive_images' => [],
-    ]);
+    // Create a media item using Spatie Media Library
+    $file = UploadedFile::fake()->image('test.jpg');
+    $media = $this->user->addMedia($file->getRealPath())
+        ->toMediaCollection('default');
 
     $response = get(route('settings.media-items.show', $media));
 

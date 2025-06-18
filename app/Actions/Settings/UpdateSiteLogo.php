@@ -13,6 +13,7 @@ readonly class UpdateSiteLogo
         $setting = Setting::where('name', 'logo_media_id')->first();
 
         $media = $setting->addMedia($file->getRealPath())
+            ->usingFileName($file->getClientOriginalName())
             ->toMediaCollection('site_logo');
 
         $settings->logo_media_id = $media->id;

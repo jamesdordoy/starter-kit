@@ -3,7 +3,7 @@
 My personal implementation of a starter kit using best in class packages.
 
 ## Whats included?
-This has been built on top of the laravel interia-vue starter kit with addtional vue components included such as file pond, a date picker etc. Addtional sections of the authenticated dashboard have been expanded upon such as the new setting section that allows you to manage your users, their activity and site wide global assets. Laravel data has also been used so that typescript interfaces can be generated for the frontend.
+This has been built on top of the laravel [vue-starter-kit](https://github.com/laravel/vue-starter-kit) with addtional vue components included such as file pond, a date picker etc. Addtional sections of the authenticated dashboard have been expanded upon such as the new setting section that allows you to manage your users, their activity and site wide global assets with filters. Laravel data has also been used so that typescript interfaces can be generated for the frontend.
 
 ## Built around
 * [PHP](https://www.php.net/releases/8.2/en.php) 8.2+

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
@@ -68,7 +69,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         );
     }
 
-    public function activities()
+    public function activities(): MorphMany
     {
         return $this->morphMany(Activity::class, 'causer');
     }
@@ -86,35 +87,20 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         $this->addMediaCollection(MediaCollectionEnum::AVATARS->value)->singleFile();
     }
 
-    public function scopeRoles(Builder $query, $roles)
+    public function scopeRoles(Builder $query, $roles): Builder
     {
-
-        // dd($roles);
-        return $query->whereHas('roles', function ($query) use ($roles) {
+        return $query->whereHas('roles', fn ($query) => 
             $query->whereIn('name', $roles)
-                ->where('guard_name', 'web');
-        });
+                ->where('guard_name', 'web')
+        );
     }
 
     #[Scope]
-    public function hasAllRoles(Builder $query, $roles)
+    public function search(Builder $query, $search): Builder
     {
-        foreach ($roles as $role) {
-            $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', $role)
-                    ->where('guard_name', 'web');
-            });
-        }
-
-        return $query;
-    }
-
-    #[Scope]
-    public function search(Builder $query, $search)
-    {
-        return $query->where(function ($query) use ($search) {
+        return $query->where(fn ($query) =>
             $query->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%");
-        });
+                ->orWhere('email', 'like', "%{$search}%")
+        );
     }
 }

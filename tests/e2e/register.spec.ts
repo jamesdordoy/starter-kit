@@ -9,5 +9,8 @@ test('register test', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Password', exact: true }).fill('password');
     await page.getByRole('textbox', { name: 'Password', exact: true }).press('Tab');
     await page.getByRole('textbox', { name: 'Confirm password' }).fill('password');
-    await page.getByRole('button', { name: 'Create account' }).click();
+    await Promise.all([
+        page.waitForNavigation(),
+        page.getByRole('button', { name: 'Create account' }).click(),
+    ]);
 });

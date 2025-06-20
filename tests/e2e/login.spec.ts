@@ -7,5 +7,8 @@ test('login test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email address' }).fill('admin@admin.com');
   await page.getByRole('textbox', { name: 'Email address' }).press('Tab');
   await page.getByRole('textbox', { name: 'Password' }).fill('password');
-  await page.getByRole('button', { name: 'Log in' }).click();
+  await Promise.all([
+    page.waitForNavigation(),
+    page.getByRole('button', { name: 'Log in' }).click(),
+  ]);
 });

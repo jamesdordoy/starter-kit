@@ -38,7 +38,11 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 Tests have been included for the backend controllers
 
 ### Playwright
-Use `npm run test-ui` to run the playwright tests and `npm run test-generate` to gernerate them.
+
+#### Fresh install
+You may need to run the following commands after installing your npm deps to install the browsers playwright will use: npx playwright install 
+
+Use `npm run test-ui` to run the playwright tests and `npm run test-generate` to generate them.
 
 ## Alpha
 Finished by the end of the month.

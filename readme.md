@@ -40,10 +40,13 @@ Tests have been included for the backend controllers
 
 ### Playwright
 
-#### Fresh install
+### Fresh install
 You may need to run the following commands after installing your npm deps to install the browsers playwright will use: npx playwright install 
 
 Use `npm run test-ui` to run the playwright tests and `npm run test-generate` to generate them.
+
+#### SSL
+you can turn off ssl in the essentails config.
 
 ## Alpha
 Finished by the end of the month.

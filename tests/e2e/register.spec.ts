@@ -1,4 +1,4 @@
-import { test, expect } from './coverage-utils';
+import { test } from './coverage-utils';
 
 test('register test', async ({ page }) => {
     await page.goto('https://starter-kit.test/register');

@@ -50,4 +50,11 @@ jobs:
         run: npm run build
 
       - name: Tests
-        run: ./vendor/bin/pest
+        run: ./vendor/bin/pest --coverage --coverage-clover storage/coverage/coverage.xml
+      
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: jamesdordoy/starter-kit
+          files: ./storage/coverage/coverage.xml

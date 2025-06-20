@@ -84,6 +84,7 @@ const submit = async () => {
                                 <Label for="email">Email address</Label>
                                 <Input
                                     id="email"
+                                    name="email"
                                     type="email"
                                     required
                                     autofocus
@@ -106,6 +107,7 @@ const submit = async () => {
                                 </div>
                                 <Input
                                     id="password"
+                                    name="password"
                                     type="password"
                                     required
                                     :tabindex="2"

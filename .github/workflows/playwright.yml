@@ -1,4 +1,4 @@
-name: tests
+name: Playwright Coverage
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  ci:
+  playwright-coverage:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Copy Environment File
-        run: cp .env.example .env
+        run: cp .env.testing .env
 
       - name: Generate Application Key
         run: php artisan key:generate
@@ -46,15 +46,23 @@ jobs:
       - name: Publish Ziggy Configuration
         run: php artisan ziggy:generate
 
-      - name: Build Assets
-        run: npm run build
+      - name: Start Vite
+        run: LARAVEL_BYPASS_ENV_CHECK=1 npm run dev -- --host &
 
-      - name: Tests
-        run: ./vendor/bin/pest --coverage --coverage-clover storage/coverage/coverage.xml
-      
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: jamesdordoy/starter-kit
-          files: ./storage/coverage/coverage.xml,./coverage/lcov.info
+      - name: Add starter-kit.test to /etc/hosts
+        run: echo "127.0.0.1 starter-kit.test" | sudo tee -a /etc/hosts
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Seed database
+        run: php artisan db:seed --force
+
+      - name: Start Laravel server
+        run: php artisan serve --host=starter-kit.test --port=8000 &
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: LARAVEL_BYPASS_ENV_CHECK=1 npx playwright test

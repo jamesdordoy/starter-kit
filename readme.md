@@ -28,7 +28,11 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Spatie Laravel Activity Log](https://spatie.be/docs/laravel-activitylog/)
 
 ## Frontend vue packages
+* [Reka-UI](https://reka-ui.com/)
 * [Vue Multiselect](https://vue-multiselect.js.org/)
+* [Vue Filepond](https://github.com/pqina/vue-filepond)
+* [Vue 3 Datatable](https://vue3-datatable-document.vercel.app/)
+* [Font Awesome](https://docs.fontawesome.com/web/use-with/vue)
 
 ## Testing
 Tests have been included for the backend controllers

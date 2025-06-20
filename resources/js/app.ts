@@ -36,6 +36,8 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) });
 
         app.use(plugin).use(ZiggyVue).use(pinia).component('font-awesome-icon', FontAwesomeIcon).mount(el);
+
+        el.setAttribute('data-hydrated', 'true');
     },
     progress: {
         color: '#4B5563',

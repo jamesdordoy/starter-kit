@@ -1,5 +1,5 @@
 [![linter](https://github.com/jamesdordoy/starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/jamesdordoy/starter-kit/actions/workflows/lint.yml)
-[![tests](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml)
+[![pint](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/jamesdordoy/starter-kit/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/jamesdordoy/starter-kit/graph/badge.svg?token=66JIRMPM8T)](https://codecov.io/gh/jamesdordoy/starter-kit)
 
 # My Starter Kit

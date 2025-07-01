@@ -36,6 +36,9 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Vue 3 Datatable](https://vue3-datatable-document.vercel.app/)
 * [Font Awesome](https://docs.fontawesome.com/web/use-with/vue)
 
+## SSL/HTTPS
+you can turn off ssl in the essentails config via the env: ESSENTIALS_FORCE_HTTPS_SCHEME=.
+
 ## Testing
 Tests have been included for Controllers and Actions
 
@@ -46,5 +49,4 @@ You may need to run the following commands after installing your npm deps to ins
 
 Use `npm run test-ui` to run the playwright tests and `npm run test-generate` to generate them.
 
-### SSL/HTTPS
-you can turn off ssl in the essentails config via the env: ESSENTIALS_FORCE_HTTPS_SCHEME=.
+

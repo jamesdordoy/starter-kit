@@ -87,9 +87,6 @@ const handleChange = (e: {
             break;
     }
 
-    // console.log(props.params)
-    console.log(params);
-
     router.reload({
         data: {
             ...props.params,

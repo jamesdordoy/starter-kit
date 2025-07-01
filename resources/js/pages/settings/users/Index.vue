@@ -79,6 +79,7 @@ const params = ref(props.params);
                             :href="route('settings.users.show', { user: data.value })"
                             class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
                         >
+                            <font-awesome-icon icon="eye" />
                             View
                         </Link>
                     </div>

@@ -37,7 +37,7 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Font Awesome](https://docs.fontawesome.com/web/use-with/vue)
 
 ## Testing
-Tests have been included for the backend controllers
+Tests have been included for Controllers and Actions
 
 ### Playwright
 

@@ -33,7 +33,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\AutomaticallyEagerLoadRelationships::class => true,
+    NunoMaduro\Essentials\Configurables\AutomaticallyEagerLoadRelationships::class => env('ESSENTIALS_AUTO_EAGER_LOAD_RELATIONS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\FakeSleep::class => true,
+    NunoMaduro\Essentials\Configurables\FakeSleep::class => env('ESSENTIALS_FAKE_SLEEP', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ForceScheme::class => true,
+    NunoMaduro\Essentials\Configurables\ForceScheme::class => env('ESSENTIALS_FORCE_HTTPS_SCHEME', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ImmutableDates::class => true,
+    NunoMaduro\Essentials\Configurables\ImmutableDates::class => env('ESSENTIALS_IMMUTABLE_DATES', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +92,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\PreventStrayRequests::class => true,
+    NunoMaduro\Essentials\Configurables\PreventStrayRequests::class => env('ESSENTIALS_PREVENT_STRAY_REQUESTS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ProhibitDestructiveCommands::class => true,
+    NunoMaduro\Essentials\Configurables\ProhibitDestructiveCommands::class => env('ESSENTIALS_PROHIBIT_DESTRUCTIVE_COMMANDS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\SetDefaultPassword::class => true,
+    NunoMaduro\Essentials\Configurables\SetDefaultPassword::class => env('ESSENTIALS_SET_DEFAULT_PASSWORD', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\ShouldBeStrict::class => true,
+    NunoMaduro\Essentials\Configurables\ShouldBeStrict::class => env('ESSENTIALS_SHOULD_BE_STRICT', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +153,6 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\Unguard::class => true,
+    NunoMaduro\Essentials\Configurables\Unguard::class => env('ESSENTIALS_UNGUARD', true),
 
 ];

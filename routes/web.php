@@ -9,14 +9,17 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('kitchen-sink', function () {
-    return Inertia::render('KitchenSink', [
-        'users' => UserResource::collection(User::paginate()),
-    ]);
-})->middleware(['auth', 'verified'])->name('sink');
+    Route::get('dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    
+    Route::get('kitchen-sink', function () {
+        return Inertia::render('KitchenSink', [
+            'users' => UserResource::collection(User::paginate()),
+        ]);
+    })->name('sink');
+});
 
 require __DIR__.'/settings.php';

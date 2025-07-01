@@ -2,8 +2,8 @@
 
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Models\User;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 use function Pest\Laravel\actingAs;
@@ -15,7 +15,7 @@ describe('UpdateUserProfileInformation', function () {
             'email' => 'old@example.com',
         ]);
         actingAs($user);
-        $action = new UpdateUserProfileInformation();
+        $action = new UpdateUserProfileInformation;
 
         $action->update($user, [
             'name' => 'New Name',
@@ -35,7 +35,7 @@ describe('UpdateUserProfileInformation', function () {
             'email' => 'user2@example.com',
         ]);
         actingAs($user2);
-        $action = new UpdateUserProfileInformation();
+        $action = new UpdateUserProfileInformation;
 
         expect(fn () => $action->update($user2, [
             'name' => 'User Two',
@@ -50,7 +50,7 @@ describe('UpdateUserProfileInformation', function () {
             'email_verified_at' => now(),
         ]);
         actingAs($user);
-        $action = new UpdateUserProfileInformation();
+        $action = new UpdateUserProfileInformation;
 
         $action->update($user, [
             'name' => 'Name',
@@ -61,4 +61,4 @@ describe('UpdateUserProfileInformation', function () {
         expect($user->email_verified_at)->toBeNull();
         Notification::assertSentTo($user, VerifyEmail::class);
     });
-}); 
+});

@@ -118,8 +118,10 @@ const reloadAssets = (page: number) => {
                             <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                 {{ item.file_name }}
                             </h3>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="inline-block rounded bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            <div class="mt-1 flex items-center gap-2">
+                                <span
+                                    class="inline-block rounded bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                                >
                                     {{ item.collection_name }}
                                 </span>
                             </div>

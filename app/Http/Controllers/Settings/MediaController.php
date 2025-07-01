@@ -59,7 +59,7 @@ class MediaController
         dd('hit');
     }
 
-    public function destroy(Media $mediaItem)
+    public function destroy(\App\Http\Requests\Settings\Media\DeleteDefaultAssetRequest $request, Media $mediaItem)
     {
         $mediaItem->delete();
 

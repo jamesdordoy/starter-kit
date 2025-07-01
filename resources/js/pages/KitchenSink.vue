@@ -1,17 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
-import { Filepond } from '@/components/ui/filepond';
-import { Input } from '@/components/ui/input';
-import { Pagination } from '@/components/ui/pagination';
-import { Select } from '@/components/ui/select';
-import TagsInput from '@/components/ui/tags-input/TagsInput.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import type { PaginatedCollection } from '@/types/paginated-collection';
-import { Head } from '@inertiajs/vue3';
-import type { DateRange } from 'reka-ui';
-import { ref } from 'vue';
 import {
     Dialog,
     DialogClose,
@@ -22,10 +11,21 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { Filepond } from '@/components/ui/filepond';
+import { Input } from '@/components/ui/input';
+import { Pagination } from '@/components/ui/pagination';
 import Progress from '@/components/ui/progress/Progress.vue';
-import Switch from '@/components/ui/switch/Switch.vue';
-import Slider from '@/components/ui/slider/Slider.vue';
 import RadioGroup from '@/components/ui/radio-group/RadioGroup.vue';
+import { Select } from '@/components/ui/select';
+import Slider from '@/components/ui/slider/Slider.vue';
+import Switch from '@/components/ui/switch/Switch.vue';
+import TagsInput from '@/components/ui/tags-input/TagsInput.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { type BreadcrumbItem } from '@/types';
+import type { PaginatedCollection } from '@/types/paginated-collection';
+import { Head } from '@inertiajs/vue3';
+import type { DateRange } from 'reka-ui';
+import { ref } from 'vue';
 
 interface Props {
     users: PaginatedCollection<App.Data.UserData>;
@@ -160,7 +160,8 @@ const userOptions = [
                             <DialogHeader class="space-y-3">
                                 <DialogTitle>Dialog Example</DialogTitle>
                                 <DialogDescription>
-                                    This is a simple dialog example. You can use dialogs to display important information or ask for user confirmation.
+                                    This is a simple dialog example. You can use dialogs to display important information or ask for user
+                                    confirmation.
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter class="gap-2">
@@ -182,7 +183,7 @@ const userOptions = [
                     <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Progress</h2>
                     <div class="text-sm text-gray-500 dark:text-gray-400">Animated progress bar example</div>
                 </div>
-                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
                     <div>
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Default (startValue = 0)</p>
                         <Progress />
@@ -200,7 +201,7 @@ const userOptions = [
                     <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Switch & Slider</h2>
                     <div class="text-sm text-gray-500 dark:text-gray-400">Toggle and range input components</div>
                 </div>
-                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
                     <div>
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Switch Example</p>
                         <Switch />
@@ -218,7 +219,7 @@ const userOptions = [
                     <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Radio Group</h2>
                     <div class="text-sm text-gray-500 dark:text-gray-400">Single-select radio group component</div>
                 </div>
-                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
                     <RadioGroup />
                 </div>
             </section>

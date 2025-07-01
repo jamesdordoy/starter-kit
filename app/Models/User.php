@@ -89,18 +89,16 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
 
     public function scopeRoles(Builder $query, $roles): Builder
     {
-        return $query->whereHas('roles', fn ($query) => 
-            $query->whereIn('name', $roles)
-                ->where('guard_name', 'web')
+        return $query->whereHas('roles', fn ($query) => $query->whereIn('name', $roles)
+            ->where('guard_name', 'web')
         );
     }
 
     #[Scope]
     public function search(Builder $query, $search): Builder
     {
-        return $query->where(fn ($query) =>
-            $query->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
+        return $query->where(fn ($query) => $query->where('name', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
         );
     }
 }

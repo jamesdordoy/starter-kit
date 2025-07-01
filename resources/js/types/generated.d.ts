@@ -1,7 +1,7 @@
 declare namespace App.Data {
     export type ActivityData = {
         id: number;
-        log_name: string;
+        log_name: string | null;
         description: string;
         subject_type: string | null;
         subject_id: number | null;
@@ -9,43 +9,43 @@ declare namespace App.Data {
         causer_id: number | null;
         causer: App.Data.UserData | null;
         properties: any;
-        created_at: string;
-        updated_at: string;
+        created_at: string | null;
+        updated_at: string | null;
         formatted_created_at: string | null;
     };
     export type MediaData = {
-        id: number;
-        model_type: string;
-        model_id: number;
+        id: number | null;
+        model_type: string | null;
+        model_id: number | null;
         uuid: string | null;
-        collection_name: string;
-        name: string;
-        file_name: string;
+        collection_name: string | null;
+        name: string | null;
+        file_name: string | null;
         mime_type: string | null;
-        disk: string;
+        disk: string | null;
         conversions_disk: string | null;
-        size: number;
-        manipulations: Array<any>;
-        custom_properties: Array<any>;
-        generated_conversions: Array<any>;
-        responsive_images: Array<any>;
+        size: number | null;
+        manipulations: Array<any> | null;
+        custom_properties: Array<any> | null;
+        generated_conversions: Array<any> | null;
+        responsive_images: Array<any> | null;
         order_column: number | null;
         created_at: string | null;
         updated_at: string | null;
     };
     export type PermissionData = {
-        id: number;
-        name: string;
-        guard_name: string;
-        created_at: string;
-        updated_at: string;
+        id: number | null;
+        name: string | null;
+        guard_name: string | null;
+        created_at: string | null;
+        updated_at: string | null;
     };
     export type RoleData = {
-        id: number;
-        name: string;
-        guard_name: string;
-        created_at: string;
-        updated_at: string;
+        id: number | null;
+        name: string | null;
+        guard_name: string | null;
+        created_at: string | null;
+        updated_at: string | null;
     };
     export type UserData = {
         id: number | null;
@@ -79,7 +79,7 @@ declare namespace App.Enums {
         | 'leave_impersonate'
         | 'media_added';
     export type FilterEnum = 'search' | 'date' | 'date_from' | 'date_to' | 'date_range' | 'description';
-    export type MediaCollectionEnum = 'avatars';
+    export type MediaCollectionEnum = 'default' | 'avatars';
     export type PermissionEnum =
         | 'view_users'
         | 'create_users'

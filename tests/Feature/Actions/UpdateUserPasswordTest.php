@@ -13,7 +13,7 @@ describe('UpdateUserPassword', function () {
             'password' => Hash::make('old-password'),
         ]);
         actingAs($user);
-        $action = new UpdateUserPassword();
+        $action = new UpdateUserPassword;
 
         $action->update($user, [
             'current_password' => 'old-password',
@@ -29,7 +29,7 @@ describe('UpdateUserPassword', function () {
             'password' => Hash::make('old-password'),
         ]);
         actingAs($user);
-        $action = new UpdateUserPassword();
+        $action = new UpdateUserPassword;
 
         expect(fn () => $action->update($user, [
             'current_password' => 'wrong-password',
@@ -43,7 +43,7 @@ describe('UpdateUserPassword', function () {
             'password' => Hash::make('old-password'),
         ]);
         actingAs($user);
-        $action = new UpdateUserPassword();
+        $action = new UpdateUserPassword;
 
         expect(fn () => $action->update($user, [
             'current_password' => 'old-password',
@@ -51,4 +51,4 @@ describe('UpdateUserPassword', function () {
             'password_confirmation' => 'short',
         ]))->toThrow(ValidationException::class);
     });
-}); 
+});

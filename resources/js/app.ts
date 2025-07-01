@@ -8,7 +8,7 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserSecret, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faUserSecret, faEye);

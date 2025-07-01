@@ -10,7 +10,7 @@ My personal implementation of a starter kit using best in class packages.
 This has been built on top of the laravel [vue-starter-kit](https://github.com/laravel/vue-starter-kit) with addtional vue components included such as file pond, a date picker etc. Addtional sections of the authenticated dashboard have been expanded upon such as the new setting section that allows you to manage your users, their activity and site wide global assets with filters. Laravel data has also been used so that typescript interfaces can be generated for the frontend.
 
 ## Built around
-* [PHP](https://www.php.net/releases/8.2/en.php) 8.2+
+* [PHP](https://www.php.net/releases/8.2/en.php) 8.3+
 * [Vue.js](https://vuejs.org/) 3.x
 * [TypeScript](https://www.typescriptlang.org/) 5.x
 * [Laravel](http://laravel.com/docs/) 12.x
@@ -37,10 +37,29 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Font Awesome](https://docs.fontawesome.com/web/use-with/vue)
 
 ## SSL/HTTPS
-you can turn off ssl in the essentails config via the env: ESSENTIALS_FORCE_HTTPS_SCHEME=.
+You can turn off required SSL in the essentails config via the env: `ESSENTIALS_FORCE_HTTPS_SCHEME=`
 
-## Testing
-Tests have been included for Controllers and Actions
+## Backend
+
+### Generating typescript models
+
+```bash
+php artisan typescript:transform
+```
+
+### Testing
+Tests have been included for Controllers and Actions using Pest
+
+```bash
+php artisan test -p
+```
+
+## Frontend
+
+### Generating Reka UI ui components:
+```bash
+npx shadcn-vue@latest add
+```
 
 ### Playwright
 

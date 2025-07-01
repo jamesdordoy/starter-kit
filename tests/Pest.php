@@ -11,8 +11,6 @@
 |
 */
 
-
-
 use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
 use Illuminate\Foundation\Testing\RefreshDatabase;

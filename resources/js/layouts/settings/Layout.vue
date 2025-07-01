@@ -2,32 +2,23 @@
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import type { SharedData } from '@/types';
-import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
+import type { NavItem } from '@/types';
 
 const sidebarNavItems: NavItem[] = [
-    {
-        title: 'General Settings',
-        href: route('settings.index'),
-    },
-    {
-        title: 'Site Users',
-        href: route('settings.users.index'),
-    },
-    {
-        title: 'Activity Log',
-        href: route('settings.activity.index'),
-    },
-    {
-        title: 'Assets',
-        href: route('settings.media-items.index'),
-    },
+    { title: 'General Settings', routeGroup: 'settings.index' },
+    { title: 'Site Users', routeGroup: 'settings.users' },
+    { title: 'Activity Log', routeGroup: 'settings.activity.index' },
+    { title: 'Assets', routeGroup: 'settings.media-items.index' },
 ];
 
-const page = usePage<SharedData>();
+const isActive = (routeGroup: string) => {
+    if (routeGroup.endsWith('.index')) {
+        return route().current(routeGroup);
+    }
 
-const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
+    return route().current(routeGroup + '.*');
+};
 </script>
 
 <template>
@@ -39,12 +30,12 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
                 <nav class="flex flex-col space-y-1 space-x-0">
                     <Button
                         v-for="item in sidebarNavItems"
-                        :key="item.href"
+                        :key="item.routeGroup"
                         variant="ghost"
-                        :class="['w-full justify-start', { 'bg-muted': currentPath === item.href }]"
+                        :class="['w-full justify-start', { 'bg-muted': isActive(item.routeGroup || '') }]"
                         as-child
                     >
-                        <Link :href="item.href">
+                        <Link :href="route(item.routeGroup?.endsWith('.index') ? item.routeGroup : item.routeGroup + '.index')">
                             {{ item.title }}
                         </Link>
                     </Button>

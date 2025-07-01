@@ -21,12 +21,6 @@ class Media extends SpatieMedia
     #[Scope]
     public function search(Builder $query, ?string $search): Builder
     {
-        if (! $search) {
-            return $query;
-        }
-
-        return $query->where(function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%");
-        });
+        return $query->where('file_name', 'like', "%{$search}%");
     }
 }

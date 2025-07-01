@@ -11,9 +11,7 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+
 
 use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
@@ -22,8 +20,9 @@ use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-uses(RefreshDatabase::class)->in('Feature');
-uses(RefreshDatabase::class)->in('Unit');
+pest()->extend(Tests\TestCase::class)
+    ->use(RefreshDatabase::class)
+    ->in('Feature', 'Unit');
 
 beforeEach(function () {
     Config::set('app.env', 'testing');

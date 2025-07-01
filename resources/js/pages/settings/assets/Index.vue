@@ -116,8 +116,13 @@ const reloadAssets = (page: number) => {
                         <!-- File Info -->
                         <div class="mt-4 space-y-2">
                             <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                {{ item.custom_properties.client_name ?? item.file_name }}
+                                {{ item.file_name }}
                             </h3>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="inline-block rounded bg-gray-200 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                    {{ item.collection_name }}
+                                </span>
+                            </div>
                             <p class="text-xs text-gray-500 dark:text-gray-400">
                                 {{ formatFileSize(Number(item.size), true) }}
                             </p>
@@ -132,7 +137,7 @@ const reloadAssets = (page: number) => {
                         <div class="absolute right-5 bottom-5 opacity-0 transition-opacity group-hover:opacity-100">
                             <div class="flex gap-2">
                                 <a :href="route('settings.media-items.show', { media_item: item.id })" variant="secondary" size="sm"> Download </a>
-                                <Button variant="destructive" size="sm"> Delete </Button>
+                                <Button v-if="item.collection_name === 'default'" variant="destructive" size="sm"> Delete </Button>
                             </div>
                         </div>
                     </div>

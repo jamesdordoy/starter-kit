@@ -19,7 +19,8 @@ import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import Input from '@/components/ui/input/Input.vue';
 
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
@@ -33,6 +34,8 @@ const page = usePage();
 const auth = computed(() => page.props.auth);
 
 const isCurrentRoute = computed(() => (url: string) => page.url === url);
+
+const globalSearch = ref('');
 
 const activeItemStyles = computed(
     () => (url: string) => (isCurrentRoute.value(url) ? 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100' : ''),
@@ -186,7 +189,10 @@ const rightNavItems: NavItem[] = [
 
         <div v-if="props.breadcrumbs.length > 1" class="border-sidebar-border/70 flex w-full border-b">
             <div class="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
-                <Breadcrumbs :breadcrumbs="breadcrumbs" />
+                testing
+                <!-- <Breadcrumbs :breadcrumbs="breadcrumbs" /> -->
+                <Input v-model="globalSearch" placeholder="Search..." class="ml-4 w-48 align-middle" />
+                <p>hi</p>
             </div>
         </div>
     </div>

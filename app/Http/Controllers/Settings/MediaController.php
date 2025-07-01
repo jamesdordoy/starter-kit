@@ -33,22 +33,17 @@ class MediaController
     public function store(StoreRequest $request)
     {
         $user = $request->user();
+        $file = $request->file('file', null);
 
-        if (! is_null($request->file('file', null))) {
-            $user->addMedia($request->file('file')->getRealPath())
-                ->withCustomProperties([
-                    'client_name' => $request->file('file')->getClientOriginalName(),
-                    ...['user_id' => $user->id],
-                ])
+        if (! is_null($file)) {
+            $user->addMedia($file->getRealPath())
+                ->usingFileName($file->getClientOriginalName())
                 ->toMediaCollection();
         }
 
         collect($request->file('files'), [])
             ->map(fn ($file) => $user->addMedia($file->getRealPath())
-                ->withCustomProperties([
-                    'client_name' => $file->getClientOriginalName(),
-                    ...['user_id' => $user->id],
-                ])
+                ->usingFileName($file->getClientOriginalName())
                 ->toMediaCollection());
 
         return redirect()->back();
@@ -56,11 +51,18 @@ class MediaController
 
     public function show(Media $mediaItem)
     {
-        return response()->download($mediaItem->getPath(), $mediaItem->custom_properties['client_name'] ?? $mediaItem->file_name);
+        return response()->download($mediaItem->getPath(), $mediaItem->file_name);
     }
 
     public function update(Request $request)
     {
         dd('hit');
+    }
+
+    public function destroy(Media $mediaItem)
+    {
+        $mediaItem->delete();
+
+        return redirect()->back();
     }
 }

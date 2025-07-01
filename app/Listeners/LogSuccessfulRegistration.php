@@ -10,7 +10,13 @@ class LogSuccessfulRegistration
     public function handle(Registered $event)
     {
         activity()->causedBy($event->user->id)
-            ->withProperties(['ip' => request()->ip()])
+            ->withProperties([
+                'id' => $event->user->getAuthIdentifier(),
+                'email' => $event->user->email ?? null,
+                'name' => $event->user->name ?? null,
+                'ip' => request()->ip(),
+            ])
+
             ->log(ActivityLogEnum::REGISTER->value);
     }
 }

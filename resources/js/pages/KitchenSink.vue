@@ -12,6 +12,20 @@ import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head } from '@inertiajs/vue3';
 import type { DateRange } from 'reka-ui';
 import { ref } from 'vue';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import Progress from '@/components/ui/progress/Progress.vue';
+import Switch from '@/components/ui/switch/Switch.vue';
+import Slider from '@/components/ui/slider/Slider.vue';
+import RadioGroup from '@/components/ui/radio-group/RadioGroup.vue';
 
 interface Props {
     users: PaginatedCollection<App.Data.UserData>;
@@ -28,17 +42,17 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 // Example state for components
 const searchQuery = ref('');
-const selectedUser = ref('');
+const selectedUser = ref<string | number | undefined>(undefined);
 const dateRange = ref<DateRange>();
 const currentPage = ref(1);
 const selectedUsers = ref<App.Data.UserData[]>([]);
 
 // Example options for Select
 const userOptions = [
-    { label: 'Select a user', value: null },
+    { label: 'Select a user', value: undefined },
     ...props.users.data.map((user) => ({
         label: user.name,
-        value: user.id?.toString() ?? '',
+        value: user.id,
     })),
 ];
 </script>
@@ -128,6 +142,84 @@ const userOptions = [
                         <Button variant="ghost">Ghost</Button>
                         <Button variant="link">Link</Button>
                     </div>
+                </div>
+            </section>
+
+            <!-- Dialog Example Section -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Dialog</h2>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Modal dialog example</div>
+                </div>
+                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                    <Dialog>
+                        <DialogTrigger as-child>
+                            <Button variant="outline">Open Dialog</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader class="space-y-3">
+                                <DialogTitle>Dialog Example</DialogTitle>
+                                <DialogDescription>
+                                    This is a simple dialog example. You can use dialogs to display important information or ask for user confirmation.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter class="gap-2">
+                                <DialogClose as-child>
+                                    <Button variant="secondary">Cancel</Button>
+                                </DialogClose>
+                                <DialogClose as-child>
+                                    <Button variant="destructive">Confirm</Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </section>
+
+            <!-- Progress Example Section -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Progress</h2>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Animated progress bar example</div>
+                </div>
+                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                    <div>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Default (startValue = 0)</p>
+                        <Progress />
+                    </div>
+                    <div>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Start at 50</p>
+                        <Progress :startValue="50" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Switch & Slider Example Section -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Switch & Slider</h2>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Toggle and range input components</div>
+                </div>
+                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                    <div>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Switch Example</p>
+                        <Switch />
+                    </div>
+                    <div>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Slider Example</p>
+                        <Slider />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Radio Group Example Section -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">Radio Group</h2>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Single-select radio group component</div>
+                </div>
+                <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 space-y-6">
+                    <RadioGroup />
                 </div>
             </section>
 

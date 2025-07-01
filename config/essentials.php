@@ -16,13 +16,13 @@ return [
     |
     */
 
-    NunoMaduro\Essentials\Configurables\AggressivePrefetching::class => true,
+    NunoMaduro\Essentials\Configurables\AggressivePrefetching::class => env('ESSENTIALS_AGGRESSIVE_PREFETCHING', true),
 
     /*
     |--------------------------------------------------------------------------
     | Automatically Eager Load Relationships
     |--------------------------------------------------------------------------
-    |
+    |s
     | This option allows you to automatically eagerly load relationships
     | for your models. It reduces N+1 query issues and improves
     | performance without needing with() everywhere.

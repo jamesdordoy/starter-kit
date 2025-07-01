@@ -20,6 +20,8 @@ This has been built on top of the laravel [vue-starter-kit](https://github.com/l
 * [Vite](https://vitejs.dev/)
 
 ## Packages
+* [Laravel Fortify](https://laravel.com/docs/master/fortify)
+* [Laravel Precognition](https://laravel.com/docs/master/precognition)
 * [Spatie Permissions](https://spatie.be/docs/laravel-permission/)
 * [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary/)
 * [Spatie Laravel Data](https://spatie.be/docs/laravel-data/)

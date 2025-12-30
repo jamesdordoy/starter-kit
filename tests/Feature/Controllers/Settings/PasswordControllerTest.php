@@ -36,7 +36,7 @@ test('it requires authentication to access password edit', function () {
 
 test('it can update password', function () {
     $response = actingAs($this->user)
-        ->put(route('password.update'), [
+        ->put(route('user-password.update'), [
             'current_password' => 'old-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -49,36 +49,36 @@ test('it can update password', function () {
 
 test('it validates current password', function () {
     $response = actingAs($this->user)
-        ->put(route('password.update'), [
+        ->put(route('user-password.update'), [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
 
-    $response->assertSessionHasErrors('current_password');
+    $response->assertSessionHasErrorsIn('updatePassword', ['current_password']);
     expect(Hash::check('old-password', $this->user->fresh()->password))->toBeTrue();
 });
 
 test('it validates password confirmation', function () {
     $response = actingAs($this->user)
-        ->put(route('password.update'), [
+        ->put(route('user-password.update'), [
             'current_password' => 'old-password',
             'password' => 'new-password',
             'password_confirmation' => 'different-password',
         ]);
 
-    $response->assertSessionHasErrors('password');
+    $response->assertSessionHasErrorsIn('updatePassword', ['password']);
     expect(Hash::check('old-password', $this->user->fresh()->password))->toBeTrue();
 });
 
 test('it validates password strength', function () {
     $response = actingAs($this->user)
-        ->put(route('password.update'), [
+        ->put(route('user-password.update'), [
             'current_password' => 'old-password',
             'password' => 'weak',
             'password_confirmation' => 'weak',
         ]);
 
-    $response->assertSessionHasErrors('password');
+    $response->assertSessionHasErrorsIn('updatePassword', ['password']);
     expect(Hash::check('old-password', $this->user->fresh()->password))->toBeTrue();
 });

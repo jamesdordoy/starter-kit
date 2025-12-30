@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileAvatarController
 {
-    public function __construct(
-        private UpdateUserAvatar $updateUserAvatar
-    ) {}
-
     public function update(ProfileAvatarUpdateRequest $request)
     {
         app(UpdateUserAvatar::class)(

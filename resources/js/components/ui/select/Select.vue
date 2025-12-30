@@ -19,7 +19,7 @@ import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 
 interface Option {
   label: string;
-  value: string | number;
+  value: string | number | null;
 }
 
 interface Props {

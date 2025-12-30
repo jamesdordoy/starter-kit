@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Actions\Users\DestroyUser;
 use App\Actions\Users\UpdateUserProfile;
+use App\Data\Pages\Settings\Profile\EditProfileData;
 use App\Data\UserData;
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
@@ -23,9 +24,11 @@ final class ProfileController
     public function edit(Request $request, User $profile): Response
     {
         return Inertia::render('settings/Profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail && empty($request->user()->email_verified_at),
-            'status' => $request->session()->get('status'),
-            UserData::DATA_NAME => UserData::from($profile),
+            'editProfilePage' => EditProfileData::from([
+                'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail && empty($request->user()->email_verified_at),
+                'status' => $request->session()->get('status'),
+                UserData::DATA_NAME => UserData::from($profile),
+            ])
         ]);
     }
 

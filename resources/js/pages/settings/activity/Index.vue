@@ -89,9 +89,15 @@ interface Props {
     params: App.QueryBuilder.Data.QueryBuilderParams;
 }
 
+interface Column {
+    field: string;
+    title: string;
+    sort?: boolean;
+}
+
 const props = defineProps<Props>();
 
-const cols = ref([
+const cols = ref<Column[]>([
     { field: 'created_at', title: 'Date' },
     { field: 'log_name', title: 'Type' },
     { field: 'causer', title: 'User' },
@@ -99,7 +105,12 @@ const cols = ref([
     { field: 'properties', title: '', sort: false },
 ]);
 
-const activityOptions = ref([
+interface ActivityOption {
+    value: App.Enums.ActivityLogEnum | null;
+    label: string;
+}
+
+const activityOptions = ref<ActivityOption[]>([
     { value: null, label: 'All' },
     { value: 'created', label: 'Created' },
     { value: 'updated', label: 'Updated' },

@@ -14,38 +14,54 @@ import ProfileLayout from '@/layouts/profile/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { useForm as intertiaForm, router } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
-import { computed } from 'vue';
+import { computed, PropType } from 'vue';
 
-interface Props {
-    mustVerifyEmail: boolean;
-    status?: string;
-    user: App.Data.UserData;
-}
-
-const props = defineProps<Props>();
+const props = defineProps({
+    editProfilePage: {
+        type: Object as PropType<App.Data.Pages.Settings.Profile.EditProfileData>,
+        required: true,
+    },
+    errors: {
+        type: Object,
+        default: () => ({}),
+    },
+});
 
 const page = usePage();
-const auth = computed(() => page.props.auth);
+const auth = computed(() => page.props.auth as any)
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
-        href: route('profile.update', { profile: props.user }),
+        href: route('profile.update', { profile: props.editProfilePage.user }),
     },
 ];
 
-const form = useForm('patch', route('profile.update', { profile: props.user }), {
-    name: props.user.name,
-    email: props.user.email,
+const form = useForm('patch', route('profile.update', { profile: props.editProfilePage.user }), {
+    name: props.editProfilePage.user.name,
+    email: props.editProfilePage.user.email,
 });
 
 const submit = async () => {
     await form.submit();
 };
 
-const avatarForm = intertiaForm({
+interface AvatarFormData {
+    avatar: File | null;
+}
+
+const avatarForm = intertiaForm<AvatarFormData>({
     avatar: null,
 });
+
+const handleAvatarChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.[0];
+    if (file) {
+        avatarForm.avatar = file;
+    }
+};
 
 const uploadAvatar = async () => {
     try {
@@ -67,7 +83,7 @@ const uploadAvatar = async () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Profile settings" />
 
-        <ProfileLayout :user="props.user">
+        <ProfileLayout :user="props.editProfilePage.user">
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
@@ -83,7 +99,7 @@ const uploadAvatar = async () => {
                             <div class="relative">
                                 <input
                                     type="file"
-                                    @input="avatarForm.avatar = $event.target.files[0]"
+                                    @input="handleAvatarChange"
                                     class="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
                                     accept="image/*"
                                 />
@@ -145,7 +161,7 @@ const uploadAvatar = async () => {
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
-                    <div v-if="mustVerifyEmail && !props.user.emailVerifiedAt">
+                    <div v-if="props.editProfilePage.must_verify_email && !props.editProfilePage.user.email_verified_at">
                         <p class="text-muted-foreground -mt-4 text-sm">
                             Your email address is unverified.
                             <Link
@@ -157,10 +173,10 @@ const uploadAvatar = async () => {
                                 Click here to resend the verification email.
                             </Link>
                         </p>
-
-                        <div v-if="status === 'verification-link-sent'" class="mt-2 text-sm font-medium text-green-600">
+                        // TODO: make this flash
+                        <!-- <div v-if="status === 'verification-link-sent'" class="mt-2 text-sm font-medium text-green-600">
                             A new verification link has been sent to your email address.
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="flex items-center gap-4">
@@ -178,7 +194,7 @@ const uploadAvatar = async () => {
                 </form>
             </div>
 
-            <DeleteUser :user="props.user" />
+            <DeleteUser :user="props.editProfilePage.user" />
         </ProfileLayout>
     </AppLayout>
 </template>

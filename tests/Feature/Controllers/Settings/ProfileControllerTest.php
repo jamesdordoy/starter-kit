@@ -25,7 +25,7 @@ test('it can access profile edit page', function () {
     $response->assertStatus(200);
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/Profile')
-        ->has('user')
+        ->has('editProfilePage.user')
     );
 });
 

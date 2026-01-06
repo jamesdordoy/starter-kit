@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import { usePage } from '@inertiajs/vue3';
+import { show } from '@/actions/App/Http/Controllers/Settings/MediaController';
 const appName = usePage().props.name as string;
 const settings = usePage().props.settings as App.Settings.SiteSettings;
 </script>
@@ -10,7 +11,7 @@ const settings = usePage().props.settings as App.Settings.SiteSettings;
         <div class="text-sidebar-primary-foreground aspect-square size-8 w-full items-center justify-center rounded-md">
             <AppLogoIcon
                 v-if="settings.logo_media_id"
-                :href="route('settings.media-items.show', { media_item: settings.logo_media_id })"
+                :href="show({ media_item: settings.logo_media_id }).url"
                 class="size-5 fill-current text-white dark:text-black"
             />
         </div>

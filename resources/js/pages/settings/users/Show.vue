@@ -13,11 +13,12 @@ import { type BreadcrumbItem } from '@/types';
 import type { Collection } from '@/types/collection';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { index, update } from '@/actions/App/Http/Controllers/Settings/UserController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: route('settings.users.index'),
+        href: index().url,
     },
 ];
 
@@ -80,7 +81,7 @@ const updatePassword = () => {
 const updateRolesAndPermissions = () => {
     if (props.user.id) {
         router.put(
-            route('settings.users.roles-permissions.update', props.user.id),
+            update['/settings/users/{user}/roles-permissions']({ user: props.user.id }).url,
             {
                 roles: selectedRoles.value,
                 permissions: selectedPermissions.value,

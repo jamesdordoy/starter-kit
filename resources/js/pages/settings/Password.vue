@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { type BreadcrumbItem } from '@/types';
+import { update } from '@/actions/App/Http/Controllers/Settings/PasswordController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -34,7 +35,7 @@ const form = useForm({
 });
 
 const updatePassword = () => {
-    form.put(route('password.update'), {
+    form.put(update().url, {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: (errors: any) => {

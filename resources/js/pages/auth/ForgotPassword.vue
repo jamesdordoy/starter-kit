@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import { store, create } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
+import { create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 
 defineProps<{
     status?: string;
@@ -17,7 +19,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('password.email'));
+    form.post(store.url);
 };
 </script>
 
@@ -47,7 +49,7 @@ const submit = () => {
 
             <div class="text-muted-foreground space-x-1 text-center text-sm">
                 <span>Or, return to</span>
-                <TextLink :href="route('login')">log in</TextLink>
+                <TextLink :href="loginCreate().url">log in</TextLink>
             </div>
         </div>
     </AuthLayout>

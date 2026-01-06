@@ -11,11 +11,13 @@ import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head, router } from '@inertiajs/vue3';
 import { FileIcon, FileTextIcon, ImageIcon } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
+import { index as settingsIndex } from '@/actions/App/Http/Controllers/Settings/SettingController';
+import { index, show } from '@/actions/App/Http/Controllers/Settings/MediaController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: route('settings.index'),
+        href: settingsIndex().url,
     },
 ];
 
@@ -42,7 +44,7 @@ const searchValue = ref('');
 
 watch(searchValue, (value) => {
     router.get(
-        route('settings.media-items.index'),
+        index().url,
         { filter: { search: value } },
         {
             only: ['assets'],
@@ -66,7 +68,7 @@ const getFileIcon = (mimeType: string | null) => {
 
 const reloadAssets = (page: number) => {
     router.get(
-        route('settings.media-items.index'),
+        index().url,
         { page },
         {
             only: ['assets'],
@@ -103,7 +105,7 @@ const reloadAssets = (page: number) => {
                         <div class="flex aspect-square items-center justify-center overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
                             <template v-if="isImageFile(item.mime_type)">
                                 <img
-                                    :src="route('settings.media-items.show', { media_item: item.id })"
+                                    :src="show({ media_item: item.id }).url"
                                     :alt="item.file_name"
                                     class="h-full w-full object-cover transition-transform group-hover:scale-105"
                                 />
@@ -138,7 +140,7 @@ const reloadAssets = (page: number) => {
                         <!-- Actions -->
                         <div class="absolute right-5 bottom-5 opacity-0 transition-opacity group-hover:opacity-100">
                             <div class="flex gap-2">
-                                <a :href="route('settings.media-items.show', { media_item: item.id })" variant="secondary" size="sm"> Download </a>
+                                <a :href="show({ media_item: item.id }).url" variant="secondary" size="sm"> Download </a>
                                 <Button v-if="item.collection_name === 'default'" variant="destructive" size="sm"> Delete </Button>
                             </div>
                         </div>

@@ -20,6 +20,7 @@ import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
+import { dashboard } from '@/routes';
 
 interface Props {
     breadcrumbs?: BreadcrumbItem[];
@@ -110,7 +111,7 @@ const rightNavItems: NavItem[] = [
                     </Sheet>
                 </div>
 
-                <Link :href="route('dashboard')" class="flex items-center gap-x-2">
+                <Link :href="dashboard().url" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 

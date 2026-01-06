@@ -3,6 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { ArrowRight, BookOpen, Github } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
+import { dashboard } from '@/routes';
+import { create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
+import { create as registerCreate } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
 
 // Animation states
 const isVisible = ref(false);
@@ -48,20 +51,20 @@ onMounted(() => {
                 <nav class="flex items-center gap-4">
                     <Link
                         v-if="page.props.auth.user"
-                        :href="route('dashboard')"
+                        :href="dashboard.url"
                         class="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
                         Dashboard
                     </Link>
                     <template v-else>
                         <Link
-                            :href="route('login')"
+                            :href="loginCreate().url"
                             class="inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-blue-600 shadow-sm ring-1 ring-blue-300 transition-all duration-300 ring-inset hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:ring-blue-700 dark:hover:bg-gray-700"
                         >
                             Log in
                         </Link>
                         <Link
-                            :href="route('register')"
+                            :href="registerCreate().url"
                             class="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                         >
                             Register
@@ -100,13 +103,13 @@ onMounted(() => {
                     class="mt-10 flex transform items-center justify-center gap-x-6 transition-all delay-700 duration-1000"
                     :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'"
                 >
-                    <Link :href="route('register')">
+                    <Link :href="registerCreate().url">
                         <Button size="lg" class="group bg-blue-600 hover:bg-blue-500">
                             Get started
                             <ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
-                    <Link :href="route('login')">
+                    <Link :href="loginCreate().url">
                         <Button
                             variant="outline"
                             size="lg"

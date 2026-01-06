@@ -3,21 +3,31 @@ import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { index as settingsIndex } from '@/actions/App/Http/Controllers/Settings/SettingController';
+import { index as usersIndex } from '@/actions/App/Http/Controllers/Settings/UserController';
+import { index as activityIndex } from '@/actions/App/Http/Controllers/Settings/ActivityLogController';
+import { index as mediaIndex } from '@/actions/App/Http/Controllers/Settings/MediaController';
+
+const page = usePage();
+const currentUrl = page.url;
 
 const sidebarNavItems: NavItem[] = [
-    { title: 'General Settings', routeGroup: 'settings.index' },
-    { title: 'Site Users', routeGroup: 'settings.users' },
-    { title: 'Activity Log', routeGroup: 'settings.activity.index' },
-    { title: 'Assets', routeGroup: 'settings.media-items.index' },
+    { title: 'General Settings', routeGroup: 'settings.index', href: settingsIndex().url },
+    { title: 'Site Users', routeGroup: 'settings.users', href: usersIndex().url },
+    { title: 'Activity Log', routeGroup: 'settings.activity.index', href: activityIndex().url },
+    { title: 'Assets', routeGroup: 'settings.media-items.index', href: mediaIndex().url },
 ];
 
 const isActive = (routeGroup: string) => {
+    const item = sidebarNavItems.find(i => i.routeGroup === routeGroup);
+    if (!item) return false;
+    
     if (routeGroup.endsWith('.index')) {
-        return route().current(routeGroup);
+        return currentUrl === item.href || currentUrl.startsWith(item.href + '/');
     }
 
-    return route().current(routeGroup + '.*');
+    return currentUrl.startsWith(item.href);
 };
 </script>
 
@@ -35,7 +45,7 @@ const isActive = (routeGroup: string) => {
                         :class="['w-full justify-start', { 'bg-muted': isActive(item.routeGroup || '') }]"
                         as-child
                     >
-                        <Link :href="route(item.routeGroup?.endsWith('.index') ? item.routeGroup : item.routeGroup + '.index')">
+                        <Link :href="item.href">
                             {{ item.title }}
                         </Link>
                     </Button>

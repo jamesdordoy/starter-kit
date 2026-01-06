@@ -7,11 +7,15 @@ import { type BreadcrumbItem } from '@/types';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { index as settingsIndex } from '@/actions/App/Http/Controllers/Settings/SettingController';
+import { take } from '@/actions/Lab404/Impersonate/Controllers/ImpersonateController';
+import { show } from '@/actions/App/Http/Controllers/Settings/UserController';
+import { index as activityIndex } from '@/actions/App/Http/Controllers/Settings/ActivityLogController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: route('settings.index'),
+        href: settingsIndex().url,
     },
 ];
 
@@ -37,7 +41,7 @@ const cols = ref([
 ]);
 
 const handleImpersonate = (data: any) => {
-    window.location.href = route('settings.impersonate', { id: data.value.id });
+    window.location.href = take({ id: data.value.id }).url;
 };
 
 const params = ref(props.params);
@@ -76,7 +80,7 @@ const params = ref(props.params);
                             Impersonate
                         </button>
                         <Link
-                            :href="route('settings.users.show', { user: data.value })"
+                            :href="show({ user: data.value }).url"
                             class="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
                         >
                             <font-awesome-icon icon="eye" />

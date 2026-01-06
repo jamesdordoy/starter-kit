@@ -6,17 +6,18 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { LayoutGrid } from 'lucide-vue-next';
+import { dashboard, sink } from '@/routes';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: route('dashboard'),
+        href: dashboard.url(),
         icon: LayoutGrid,
     },
     {
         title: 'Kitchen Sink',
-        href: route('sink'),
+        href: sink.url(),
         icon: LayoutGrid,
     },
 ];
@@ -30,7 +31,7 @@ const footerNavItems: NavItem[] = [];
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="dashboard.url()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

@@ -26,6 +26,7 @@ import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head } from '@inertiajs/vue3';
 import type { DateRange } from 'reka-ui';
 import { ref } from 'vue';
+import { store } from '@/actions/App/Http/Controllers/Settings/MediaController';
 
 interface Props {
     users: PaginatedCollection<App.Data.UserData>;
@@ -113,7 +114,7 @@ const userOptions = [
                             <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">File Upload</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Drag and drop file uploader</p>
                         </div>
-                        <Filepond :files="[]" :single="false" route="settings.media-items.store" />
+                        <Filepond :files="[]" :single="false" :route="store.url()" />
                     </div>
 
                     <!-- TagsInput Examples -->

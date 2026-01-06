@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
+import { edit as profileEdit } from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { edit as passwordEdit } from '@/actions/App/Http/Controllers/Settings/PasswordController';
 
 interface Props {
     user: App.Data.UserData;
@@ -14,11 +16,11 @@ const props = defineProps<Props>();
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: route('profile.edit', { profile: props.user }),
+        href: profileEdit({ profile: props.user }).url,
     },
     {
         title: 'Password',
-        href: route('password.edit'),
+        href: passwordEdit().url,
     },
 ];
 

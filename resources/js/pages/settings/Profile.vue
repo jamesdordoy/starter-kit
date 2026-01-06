@@ -15,6 +15,9 @@ import { type BreadcrumbItem } from '@/types';
 import { useForm as intertiaForm, router } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
 import { computed, PropType } from 'vue';
+import { update } from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { update as profileAvatarUpdate } from '@/actions/App/Http/Controllers/Settings/ProfileAvatarController';
+import { store as verificationStore } from '@/actions/Laravel/Fortify/Http/Controllers/EmailVerificationNotificationController';
 
 const props = defineProps({
     editProfilePage: {
@@ -34,11 +37,11 @@ const auth = computed(() => page.props.auth as any)
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
-        href: route('profile.update', { profile: props.editProfilePage.user }),
+        href: update({ profile: props.editProfilePage.user }).url,
     },
 ];
 
-const form = useForm('patch', route('profile.update', { profile: props.editProfilePage.user }), {
+const form = useForm('patch', update({ profile: props.editProfilePage.user }).url, {
     name: props.editProfilePage.user.name,
     email: props.editProfilePage.user.email,
 });
@@ -65,7 +68,7 @@ const handleAvatarChange = (event: Event) => {
 
 const uploadAvatar = async () => {
     try {
-        await avatarForm.post(route('profile.avatar'), {
+        await avatarForm.post(profileAvatarUpdate().url, {
             forceFormData: true,
             preserveScroll: true,
         });
@@ -165,7 +168,7 @@ const uploadAvatar = async () => {
                         <p class="text-muted-foreground -mt-4 text-sm">
                             Your email address is unverified.
                             <Link
-                                :href="route('verification.send')"
+                                :href="verificationStore.url"
                                 method="post"
                                 as="button"
                                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"

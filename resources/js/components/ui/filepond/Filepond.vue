@@ -9,7 +9,6 @@
             accepted-file-types="image/jpeg, image/png, image/jpg, application/pdf"
             :files="pondFiles"
             @updatefiles="handleFilePondUpdate"
-            
         />
         <button 
             @click="uploadFiles"
@@ -27,7 +26,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/d
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import { ref, useTemplateRef } from 'vue';
+import { ref, watch } from 'vue';
+import { store, show } from '@/actions/App/Http/Controllers/Settings/MediaController';
 
 const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
@@ -35,25 +35,62 @@ interface Props {
     files?: App.Data.MediaData[];
     single?: boolean,
     route?: string,
+    remote?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    route: route('settings.media-items.store')
+    route: store.url() as string,
 });
 
-const transformMediaToFilePond = (media: App.Data.MediaData) => ({
-    source: route('settings.media-items.show', {media_item:  media}),
-    options: {
-        type: 'remote',
-        metadata: {
-            url: route('settings.media-items.show', {media_item:  media}),
-            created_at: media.created_at,
-            updated_at: media.updated_at
-        }
+const transformMediaToFilePond = async (media: App.Data.MediaData) => {
+    if (!media.id) return null;
+    
+    const url = show.url({ media_item: media.id });
+    
+    if (props.remote) {
+        return {
+            source: url,
+            type: 'remote',
+            metadata: {
+                url,
+                created_at: media.created_at,
+                updated_at: media.updated_at
+            }
+        };
     }
-});
+    
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const fileName = media.file_name || media.name || 'file';
+        const file = new File([blob], fileName, { type: media.mime_type || blob.type });
+        
+        return {
+            source: file,
+            type: 'local',
+            options: {
+                type: 'local',
+                file
+            }
+        };
+    } catch {
+        return { source: url, type: 'remote' };
+    }
+};
 
-const pondFiles = ref(props.files?.filter(Boolean).map(transformMediaToFilePond) ?? []);
+const pondFiles = ref<Array<any>>([]);
+
+watch(() => props.files, async (files) => {
+    if (!files?.length) {
+        pondFiles.value = [];
+        return;
+    }
+    
+    const transformed = await Promise.all(
+        files.filter(Boolean).map(transformMediaToFilePond)
+    );
+    pondFiles.value = transformed.filter(Boolean);
+}, { immediate: true });
 
 const handleFilePondUpdate = (fileItems: any) => {
     const newFiles = fileItems.filter((item: any) => typeof item.source !== 'string');
@@ -78,18 +115,10 @@ const uploadFiles = () => {
     }
     
     router.post(props.route, formData, {
-        onStart: () => console.log('Uploading...'),
         onSuccess: () => {
-            console.log('Upload successful');
-            selectedFiles.value = []; // Reset new files
+            selectedFiles.value = [];
             pondFiles.value = [];
-        },
-        onError: (errors) => {
-            console.error('Upload failed:', errors);
         },
     });
 };
 </script>
-
-<style>
-</style>

@@ -9,13 +9,16 @@ import { Head } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
 import { LoaderCircle } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
+import { store, create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
+import { create as registerCreate } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
+import { create as passwordRequestCreate } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
 }>();
 
-const form = useForm('post', route('login'), {
+const form = useForm('post', store.url, {
     email: '',
     password: '',
     remember: false,
@@ -101,7 +104,7 @@ const submit = async () => {
                             <div class="grid gap-2">
                                 <div class="flex items-center justify-between">
                                     <Label for="password">Password</Label>
-                                    <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5">
+                                    <TextLink v-if="canResetPassword" :href="passwordRequestCreate().url" class="text-sm" :tabindex="5">
                                         Forgot password?
                                     </TextLink>
                                 </div>
@@ -135,7 +138,7 @@ const submit = async () => {
 
                         <div class="text-muted-foreground text-center text-sm">
                             Don't have an account?
-                            <TextLink :href="route('register')" :tabindex="5">Sign up</TextLink>
+                            <TextLink :href="registerCreate().url" :tabindex="5">Sign up</TextLink>
                         </div>
                     </form>
                 </div>

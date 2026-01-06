@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
+import { store, create } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
+import { create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 
 const form = useForm({
     name: '',
@@ -28,7 +30,7 @@ onMounted(() => {
 });
 
 const submit = () => {
-    form.post(route('register.store'), {
+    form.post(store.url, {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
@@ -136,7 +138,7 @@ const submit = () => {
 
                         <div class="text-muted-foreground text-center text-sm">
                             Already have an account?
-                            <TextLink :href="route('login')" :tabindex="6">Log in</TextLink>
+                            <TextLink :href="loginCreate().url" :tabindex="6">Log in</TextLink>
                         </div>
                     </form>
                 </div>

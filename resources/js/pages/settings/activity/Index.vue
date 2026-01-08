@@ -127,7 +127,7 @@ const userOptions = ref([
         value: null,
         label: 'All Users',
     },
-    ...props.users.data.map((user) => ({
+    ...props.users.map((user) => ({
         value: user.id,
         label: user.name,
     })),

@@ -103,7 +103,7 @@ const handleChange = (e: {
             class="dark:text-white"
             :rows="props.data?.data"
             :columns="columns"
-            :total-rows="props.data?.meta.total"
+            :total-rows="props.data?.total"
             is-server-mode
             skin="table-auto w-full border border-gray-200 dark:border-gray-700 
             [&>thead>tr]:bg-gray-100 dark:[&>thead>tr]:bg-gray-800 
@@ -113,8 +113,8 @@ const handleChange = (e: {
             [&>tbody>tr]:border-t [&>tbody>tr]:border-gray-200 dark:[&>tbody>tr]:border-gray-700"
             @change="handleChange"
             @rowClick="handleRowClick"
-            :page="props.data?.meta.current_page"
-            :page-size="props.data?.meta.per_page"
+            :page="props.data?.current_page"
+            :page-size="props.data?.per_page"
             :page-size-options="[15, 30, 50, 100]"
             :sortable="true"
             :searchable="true"

@@ -18,9 +18,6 @@ use Inertia\Response;
 
 final class ProfileController
 {
-    /**
-     * Show the user's profile settings page.
-     */
     public function edit(Request $request, User $profile): Response
     {
         return Inertia::render('settings/Profile', [
@@ -32,9 +29,6 @@ final class ProfileController
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request, User $profile): RedirectResponse
     {
         app(UpdateUserProfile::class)(
@@ -47,9 +41,6 @@ final class ProfileController
         ])->with('status', __('Profile updated successfully.'));
     }
 
-    /**
-     * Delete the user's profile.
-     */
     public function destroy(ProfileDeleteRequest $request, User $profile): RedirectResponse
     {
         Auth::logout();

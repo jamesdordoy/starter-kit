@@ -13,9 +13,6 @@ use Inertia\Response;
 
 final class PasswordController
 {
-    /**
-     * Show the user's password settings page.
-     */
     public function edit(Request $request): Response
     {
         return Inertia::render('settings/Password', [
@@ -23,9 +20,6 @@ final class PasswordController
         ]);
     }
 
-    /**
-     * Update the user's password.
-     */
     public function update(ProfilePasswordUpdateRequest $request): RedirectResponse
     {
         $validated = $request->validated();

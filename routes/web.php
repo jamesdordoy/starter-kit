@@ -14,12 +14,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-
-    Route::get('kitchen-sink', function () {
-        return Inertia::render('KitchenSink', [
-            'users' => UserData::collect(User::paginate()),
-        ]);
-    })->name('sink');
 });
 
 require __DIR__.'/settings.php';

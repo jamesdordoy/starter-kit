@@ -3,12 +3,13 @@
 namespace App\Actions\Users;
 
 use App\Models\User;
+use App\Data\UserData;
 
 class UpdateUserProfile
 {
-    public function __invoke(User $user, array $data): User
+    public function __invoke(User $user, UserData $data): User
     {
-        $user->fill($data);
+        $user->fill($data->only('name', 'email')->toArray());
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;

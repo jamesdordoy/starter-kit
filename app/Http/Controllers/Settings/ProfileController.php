@@ -39,7 +39,7 @@ final class ProfileController
     {
         app(UpdateUserProfile::class)(
             user: $profile,
-            data: $request->validated()
+            data: UserData::from($request->validated())
         );
 
         return to_route('profile.edit', [

@@ -1,7 +1,5 @@
 <?php
 
-use App\Data\UserData;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

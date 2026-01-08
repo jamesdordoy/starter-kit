@@ -2,8 +2,8 @@
 
 namespace App\Data\Pages\Settings\Activity\Filters;
 
-use Spatie\LaravelData\Attributes\MapName;
 use App\Data\UserData;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 

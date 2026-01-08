@@ -4,9 +4,8 @@ use Laravel\Fortify\Features;
 
 return [
 
-
     'enabled' => true,
-    
+
     /*
     |--------------------------------------------------------------------------
     | Fortify Guard

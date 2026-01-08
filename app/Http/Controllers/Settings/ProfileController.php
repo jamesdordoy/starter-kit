@@ -28,7 +28,7 @@ final class ProfileController
                 'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail && empty($request->user()->email_verified_at),
                 'status' => $request->session()->get('status'),
                 UserData::DATA_NAME => UserData::from($profile),
-            ])
+            ]),
         ]);
     }
 

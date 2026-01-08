@@ -7,8 +7,6 @@ use App\Data\PermissionData;
 use App\Data\RoleData;
 use App\Data\UserData;
 use App\Http\Requests\Settings\Users\UpdateRolesAndPermissionsRequest;
-use App\Http\Resources\PermissionResource;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\UserQuery;
@@ -31,7 +29,7 @@ class UserController
             ->appends(request()->query());
 
         return Inertia::render('settings/users/Index', [
-            UserData::COLLECTION_NAME => UserResource::collection($users),
+            UserData::COLLECTION_NAME => UserData::collect($users),
             'params' => QueryBuilderParams::from(request()->query()),
         ]);
     }
@@ -63,8 +61,8 @@ class UserController
                 'permissions' => $user->getAllPermissions()->toArray(),
                 'roles' => $user->roles->toArray(),
             ]),
-            PermissionData::COLLECTION_NAME => PermissionResource::collection(Permission::get()),
-            RoleData::COLLECTION_NAME => Role::get(),
+            PermissionData::COLLECTION_NAME => PermissionData::collect(Permission::get()),
+            RoleData::COLLECTION_NAME => RoleData::collect(Role::get()),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from(request()->query()),
         ]);
     }

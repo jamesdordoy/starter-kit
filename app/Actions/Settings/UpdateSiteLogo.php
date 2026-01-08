@@ -6,7 +6,7 @@ use App\Models\Setting;
 use App\Settings\SiteSettings;
 use Illuminate\Http\UploadedFile;
 
-readonly class UpdateSiteLogo
+class UpdateSiteLogo
 {
     public function __invoke(UploadedFile $file, SiteSettings $settings): void
     {

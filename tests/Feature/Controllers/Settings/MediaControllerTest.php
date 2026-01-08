@@ -58,7 +58,7 @@ test('it can paginate media items', function () {
     $response->assertInertia(fn ($assert) => $assert
         ->component('settings/assets/Index')
         ->has('assets.data', 5)
-        ->where('assets.meta.current_page', 2)
+        ->where('assets.current_page', 2)
     );
 });
 

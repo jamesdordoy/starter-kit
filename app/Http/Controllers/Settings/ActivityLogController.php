@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Settings;
 
 use App\Data\ActivityData;
 use App\Data\UserData;
-use App\Http\Resources\ActivityResource;
-use App\Http\Resources\UserResource;
 use App\Models\Activity;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
@@ -19,15 +17,14 @@ class ActivityLogController
     {
         $activities = (new ActivityQuery($request))
             ->withRelations()
-            ->paginate($request->input('per_page', 15))
-            ->withQueryString()
-            ->appends(request()->query());
+            ->paginate($request->integer('per_page', 15))
+            ->withQueryString();
 
         $users = User::has('activities')->get();
 
         return Inertia::render('settings/activity/Index', [
-            ActivityData::COLLECTION_NAME => ActivityResource::collection($activities),
-            UserData::COLLECTION_NAME => UserResource::collection($users),
+            ActivityData::COLLECTION_NAME => ActivityData::collect($activities),
+            UserData::COLLECTION_NAME => UserData::collect($users),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from([
                 'filter' => [
                     'description' => null,
@@ -41,7 +38,7 @@ class ActivityLogController
     public function show(Activity $activity)
     {
         return Inertia::render('settings/activity/Show', [
-            ActivityData::DATA_NAME => new ActivityResource($activity->load('causer')),
+            ActivityData::DATA_NAME => ActivityData::from($activity->load('causer')),
         ]);
     }
 }

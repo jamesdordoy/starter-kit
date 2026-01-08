@@ -5,15 +5,15 @@ import { computed, ref } from 'vue';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 
 interface Props {
-    data?: PaginatedCollection<any>;
+    data: PaginatedCollection<any>;
 }
 
 const props = defineProps<Props>();
 
 // Compute pagination values from Laravel data
-const total = computed(() => props.data?.meta?.total ?? 0);
-const currentPage = ref(props.data.meta.current_page ?? 1);
-const perPage = computed(() => props.data?.meta?.per_page ?? 10);
+const total = computed(() => props.data?.total ?? 0);
+const currentPage = ref(props.data.current_page ?? 1);
+const perPage = computed(() => props.data?.per_page ?? 10);
 
 // Emit page change events
 const emit = defineEmits<{
@@ -30,11 +30,11 @@ const handlePageChange = (page: number) => {
     <div class="hidden sm:block">
       <p class="text-sm text-gray-700 dark:text-gray-300">
         Showing
-        <span class="font-medium">{{ data?.meta?.from }}</span>
+        <span class="font-medium">{{ data?.from }}</span>
         to
-        <span class="font-medium">{{ data?.meta?.to }}</span>
+        <span class="font-medium">{{ data?.to }}</span>
         of
-        <span class="font-medium">{{ data?.meta?.total }}</span>
+        <span class="font-medium">{{ data?.total }}</span>
         results
       </p>
     </div>

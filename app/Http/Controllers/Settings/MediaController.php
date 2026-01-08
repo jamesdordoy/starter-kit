@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Settings;
 
 use App\Data\MediaData;
 use App\Http\Requests\Settings\Media\StoreRequest;
-use App\Http\Resources\MediaResource;
 use App\Models\Media;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\MediaQuery;
@@ -16,12 +15,11 @@ class MediaController
     public function index(Request $request)
     {
         $assets = (new MediaQuery($request))
-            ->paginate($request->input('per_page', 8))
-            ->withQueryString()
-            ->appends(request()->query());
+            ->paginate($request->integer('per_page', 8))
+            ->withQueryString();
 
         return Inertia::render('settings/assets/Index', [
-            MediaData::COLLECTION_NAME => MediaResource::collection($assets),
+            MediaData::COLLECTION_NAME => MediaData::collect($assets),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from([
                 'filter' => [
                     'search' => null,

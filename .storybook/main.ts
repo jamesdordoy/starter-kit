@@ -17,7 +17,7 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding"
   ],
   "framework": "@storybook/vue3-vite",
-  'staticDirs': ['../stories/assets'],
+  staticDirs: [{ from: "../src/stories/assets", to: "../stories/assets" }],
   async viteFinal(config) {
     // Set base path explicitly to prevent undefined in asset URLs
     config.base = config.base || '/';

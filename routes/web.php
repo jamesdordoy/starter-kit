@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resources\UserResource;
+use App\Data\UserData;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,7 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('kitchen-sink', function () {
         return Inertia::render('KitchenSink', [
-            'users' => UserResource::collection(User::paginate()),
+            'users' => UserData::collect(User::paginate()),
         ]);
     })->name('sink');
 });

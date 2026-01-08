@@ -19,7 +19,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
-interface Props {
+const props = defineProps<{
     users: PaginatedCollection<App.Data.UserData>;
     params: {
         page: number;
@@ -28,9 +28,7 @@ interface Props {
         sortDirection: string;
         search: string;
     };
-}
-
-const props = defineProps<Props>();
+}>();
 
 const cols = ref([
     { field: 'id', title: 'ID', width: '90px' },

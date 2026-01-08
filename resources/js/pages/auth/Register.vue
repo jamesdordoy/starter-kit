@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
-import { store, create } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
+import { store } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
 import { create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 
 const form = useForm({

@@ -12,6 +12,7 @@ export default defineConfigWithVueTs(
     {
         ignores: ['vendor', 'node_modules', 'public', 'bootstrap/ssr', 'tailwind.config.js', 'resources/js/components/ui/*'],
     },
+    ...storybook.configs['flat/recommended'],
     {
         rules: {
             'vue/multi-word-component-names': 'off',

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
-import { store, create } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
+import { store } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
 import { create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 
 defineProps<{

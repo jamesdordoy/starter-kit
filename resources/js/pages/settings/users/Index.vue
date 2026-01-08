@@ -10,7 +10,6 @@ import { ref } from 'vue';
 import { index as settingsIndex } from '@/actions/App/Http/Controllers/Settings/SettingController';
 import { take } from '@/actions/Lab404/Impersonate/Controllers/ImpersonateController';
 import { show } from '@/actions/App/Http/Controllers/Settings/UserController';
-import { index as activityIndex } from '@/actions/App/Http/Controllers/Settings/ActivityLogController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {

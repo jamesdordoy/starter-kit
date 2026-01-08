@@ -9,7 +9,7 @@ import { Head } from '@inertiajs/vue3';
 import { useForm } from 'laravel-precognition-vue-inertia';
 import { LoaderCircle } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
-import { store, create as loginCreate } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
+import { store } from '@/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 import { create as registerCreate } from '@/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController';
 import { create as passwordRequestCreate } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
 

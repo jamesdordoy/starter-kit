@@ -3,7 +3,6 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import fs from 'fs';
 import laravel from 'laravel-vite-plugin';
-import { resolve } from 'node:path';
 import path from 'path';
 import { defineConfig } from 'vite';
 // No dotenv import!

@@ -7,6 +7,7 @@ namespace App\QueryBuilder\Queries;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 final class ActivityQuery extends QueryBuilder
@@ -44,6 +45,7 @@ final class ActivityQuery extends QueryBuilder
                 'subject_id',
                 'causer_type',
                 'causer_id',
+                AllowedSort::field('causer', 'causer_id'),
                 'created_at',
                 'updated_at',
             ]);

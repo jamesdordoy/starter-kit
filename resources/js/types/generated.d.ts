@@ -78,7 +78,7 @@ search: string | null;
 };
 }
 declare namespace App.Data.Pages.Settings.Profile {
-export type EditProfileData = {
+export type EditProfilePageData = {
 must_verify_email: boolean;
 status: string | null;
 user: App.Data.UserData;

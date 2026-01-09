@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
+use App\Models\Route;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
-class CheckRoutePermission
+final class CheckRoutePermission
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
         $route = $request->route();
@@ -23,7 +26,7 @@ class CheckRoutePermission
             return $next($request);
         }
 
-        $routeModel = \App\Models\Route::with('permissions')->where('name', $routeName)->first();
+        $routeModel = Route::with('permissions')->where('name', $routeName)->first();
 
         // Handle missing route mapping
         if (! $routeModel) {

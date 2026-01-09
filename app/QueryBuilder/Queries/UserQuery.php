@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilder\Queries;
 
 use App\Models\User;
@@ -7,7 +9,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class UserQuery extends QueryBuilder
+final class UserQuery extends QueryBuilder
 {
     protected array $includes = [];
 

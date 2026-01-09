@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 
-class Activity extends SpatieActivity
+final class Activity extends SpatieActivity
 {
     #[Scope]
     public function search(Builder $query, ?string $search): Builder

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Users;
 
 use App\Data\UserData;
 use App\Models\User;
 
-class UpdateUserProfile
+final class UpdateUserProfile
 {
     public function __invoke(User $user, UserData $data): User
     {

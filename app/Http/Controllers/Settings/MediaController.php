@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Data\MediaData;
@@ -9,12 +11,15 @@ use App\Http\Requests\Settings\Media\StoreRequest;
 use App\Models\Media;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\MediaQuery;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class MediaController
+final class MediaController
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $assets = (new MediaQuery($request))
             ->paginate($request->integer('per_page', 8))
@@ -28,36 +33,38 @@ class MediaController
         ]);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $user = $request->user();
-        $file = $request->file('file', null);
+        $file = $request->file('file');
 
-        if (! is_null($file)) {
+        if ($file !== null) {
             $user->addMedia($file->getRealPath())
                 ->usingFileName($file->getClientOriginalName())
                 ->toMediaCollection();
         }
 
-        collect($request->file('files'), [])
-            ->map(fn ($file) => $user->addMedia($file->getRealPath())
+        collect($request->file('files', []))
+            ->each(fn ($file) => $user->addMedia($file->getRealPath())
                 ->usingFileName($file->getClientOriginalName())
                 ->toMediaCollection());
 
         return redirect()->back();
     }
 
-    public function show(Media $mediaItem)
+    public function show(Media $mediaItem): BinaryFileResponse
     {
-        return response()->download($mediaItem->getPath(), $mediaItem->file_name);
+        $filename = $mediaItem->custom_properties['client_name'] ?? $mediaItem->file_name;
+
+        return response()->download($mediaItem->getPath(), $filename);
     }
 
-    public function update(Request $request)
+    public function update(Request $request): void
     {
-        dd('hit');
+        // TODO: Implement update functionality
     }
 
-    public function destroy(DeleteDefaultAssetRequest $request, Media $mediaItem)
+    public function destroy(DeleteDefaultAssetRequest $request, Media $mediaItem): RedirectResponse
     {
         $mediaItem->delete();
 

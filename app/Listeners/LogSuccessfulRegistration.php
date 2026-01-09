@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Enums\ActivityLogEnum;
 use Illuminate\Auth\Events\Registered;
 
-class LogSuccessfulRegistration
+final class LogSuccessfulRegistration
 {
-    public function handle(Registered $event)
+    public function handle(Registered $event): void
     {
         activity()->causedBy($event->user->id)
             ->withProperties([

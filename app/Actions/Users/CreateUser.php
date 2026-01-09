@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Users;
 
 use App\Data\UserData;
 use App\Models\User;
 
-class CreateUser
+final class CreateUser
 {
     public function __invoke(UserData $data): User
     {

@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\Route as RouteModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route as RouteFacade;
 
-class SyncRoutes extends Command
+final class SyncRoutes extends Command
 {
     protected $signature = 'route:sync';
 
     protected $description = 'Sync named Laravel routes with the routes table';
 
-    public function handle()
+    public function handle(): int
     {
         $laravelRoutes = collect(RouteFacade::getRoutes())
             ->filter(fn ($route) => $route->getName())

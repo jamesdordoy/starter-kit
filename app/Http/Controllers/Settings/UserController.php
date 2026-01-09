@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Actions\Users\UpdateUserRolesAndPermissions;
@@ -10,13 +12,14 @@ use App\Http\Requests\Settings\Users\UpdateRolesAndPermissionsRequest;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\UserQuery;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserController
+final class UserController
 {
     public function index(Request $request): Response
     {
@@ -30,17 +33,17 @@ class UserController
         ]);
     }
 
-    public function create()
+    public function create(): void
     {
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         //
     }
 
-    public function show(User $user)
+    public function show(User $user): Response
     {
         return Inertia::render('settings/users/Show', [
             UserData::DATA_NAME => UserData::from([
@@ -54,20 +57,22 @@ class UserController
         ]);
     }
 
-    public function edit(string $id)
+    public function edit(string $id): void
     {
         //
     }
 
-    public function update(UpdateRolesAndPermissionsRequest $request, User $user)
+    public function update(UpdateRolesAndPermissionsRequest $request, User $user): RedirectResponse
     {
         $user = app(UpdateUserRolesAndPermissions::class)($user, $request->validated());
 
         return back()->with('success', 'User roles and permissions updated successfully.');
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
+
+        return back();
     }
 }

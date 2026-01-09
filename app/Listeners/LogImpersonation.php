@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Enums\ActivityLogEnum;
 use Illuminate\Database\Eloquent\Model;
 use Lab404\Impersonate\Events\TakeImpersonation;
 
-class LogImpersonation
+final class LogImpersonation
 {
-    public function handle(TakeImpersonation $event)
+    public function handle(TakeImpersonation $event): void
     {
         /** @var Model $model */
         $model = $event->impersonator;

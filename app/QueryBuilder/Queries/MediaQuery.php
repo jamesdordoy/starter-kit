@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilder\Queries;
 
 use App\Models\Media;
@@ -7,7 +9,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class MediaQuery extends QueryBuilder
+final class MediaQuery extends QueryBuilder
 {
     protected array $includes = [];
 

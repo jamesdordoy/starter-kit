@@ -46,6 +46,7 @@ Laravel Best Practices
 - Use Vite for asset compilation.
 - Implement proper database indexing for improved query performance.
 - Use Laravel's built-in pagination features but use frontend typing and custom vue components for rendering.
+- If its logical, never ever use the DB facade and use models and factories.
 
 Key Conventions
 1. Follow Laravel's MVC & actions architecture.

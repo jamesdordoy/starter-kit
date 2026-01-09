@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Data\ActivityData;
@@ -11,10 +13,11 @@ use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\ActivityQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
-class ActivityLogController
+final class ActivityLogController
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $activities = (new ActivityQuery($request))
             ->withRelations()
@@ -32,7 +35,7 @@ class ActivityLogController
         ]);
     }
 
-    public function show(Activity $activity)
+    public function show(Activity $activity): Response
     {
         return Inertia::render('settings/activity/Show', [
             ActivityData::DATA_NAME => ActivityData::from($activity->load('causer')),

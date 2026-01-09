@@ -1,29 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
+use App\Models\Media;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use Inertia\Response;
 
 final class SettingController
 {
-    public function index()
+    public function index(): Response
     {
-        $logo = DB::table('media')
-            ->where('collection_name', 'site_logo')
-            ->first();
+        $setting = Setting::where('name', 'logo_media_id')->first();
+        $logo = $setting?->getFirstMedia('site_logo');
 
-        $dbConnection = DB::connection();
+        $dbConnection = app('db')->connection();
         $database = $dbConnection->getDatabaseName();
 
         $disk = Storage::disk(); // default disk
         $diskFreeSpace = disk_free_space(base_path());
         $diskTotalSpace = disk_total_space(base_path());
 
-        return inertia('settings/Index', [
-            'logo' => $logo,
+        return Inertia::render('settings/Index', [
+            'logo' => $logo?->toArray(),
             'system' => [
                 'app_name' => config('app.name'),
                 'app_env' => App::environment(),
@@ -64,32 +68,32 @@ final class SettingController
         ]);
     }
 
-    public function create()
+    public function create(): void
     {
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         //
     }
 
-    public function show(string $id)
+    public function show(string $id): void
     {
         //
     }
 
-    public function edit(string $id)
+    public function edit(string $id): void
     {
         //
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): void
     {
         //
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
         //
     }

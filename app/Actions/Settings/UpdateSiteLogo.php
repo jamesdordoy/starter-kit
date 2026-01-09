@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Settings;
 
 use App\Models\Setting;
 use App\Settings\SiteSettings;
 use Illuminate\Http\UploadedFile;
 
-class UpdateSiteLogo
+final class UpdateSiteLogo
 {
     public function __invoke(UploadedFile $file, SiteSettings $settings): void
     {
@@ -16,7 +18,7 @@ class UpdateSiteLogo
             ->usingFileName($file->getClientOriginalName())
             ->toMediaCollection('site_logo');
 
-        $settings->logo_media_id = $media->id;
+        $settings->logo_media_id = (string) $media->id;
         $settings->save();
     }
 }

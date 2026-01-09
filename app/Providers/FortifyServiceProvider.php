@@ -38,13 +38,13 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => $request->session()->get('status'),
         ]));
         Fortify::registerView(fn () => Inertia::render('auth/Register'));
-        Fortify::verifyEmailView(fn (Request $request) => Inertia::render('auth/VerifyEmail'));
-        Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render('auth/ForgotPassword'));
+        Fortify::verifyEmailView(fn () => Inertia::render('auth/VerifyEmail'));
+        Fortify::requestPasswordResetLinkView(fn () => Inertia::render('auth/ForgotPassword'));
         Fortify::resetPasswordView(fn (Request $request) => Inertia::render('auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]));
-        Fortify::confirmPasswordView(fn (Request $request) => Inertia::render('auth/ConfirmPassword'));
+        Fortify::confirmPasswordView(fn () => Inertia::render('auth/ConfirmPassword'));
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());

@@ -10,12 +10,13 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 #[
     MapName(SnakeCaseMapper::class)
 ]
-class EditProfileData extends Data
+class EditProfilePageData extends Data
 {
+    public const DATA_NAME = 'editProfilePage';
+
     public function __construct(
         public bool $mustVerifyEmail,
         public ?string $status,
         public UserData $user,
-
     ) {}
 }

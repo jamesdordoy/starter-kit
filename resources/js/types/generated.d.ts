@@ -50,7 +50,7 @@ updated_at: string | null;
 export type UserData = {
 id: number | null;
 name: string;
-email: string;
+email: string | null;
 password: string | null;
 avatar: string | null;
 two_factor_secret: string | null;
@@ -63,6 +63,18 @@ updated_at: string | null;
 permissions: Array<App.Data.PermissionData> | null;
 roles: Array<App.Data.RoleData> | null;
 formatted_email_verified_at: string | null;
+};
+}
+declare namespace App.Data.Pages.Settings.Activity.Filters {
+export type ActivityFilters = {
+description: string | null;
+causer_id: number | null;
+date_range: string | null;
+};
+}
+declare namespace App.Data.Pages.Settings.Media.Filters {
+export type MediaFilters = {
+search: string | null;
 };
 }
 declare namespace App.Data.Pages.Settings.Profile {

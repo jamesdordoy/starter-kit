@@ -6,7 +6,6 @@ use App\Data\UserData;
 use App\Settings\SiteSettings;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -60,10 +59,6 @@ class HandleInertiaRequests extends Middleware
                     ->collapse()
                     ->all() : [],
                 'impersonator' => $manager->isImpersonating() ? UserData::from($manager->getImpersonator()) : null,
-            ],
-            'ziggy' => [
-                ...(new Ziggy)->toArray(),
-                'location' => $request->url(),
             ],
             'settings' => [
                 ...$this->settings->toArray(),

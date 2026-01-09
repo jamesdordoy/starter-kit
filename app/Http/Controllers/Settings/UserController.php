@@ -22,12 +22,11 @@ class UserController
     {
         $users = (new UserQuery($request))
             ->paginate($request->input('per_page', 15))
-            ->withQueryString()
-            ->appends(request()->query());
+            ->withQueryString();
 
         return Inertia::render('settings/users/Index', [
             UserData::COLLECTION_NAME => UserData::collect($users),
-            'params' => QueryBuilderParams::from(request()->query()),
+            QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from(),
         ]);
     }
 

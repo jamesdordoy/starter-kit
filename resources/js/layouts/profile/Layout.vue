@@ -13,20 +13,18 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const page = usePage();
+
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: profileEdit({ profile: props.user }).url,
+        href: profileEdit({ profile: props.user.id! }).url,
     },
     {
         title: 'Password',
         href: passwordEdit().url,
     },
 ];
-
-const page = usePage();
-
-const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
 </script>
 
 <template>
@@ -40,7 +38,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
                         v-for="item in sidebarNavItems"
                         :key="item.href"
                         variant="ghost"
-                        :class="['w-full justify-start', { 'bg-muted': currentPath === item.href }]"
+                        :class="['w-full justify-start', { 'bg-muted': page.url === item.href }]"
                         as-child
                     >
                         <Link :href="item.href">

@@ -8,10 +8,6 @@ use App\Settings\SiteSettings;
 
 final class LogoController
 {
-    public function __construct(
-        private UpdateSiteLogo $updateSiteLogo
-    ) {}
-
     public function update(StoreRequest $request, SiteSettings $settings)
     {
         app(UpdateSiteLogo::class)(

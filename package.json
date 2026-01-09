@@ -78,8 +78,7 @@
     "vite": "^7.1.5",
     "vue": "^3.5.13",
     "vue-filepond": "^7.0.4",
-    "vue-multiselect": "^3.2.0",
-    "ziggy-js": "^2.4.2"
+    "vue-multiselect": "^3.2.0"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.50.1",

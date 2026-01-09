@@ -13,8 +13,7 @@ class ActivityQuery extends QueryBuilder
 
     public function __construct(?Request $request = null)
     {
-        $builder = resolve(Activity::class)->query()
-            ->orderBy('created_at', 'desc');
+        $builder = resolve(Activity::class)->query();
 
         parent::__construct($builder, $request);
 

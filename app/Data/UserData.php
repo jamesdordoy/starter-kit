@@ -52,7 +52,7 @@ class UserData extends Data
             Lowercase,
             Max(255),
         ]
-        public string $email,
+        public ?string $email,
 
         #[
             Required,

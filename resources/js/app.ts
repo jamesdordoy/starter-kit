@@ -5,7 +5,6 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createPinia } from 'pinia';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEye, faUserSecret } from '@fortawesome/free-solid-svg-icons';
@@ -35,7 +34,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
 
-        app.use(plugin).use(ZiggyVue).use(pinia).component('font-awesome-icon', FontAwesomeIcon).mount(el);
+        app.use(plugin).use(pinia).component('font-awesome-icon', FontAwesomeIcon).mount(el);
 
         el.setAttribute('data-hydrated', 'true');
     },

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Data\MediaData;
+use App\Data\Pages\Settings\Media\Filters\MediaFilters;
+use App\Http\Requests\Settings\Media\DeleteDefaultAssetRequest;
 use App\Http\Requests\Settings\Media\StoreRequest;
 use App\Models\Media;
 use App\QueryBuilder\Data\QueryBuilderParams;
@@ -21,9 +23,7 @@ class MediaController
         return Inertia::render('settings/assets/Index', [
             MediaData::COLLECTION_NAME => MediaData::collect($assets),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from([
-                'filter' => [
-                    'search' => null,
-                ],
+                MediaFilters::DATA_NAME => MediaFilters::from()->toArray(),
             ]),
         ]);
     }
@@ -57,7 +57,7 @@ class MediaController
         dd('hit');
     }
 
-    public function destroy(\App\Http\Requests\Settings\Media\DeleteDefaultAssetRequest $request, Media $mediaItem)
+    public function destroy(DeleteDefaultAssetRequest $request, Media $mediaItem)
     {
         $mediaItem->delete();
 

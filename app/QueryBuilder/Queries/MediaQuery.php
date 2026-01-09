@@ -13,8 +13,7 @@ class MediaQuery extends QueryBuilder
 
     public function __construct(?Request $request = null)
     {
-        $builder = resolve(Media::class)->query()
-            ->orderBy('created_at', 'desc');
+        $builder = resolve(Media::class)->query();
 
         parent::__construct($builder, $request);
 

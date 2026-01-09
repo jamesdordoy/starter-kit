@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Data\ActivityData;
+use App\Data\Pages\Settings\Activity\Filters\ActivityFilters;
 use App\Data\UserData;
 use App\Models\Activity;
 use App\Models\User;
@@ -20,17 +21,13 @@ class ActivityLogController
             ->paginate($request->integer('per_page', 15))
             ->withQueryString();
 
-        $users = User::has('activities')->get();
+        $users = User::has('activities')->select('id', 'name')->get();
 
         return Inertia::render('settings/activity/Index', [
             ActivityData::COLLECTION_NAME => ActivityData::collect($activities),
             UserData::COLLECTION_NAME => UserData::collect($users),
             QueryBuilderParams::PROPERTY_NAME => QueryBuilderParams::from([
-                'filter' => [
-                    'description' => null,
-                    'causer_id' => null,
-                    'date_range' => null,
-                ],
+                ActivityFilters::DATA_NAME => ActivityFilters::from()->toArray(),
             ]),
         ]);
     }

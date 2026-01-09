@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1954ca7019388bd1430b948ca80c20cd",
+    "content-hash": "0112c676f615f6a72ade4956c0675b97",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1484,16 +1484,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.45.0",
+            "version": "v12.46.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9dfd2afc48f2519bfdbe6862dfb9849491c673ad"
+                "reference": "9dcff48d25a632c1fadb713024c952fec489c4ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9dfd2afc48f2519bfdbe6862dfb9849491c673ad",
-                "reference": "9dfd2afc48f2519bfdbe6862dfb9849491c673ad",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9dcff48d25a632c1fadb713024c952fec489c4ae",
+                "reference": "9dcff48d25a632c1fadb713024c952fec489c4ae",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1702,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-01-06T15:24:52+00:00"
+            "time": "2026-01-07T23:26:53+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -4356,16 +4356,16 @@
         },
         {
             "name": "spatie/image",
-            "version": "3.8.7",
+            "version": "3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "4d35db207c4b317bc221d02ab7ba94aa78b44c24"
+                "reference": "01ad7779580c4075758505e594445805e587d7da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/4d35db207c4b317bc221d02ab7ba94aa78b44c24",
-                "reference": "4d35db207c4b317bc221d02ab7ba94aa78b44c24",
+                "url": "https://api.github.com/repos/spatie/image/zipball/01ad7779580c4075758505e594445805e587d7da",
+                "reference": "01ad7779580c4075758505e594445805e587d7da",
                 "shasum": ""
             },
             "require": {
@@ -4413,7 +4413,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/image/tree/3.8.7"
+                "source": "https://github.com/spatie/image/tree/3.9.0"
             },
             "funding": [
                 {
@@ -4425,7 +4425,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-24T15:10:50+00:00"
+            "time": "2026-01-07T11:16:22+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -4912,16 +4912,16 @@
         },
         {
             "name": "spatie/laravel-query-builder",
-            "version": "6.3.6",
+            "version": "6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "b9a5af31c79ae8fb79ae0aa8ba2b9e7180f39481"
+                "reference": "f73627028538bfa58d5437f79344fa93ae254a36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/b9a5af31c79ae8fb79ae0aa8ba2b9e7180f39481",
-                "reference": "b9a5af31c79ae8fb79ae0aa8ba2b9e7180f39481",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/f73627028538bfa58d5437f79344fa93ae254a36",
+                "reference": "f73627028538bfa58d5437f79344fa93ae254a36",
                 "shasum": ""
             },
             "require": {
@@ -4982,7 +4982,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-10-20T09:50:21+00:00"
+            "time": "2026-01-09T13:35:54+00:00"
         },
         {
             "name": "spatie/laravel-settings",
@@ -7855,76 +7855,6 @@
             "time": "2025-12-18T07:04:31+00:00"
         },
         {
-            "name": "tightenco/ziggy",
-            "version": "v2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tighten/ziggy.git",
-                "reference": "cccc6035c109daab03a33926b3a8499bedbed01f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tighten/ziggy/zipball/cccc6035c109daab03a33926b3a8499bedbed01f",
-                "reference": "cccc6035c109daab03a33926b3a8499bedbed01f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "laravel/framework": ">=9.0",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "laravel/folio": "^1.1",
-                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
-                "pestphp/pest": "^2.26|^3.0",
-                "pestphp/pest-plugin-laravel": "^2.4|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Tighten\\Ziggy\\ZiggyServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Tighten\\Ziggy\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Coulbourne",
-                    "email": "daniel@tighten.co"
-                },
-                {
-                    "name": "Jake Bathman",
-                    "email": "jake@tighten.co"
-                },
-                {
-                    "name": "Jacob Baker-Kretzmar",
-                    "email": "jacob@tighten.co"
-                }
-            ],
-            "description": "Use your Laravel named routes in JavaScript.",
-            "homepage": "https://github.com/tighten/ziggy",
-            "keywords": [
-                "Ziggy",
-                "javascript",
-                "laravel",
-                "routes"
-            ],
-            "support": {
-                "issues": "https://github.com/tighten/ziggy/issues",
-                "source": "https://github.com/tighten/ziggy/tree/v2.6.0"
-            },
-            "time": "2025-09-15T00:00:26+00:00"
-        },
-        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.4.0",
             "source": {
@@ -8199,16 +8129,16 @@
     "packages-dev": [
         {
             "name": "brianium/paratest",
-            "version": "v7.16.0",
+            "version": "v7.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paratestphp/paratest.git",
-                "reference": "a10878ed0fe0bbc2f57c980f7a08065338b970b6"
+                "reference": "f0fdfd8e654e0d38bc2ba756a6cabe7be287390b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/a10878ed0fe0bbc2f57c980f7a08065338b970b6",
-                "reference": "a10878ed0fe0bbc2f57c980f7a08065338b970b6",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/f0fdfd8e654e0d38bc2ba756a6cabe7be287390b",
+                "reference": "f0fdfd8e654e0d38bc2ba756a6cabe7be287390b",
                 "shasum": ""
             },
             "require": {
@@ -8219,10 +8149,10 @@
                 "fidry/cpu-core-counter": "^1.3.0",
                 "jean85/pretty-package-versions": "^2.1.1",
                 "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-                "phpunit/php-code-coverage": "^12.5.1",
+                "phpunit/php-code-coverage": "^12.5.2",
                 "phpunit/php-file-iterator": "^6",
                 "phpunit/php-timer": "^8",
-                "phpunit/phpunit": "^12.5.2",
+                "phpunit/phpunit": "^12.5.4",
                 "sebastian/environment": "^8.0.3",
                 "symfony/console": "^7.3.4 || ^8.0.0",
                 "symfony/process": "^7.3.4 || ^8.0.0"
@@ -8234,7 +8164,7 @@
                 "ext-posix": "*",
                 "phpstan/phpstan": "^2.1.33",
                 "phpstan/phpstan-deprecation-rules": "^2.0.3",
-                "phpstan/phpstan-phpunit": "^2.0.10",
+                "phpstan/phpstan-phpunit": "^2.0.11",
                 "phpstan/phpstan-strict-rules": "^2.0.7",
                 "symfony/filesystem": "^7.3.2 || ^8.0.0"
             },
@@ -8276,7 +8206,7 @@
             ],
             "support": {
                 "issues": "https://github.com/paratestphp/paratest/issues",
-                "source": "https://github.com/paratestphp/paratest/tree/v7.16.0"
+                "source": "https://github.com/paratestphp/paratest/tree/v7.16.1"
             },
             "funding": [
                 {
@@ -8288,7 +8218,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2025-12-09T20:03:26+00:00"
+            "time": "2026-01-08T07:23:06+00:00"
         },
         {
             "name": "fakerphp/faker",

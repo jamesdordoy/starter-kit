@@ -35,7 +35,7 @@ updated_at: string | null;
 };
 export type PermissionData = {
 id: number | null;
-name: string | null;
+name: string;
 guard_name: string | null;
 created_at: string | null;
 updated_at: string | null;

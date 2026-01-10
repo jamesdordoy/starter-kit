@@ -10,7 +10,6 @@ import UserInfo from '@/components/UserInfo.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
-import type { Collection } from '@/types/collection';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { index, update } from '@/actions/App/Http/Controllers/Settings/UserController';
@@ -24,7 +23,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 interface Props {
     user: App.Data.UserData;
-    permissions: Collection<App.Data.PermissionData>;
+    permissions: App.Data.PermissionData[];
     roles: App.Data.RoleData[];
     params: {
         page: number;
@@ -39,14 +38,14 @@ const props = defineProps<Props>();
 
 const form = ref({
     name: props.user.name,
-    email: props.user.email,
+    email: props.user.email ?? '',
     password: '',
     password_confirmation: '',
 });
 
 const selectedRoles = ref<App.Data.RoleData[]>(props.user.roles ?? []);
 const selectedPermissions = ref<Record<string, boolean>>(
-    props.permissions.data.reduce(
+    props.permissions.reduce(
         (acc, permission) => ({
             ...acc,
             [permission.name]: false,
@@ -60,7 +59,7 @@ const rolesArray = ref<App.Data.RoleData[]>(props.roles);
 
 // Initialize permissions based on user's existing permissions
 const initializePermissions = () => {
-    props.permissions.data.forEach((permission) => {
+    props.permissions.forEach((permission) => {
         selectedPermissions.value[permission.name] = props.user.permissions?.some((userPerm) => userPerm.name === permission.name) ?? false;
     });
 };
@@ -170,7 +169,7 @@ const updateRolesAndPermissions = () => {
                             <div class="space-y-4">
                                 <Label>Permissions</Label>
                                 <div class="grid gap-4">
-                                    <div v-for="permission in props.permissions.data" :key="permission.name" class="flex items-center space-x-2">
+                                    <div v-for="permission in props.permissions" :key="permission.name" class="flex items-center space-x-2">
                                         <Checkbox :id="permission.name" v-model="selectedPermissions[permission.name]" />
                                         <Label :for="permission.name" class="text-sm font-normal">{{ permission.name }}</Label>
                                     </div>

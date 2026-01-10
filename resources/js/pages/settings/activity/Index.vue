@@ -71,7 +71,6 @@ import { Select } from '@/components/ui/select';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import type { BreadcrumbItem } from '@/types';
-import type { Collection } from '@/types/collection';
 import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
@@ -86,7 +85,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 interface Props {
     activities: PaginatedCollection<App.Data.ActivityData>;
-    users: Collection<App.Data.UserData>;
+    users: App.Data.UserData[];
     params: App.QueryBuilder.Data.QueryBuilderParams;
 }
 

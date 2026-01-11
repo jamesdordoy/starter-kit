@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 
 final class SyncRoutes extends Command
 {
-    protected $signature = 'route:sync';
+    protected $signature = 'sync:routes';
 
     protected $description = 'Sync named Laravel routes with the routes table';
 

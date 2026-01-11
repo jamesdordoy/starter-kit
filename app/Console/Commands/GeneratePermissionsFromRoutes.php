@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 final class GeneratePermissionsFromRoutes extends Command
 {
-    protected $signature = 'permissions:generate-from-routes {--assign-routes : Assign routes to the generated permissions}';
+    protected $signature = 'generate:permissions {--assign-routes : Assign routes to the generated permissions}';
 
     protected $description = 'Generate permissions based on routes in the database';
 

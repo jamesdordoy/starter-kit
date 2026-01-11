@@ -50,13 +50,13 @@ php artisan typescript:transform
 ### Generating routes to store in the DB
 
 ```bash
-php artisan route:sync
+php artisan sync:routes
 ```
 
 ### Generating permissions to store in the DB
 
 ```bash
-php artisan permissions:generate-from-routes --assign-routes
+php artisan generate:permissions --assign-routes
 ```
 
 ### Testing

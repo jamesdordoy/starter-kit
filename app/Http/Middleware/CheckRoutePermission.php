@@ -26,24 +26,41 @@ final class CheckRoutePermission
             return $next($request);
         }
 
-        $routeModel = Route::with('permissions')->where('name', $routeName)->first();
+        $routeModel = Route::where('name', $routeName)->first();
 
         // Handle missing route mapping
         if (! $routeModel) {
-            // Log::warning("Unregistered route: {$routeName}");
+            \Log::warning("Unregistered route: {$routeName}");
 
             // Uncomment to block by default:
-            // abort(403, 'Access denied: route not registered.');
-
-            return $next($request); // Allow through (optional)
+            abort(403, 'Access denied: route not registered.');
         }
 
-        $requiredPermissions = $routeModel->permissions->pluck('name');
+        // Public routes are accessible to everyone (including unauthenticated users)
+        if ($routeModel->is_public) {
+            return $next($request);
+        }
 
-        foreach ($requiredPermissions as $permission) {
-            if (! $user || ! $user->can($permission)) {
-                abort(403, "Access denied: missing permission '{$permission}'.");
-            }
+        // If route is not public, user must be authenticated
+        if (! $user) {
+            \Log::warning('not authenticated');
+            abort(403, 'Access denied: authentication required.');
+        }
+
+        // Admins have access to all routes
+        if ($user->isAdmin()) {
+            return $next($request);
+        }
+
+        // Visitor role can only access public routes (already checked above)
+        if ($user->isVisitor()) {
+            abort(403, 'Access denied: visitor role can only access public routes.');
+        }
+
+        // Check if user's permissions grant access to this route
+        $userAccessibleRouteNames = $user->getAccessibleRouteNames();
+        if (! in_array($routeName, $userAccessibleRouteNames)) {
+            abort(403, 'Access denied: route not accessible with your current permissions.');
         }
 
         return $next($request);

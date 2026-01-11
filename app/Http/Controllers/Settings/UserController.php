@@ -9,6 +9,8 @@ use App\Data\PermissionData;
 use App\Data\RoleData;
 use App\Data\UserData;
 use App\Http\Requests\Settings\Users\UpdateRolesAndPermissionsRequest;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use App\QueryBuilder\Data\QueryBuilderParams;
 use App\QueryBuilder\Queries\UserQuery;
@@ -16,8 +18,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 final class UserController
 {

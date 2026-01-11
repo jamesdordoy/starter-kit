@@ -1,41 +1,15 @@
 <?php
 
-use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
 beforeEach(function () {
-    // Create permissions
-    collect(PermissionEnum::cases())
-        ->each(fn ($permission) => Permission::firstOrCreate(
-            ['name' => $permission->value],
-            ['guard_name' => 'web']
-        ));
-
-    // Create roles
-    collect(RoleEnum::cases())->each(function ($roleEnum) {
-        $role = Role::firstOrCreate(
-            ['name' => $roleEnum->value],
-            ['guard_name' => 'web']
-        );
-
-        $permissions = $roleEnum === RoleEnum::ADMIN
-            ? Permission::where('guard_name', 'web')->get()
-            : collect($roleEnum->getPermissions())
-                ->map(fn ($permissionEnum) => Permission::where('name', $permissionEnum->value)
-                    ->where('guard_name', 'web')
-                    ->first())
-                ->filter();
-
-        $role->syncPermissions($permissions);
-    });
-
     $this->user = User::factory()->create([
         'password' => Hash::make('password123'),
     ]);

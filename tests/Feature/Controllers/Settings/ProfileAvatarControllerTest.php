@@ -2,11 +2,11 @@
 
 use App\Enums\RoleEnum;
 use App\Models\Media;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;

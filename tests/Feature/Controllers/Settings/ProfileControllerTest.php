@@ -1,9 +1,9 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
@@ -65,13 +65,13 @@ test('it can delete profile', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = actingAs($user)
-        ->delete(route('profile.destroy', ['profile' => $user]), [
+    $response = actingAs($this->user)
+        ->delete(route('profile.destroy', ['profile' => $this->user]), [
             'password' => 'password123',
         ]);
 
     $response->assertRedirect('/');
-    expect(User::find($user->id))->toBeNull();
+    expect(User::find($this->user->id))->toBeNull();
 });
 
 test('it requires correct password to delete profile', function () {
@@ -80,8 +80,8 @@ test('it requires correct password to delete profile', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = actingAs($user)
-        ->delete(route('profile.destroy', ['profile' => $user->id]), [
+    $response = actingAs($this->user)
+        ->delete(route('profile.destroy', ['profile' => $this->user->id]), [
             'password' => 'wrong-password',
         ]);
 

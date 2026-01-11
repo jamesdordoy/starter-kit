@@ -11,45 +11,34 @@
 |
 */
 
-use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 pest()->extend(Tests\TestCase::class)
     ->use(RefreshDatabase::class)
-    ->in('Feature', 'Unit');
+    ->in('Feature', 'Unit')
+    ->beforeEach(function () {
+        Config::set('app.env', 'testing');
 
-beforeEach(function () {
-    Config::set('app.env', 'testing');
+        Artisan::call('route:sync');
+        Artisan::call('permissions:generate-from-routes', ['--assign-routes' => true]);
 
-    // Create permissions with web guard
-    collect(PermissionEnum::cases())
-        ->each(fn ($permission) => Permission::firstOrCreate(
-            ['name' => $permission->value],
-            ['guard_name' => 'web']
-        ));
+        collect(RoleEnum::cases())->each(function ($roleEnum) {
+            $role = Role::firstOrCreate(
+                ['name' => $roleEnum->value],
+                ['guard_name' => 'web']
+            );
 
-    // Create roles with web guard and sync permissions
-    collect(RoleEnum::cases())->each(function ($roleEnum) {
-        $role = Role::firstOrCreate(
-            ['name' => $roleEnum->value],
-            ['guard_name' => 'web']
-        );
-
-        $permissions = $roleEnum === RoleEnum::ADMIN
-            ? Permission::where('guard_name', 'web')->get()
-            : collect($roleEnum->getPermissions())
-                ->map(fn ($permissionEnum) => Permission::where('name', $permissionEnum->value)
-                    ->where('guard_name', 'web')
-                    ->first())
-                ->filter();
-
-        $role->syncPermissions($permissions);
+            if ($roleEnum === RoleEnum::ADMIN) {
+                $permissions = Permission::where('guard_name', 'web')->get();
+                $role->syncPermissions($permissions);
+            }
+        });
     });
-});
 
 /*
 |--------------------------------------------------------------------------

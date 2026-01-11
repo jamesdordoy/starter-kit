@@ -1,13 +1,17 @@
 I am an expert in Laravel, PHP, Inertia.js, TypeScript and related web development technologies.
 
+Check this for all packages before doing anything `readme.md`
+
 Key Principles
 - Write concise, technical responses with accurate PHP examples.
 - Follow Laravel, Tailwind & Interia.js best practices and conventions.
 - Use object-oriented programming with a focus on SOLID principles.
 - Prefer iteration and modularization over duplication.
-- Use laravel based variable and method names.
+- Always use Composition over inhertiance. Love DTOs..
+- Use Laravel based variable and method names.
 - Favor dependency injection and service containers.
 - Follow the resourceful controller methodology.
+- Use services to compose Actions to keep Testing clean. Use `app()->pipeline(...)`
 
 PHP/Laravel
 - Use PHP 8.2+ features when appropriate (e.g., typed properties, match expressions).
@@ -15,6 +19,9 @@ PHP/Laravel
 - Use strict typing: declare(strict_types=1);
 - Utilize Laravel's built-in features and helpers when possible.
 - File structure: Follow Laravel's directory structure and naming conventions.
+- One of the most important: controller method should be more than 10 lines long.
+- Always use a DTO from a request body e.g. $request->only or all. MAke it better for actions.
+- Actions should only accept DTO for model data.
 - Implement proper error handling and logging:
 - Use Laravel's exception handling and logging features.
 - Create custom exceptions when necessary.
@@ -26,36 +33,35 @@ PHP/Laravel
 - Implement proper database migrations and seeders.
 - Use Data objects from https://spatie.be/docs/laravel-data/ so we can use https://spatie.be/docs/typescript-transformer/ for code generation
 - Use closures where possible
+- Never use a foreach if possible. Create a collection and use each, map, filter etc.
 
 Dependencies
 - Laravel (latest stable version)
 - Composer for dependency management
 
 Frontend coomponents
-- https://vue-multiselect.js.org/
+- `package.json`
 
 Laravel Best Practices
 - Use Eloquent ORM instead of raw SQL queries when possible.
-- Implement Repository pattern for data access layer.
-- Use Laravel's built-in authentication and authorization features.
+- Use Laravel's Fortify as set up for auth.
 - Utilize Laravel's caching mechanisms for improved performance.
 - Implement job queues for long-running tasks.
 - Use Laravel's built-in testing tool Pest for tests.
-- Use Laravel's localization features for multi-language support.
+- Use Laravel's localization features for multi-language support when set up.
 - Implement proper CSRF protection and security measures.
 - Use Vite for asset compilation.
 - Implement proper database indexing for improved query performance.
 - Use Laravel's built-in pagination features but use frontend typing and custom vue components for rendering.
 - If its logical, never ever use the DB facade and use models and factories.
+- USe and implement typescript where ever possible on the frontend.
 
 Key Conventions
 1. Follow Laravel's MVC & actions architecture.
 2. Use Laravel's routing system for defining application endpoints using resourceful routes.
 3. Implement proper request validation using Form Requests and Spatie Laravel Data Rules.
 5. Implement proper database relationships using Eloquent.
-6. Use Laravel's built-in authentication scaffolding.
-7. Implement proper API resource transformations.
-8. Use Laravel's event and listener system for decoupled code.
-9. Implement proper database transactions for data integrity.
-10. Use Laravel's built-in scheduling features for recurring tasks.
+6. Use Laravel's event and listener system for decoupled code.
+7. Use Spatie query buiilder and dont use the default methods. Check `App/QueryBuilder/UserQuery.php`
+8. Use DTO e.g. `App\Data\UserData` for all data modeling for any request etc.
   

@@ -2,9 +2,9 @@
 
 use App\Enums\RoleEnum;
 use App\Models\Activity;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
@@ -19,6 +19,11 @@ beforeEach(function () {
     $this->user->assignRole($adminRole);
 });
 
+test('it requires authentication to access activity log', function () {
+    $response = get(route('settings.activity.index'));
+    $response->assertRedirect(route('login'));
+});
+
 test('it can access activity log index page', function () {
     $response = actingAs($this->user)
         ->get(route('settings.activity.index'));
@@ -30,11 +35,6 @@ test('it can access activity log index page', function () {
         ->has('users')
         ->has('params')
     );
-});
-
-test('it requires authentication to access activity log', function () {
-    $response = get(route('settings.activity.index'));
-    $response->assertRedirect(route('login'));
 });
 
 test('it can paginate activities', function () {

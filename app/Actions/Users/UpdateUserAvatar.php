@@ -7,7 +7,7 @@ namespace App\Actions\Users;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 
-readonly final class UpdateUserAvatar
+final readonly class UpdateUserAvatar
 {
     public function __invoke(User $user, UploadedFile $file): User
     {

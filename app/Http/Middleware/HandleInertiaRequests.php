@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Data\UserData;
+use App\Models\Permission;
 use App\Settings\SiteSettings;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -55,11 +56,11 @@ class HandleInertiaRequests extends Middleware
                     ...$user->toArray() ?? null,
                     'avatar' => $user->getFirstMediaUrl('avatars') ?? null,
                 ]) : null,
-                'can' => ! is_null($user) ? $user->loadMissing('roles.permissions')->roles
-                    ->flatMap(fn ($role) => $role->permissions)
-                    ->map(fn ($permission) => [$permission->name => $user->can($permission->name)])
-                    ->collapse()
-                    ->all() : [],
+                'can' => ! is_null($user)
+                    ? Permission::pluck('name')
+                        ->mapWithKeys(fn ($permission) => [$permission => $user->can($permission)])
+                        ->all()
+                    : [],
                 'impersonator' => $manager->isImpersonating() ? UserData::from($manager->getImpersonator()) : null,
             ],
             'settings' => [

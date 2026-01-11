@@ -3,10 +3,12 @@
 namespace App\Data;
 
 use Carbon\Carbon;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[
@@ -26,5 +28,8 @@ class RoleData extends Data
         public ?Carbon $createdAt,
         #[WithCast(DateTimeInterfaceCast::class)]
         public ?Carbon $updatedAt,
+        #[DataCollectionOf(PermissionData::class)]
+        public ?DataCollection $permissions = null,
+        public ?int $permissionsCount = null,
     ) {}
 }

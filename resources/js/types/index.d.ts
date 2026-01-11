@@ -3,9 +3,10 @@ import type { LucideIcon } from 'lucide-vue-next';
 
 export interface Auth {
     user: App.Data.UserData;
-    can: Record<App.Enums.PermissionEnum, boolean>;
+    can: Record<string, boolean>;
     impersonator: App.Data.UserData | null;
 }
+
 
 export interface BreadcrumbItem {
     title: string;

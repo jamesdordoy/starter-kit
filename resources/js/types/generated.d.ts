@@ -39,6 +39,7 @@ name: string;
 guard_name: string | null;
 created_at: string | null;
 updated_at: string | null;
+routes: Array<App.Data.RouteData> | null;
 };
 export type RoleData = {
 id: number | null;
@@ -46,6 +47,19 @@ name: string | null;
 guard_name: string | null;
 created_at: string | null;
 updated_at: string | null;
+permissions: Array<App.Data.PermissionData> | null;
+routes: Array<App.Data.RouteData> | null;
+};
+export type RouteData = {
+id: number | null;
+name: string;
+uri: string;
+method: string;
+label: string | null;
+created_at: string | null;
+updated_at: string | null;
+permissions: Array<App.Data.PermissionData> | null;
+roles: Array<App.Data.RoleData> | null;
 };
 export type UserData = {
 id: number | null;

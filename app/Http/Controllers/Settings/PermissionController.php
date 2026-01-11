@@ -57,7 +57,7 @@ final class PermissionController
         return Inertia::render('settings/permissions/Show', [
             PermissionData::DATA_NAME => PermissionData::from([
                 ...$permission->toArray(),
-                'routes' => $permissionRoutes->toArray(),
+                'routes' => RouteData::collect($permissionRoutes),
             ]),
             RouteData::COLLECTION_NAME => RouteData::collect(Route::where('is_public', false)->get()),
         ]);

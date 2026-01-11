@@ -37,6 +37,20 @@ const selectedPermissions = ref<number[]>(
 
 const permissionsArray = ref(props.permissions);
 
+const togglePermission = (permissionId: number | null) => {
+    if (!permissionId) return;
+    const index = selectedPermissions.value.indexOf(permissionId);
+    if (index > -1) {
+        selectedPermissions.value.splice(index, 1);
+    } else {
+        selectedPermissions.value.push(permissionId);
+    }
+};
+
+const isPermissionSelected = (permissionId: number | null): boolean => {
+    return permissionId !== null && selectedPermissions.value.includes(permissionId);
+};
+
 const updateRole = () => {
     if (props.role.id) {
         router.put(
@@ -52,20 +66,6 @@ const updateRole = () => {
         );
     }
 };
-
-/*
-@update:checked="(checked) => {
-                                            if (checked) {
-                                                if (permission.id && !selectedPermissions.includes(permission.id)) {
-                                                    selectedPermissions.push(permission.id);
-                                                }
-                                            } else {
-                                                if (permission.id) {
-                                                    selectedPermissions = selectedPermissions.filter(id => id !== permission.id);
-                                                }
-                                            }
-                                        }"
-*/
 </script>
 
 <template>
@@ -104,17 +104,33 @@ const updateRole = () => {
                         <CardDescription>Assign permissions to this role.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div class="space-y-4">
-                            <div class="grid gap-4">
-                                <div v-for="permission in permissionsArray" :key="permission.id ?? permission.name" class="flex items-center space-x-2">
+                        <div class="max-h-96 space-y-4 overflow-y-auto">
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                                <div
+                                    v-for="permission in permissionsArray"
+                                    :key="permission.id ?? permission.name"
+                                    class="flex cursor-pointer items-start space-x-2 rounded-md border p-3 transition-colors hover:bg-neutral-50 hover:border-neutral-300 dark:hover:bg-neutral-800 dark:hover:border-neutral-700"
+                                    @click="togglePermission(permission.id)"
+                                >
                                     <Checkbox
                                         :id="`permission-${permission.id ?? permission.name}`"
-                                        :checked="permission.id ? selectedPermissions.includes(permission.id) : false"
-                                        
+                                        :modelValue="isPermissionSelected(permission.id)"
+                                        @update:checked="(checked) => {
+                                            if (checked) {
+                                                if (permission.id && !selectedPermissions.value.includes(permission.id)) {
+                                                    selectedPermissions.value.push(permission.id);
+                                                }
+                                            } else {
+                                                togglePermission(permission.id);
+                                            }
+                                        }"
+                                        @click.stop
                                     />
-                                    <Label :for="`permission-${permission.id ?? permission.name}`" class="text-sm font-normal">
-                                        {{ permission.name }}
-                                    </Label>
+                                    <div class="flex flex-1 flex-col">
+                                        <Label :for="`permission-${permission.id ?? permission.name}`" class="text-sm font-medium cursor-pointer">
+                                            {{ permission.name }}
+                                        </Label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

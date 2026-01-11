@@ -32,10 +32,24 @@ const form = ref({
 });
 
 const selectedRoutes = ref<number[]>(
-    props.permission.routes?.map((r) => r.id).filter((id): id is number => id !== null) ?? [],
+    props.permission.routes?.map((r) => r.id).filter((id): id is number => id !== null) ?? []
 );
 
 const routesArray = ref(props.routes);
+
+const toggleRoute = (routeId: number | null) => {
+    if (!routeId) return;
+    const index = selectedRoutes.value.indexOf(routeId);
+    if (index > -1) {
+        selectedRoutes.value.splice(index, 1);
+    } else {
+        selectedRoutes.value.push(routeId);
+    }
+};
+
+const isRouteSelected = (routeId: number | null): boolean => {
+    return routeId !== null && selectedRoutes.value.includes(routeId);
+};
 
 const updatePermission = () => {
     if (props.permission.id) {
@@ -96,29 +110,18 @@ const updatePermission = () => {
                                     v-for="route in routesArray"
                                     :key="route.id"
                                     class="flex cursor-pointer items-start space-x-2 rounded-md border p-3 transition-colors hover:bg-neutral-50 hover:border-neutral-300 dark:hover:bg-neutral-800 dark:hover:border-neutral-700"
-                                    @click="() => {
-                                        if (route.id) {
-                                            const isSelected = selectedRoutes.includes(route.id);
-                                            if (isSelected) {
-                                                selectedRoutes = selectedRoutes.filter(id => id !== route.id);
-                                            } else {
-                                                selectedRoutes.push(route.id);
-                                            }
-                                        }
-                                    }"
+                                    @click="toggleRoute(route.id)"
                                 >
                                     <Checkbox
                                         :id="`route-${route.id}`"
-                                        :checked="selectedRoutes.includes(route.id ?? 0)"
+                                        :modelValue="isRouteSelected(route.id)"
                                         @update:checked="(checked) => {
                                             if (checked) {
-                                                if (route.id && !selectedRoutes.includes(route.id)) {
-                                                    selectedRoutes.push(route.id);
+                                                if (route.id && !selectedRoutes.value.includes(route.id)) {
+                                                    selectedRoutes.value.push(route.id);
                                                 }
                                             } else {
-                                                if (route.id) {
-                                                    selectedRoutes = selectedRoutes.filter(id => id !== route.id);
-                                                }
+                                                toggleRoute(route.id);
                                             }
                                         }"
                                         @click.stop

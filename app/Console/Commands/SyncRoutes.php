@@ -17,22 +17,12 @@ final class SyncRoutes extends Command
 
     public function handle(): int
     {
-        // Routes that should be marked as public
-        $publicRoutePatterns = [
-            'login',
-            'register',
-            'password.',
-            'verification.',
-            'home',
-            'two-factor.',
-        ];
-
         $laravelRoutes = collect(RouteFacade::getRoutes())
             ->filter(fn ($route) => $route->getName())
-            ->flatMap(function ($route) use ($publicRoutePatterns) {
+            ->flatMap(function ($route) {
                 $routeName = $route->getName();
 
-                $isPublic = collect($publicRoutePatterns)->contains(fn ($pattern) => Str::startsWith($routeName, $pattern));
+                $isPublic = collect(config('permission.public_route_patterns'))->contains(fn ($pattern) => Str::startsWith($routeName, $pattern));
 
                 return collect($route->methods())
                     ->reject(fn ($method) => $method === 'HEAD')

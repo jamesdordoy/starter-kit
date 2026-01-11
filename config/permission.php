@@ -31,6 +31,15 @@ return [
     'generate_enum_path' => app_path('Enums/PermissionEnum.php'),
     'generate_enum_stub' => storage_path('stubs/permission-enum.stub'),
 
+    'public_route_patterns' => [
+        'login',
+        'register',
+        'password.',
+        'verification.',
+        'home',
+        'two-factor.',
+    ],
+
     'table_names' => [
 
         /*

@@ -9,6 +9,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Route;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -202,9 +203,9 @@ final class GeneratePermissionsFromRoutes extends Command
 
         $permissionRoutesMap = $permissions->mapWithKeys(fn ($permission) => [
             $permission->name => $permission->routes->pluck('name')->unique()->sort()->values()->toArray(),
-        ])->toArray();
+        ]);
 
-        $enumContent = $this->buildPermissionEnumContent($enumCases->toArray(), $permissionRoutesMap);
+        $enumContent = $this->buildPermissionEnumContent($enumCases, $permissionRoutesMap);
 
         $enumPath = config('permission.generate_enum_path');
         File::put($enumPath, $enumContent);
@@ -215,13 +216,13 @@ final class GeneratePermissionsFromRoutes extends Command
     /**
      * Build the permission enum PHP file content
      */
-    private function buildPermissionEnumContent(array $enumCases, array $permissionRoutesMap): string
+    private function buildPermissionEnumContent(Collection $enumCases, Collection $permissionRoutesMap): string
     {
-        $cases = collect($enumCases)
+        $cases = $enumCases
             ->map(fn ($permissionName, $caseName) => "\tcase {$caseName} = '{$permissionName}';")
             ->implode("\n");
 
-        $matchEntries = collect($permissionRoutesMap)
+        $matchEntries = $permissionRoutesMap
             ->sortKeys()
             ->map(fn ($routeNames, $permission) => [
                 'case' => Str::upper($permission),

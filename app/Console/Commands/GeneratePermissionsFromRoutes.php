@@ -9,6 +9,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Route;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 final class GeneratePermissionsFromRoutes extends Command
 {
@@ -118,31 +119,85 @@ final class GeneratePermissionsFromRoutes extends Command
 
         $this->info('Generated '.count($permissionMap).' unique permission names.');
 
+        // Get existing permissions before upsert to determine what was created vs updated
+        $permissionNames = array_keys($permissionMap);
+        $existingPermissionNames = Permission::where('guard_name', 'web')
+            ->whereIn('name', $permissionNames)
+            ->pluck('name')
+            ->toArray();
+
+        // Bulk upsert permissions
+        $permissionsToUpsert = collect($permissionMap)->map(function ($permissionData) {
+            return [
+                'name' => $permissionData['name'],
+                'guard_name' => 'web',
+                'updated_at' => now(),
+                'created_at' => now(),
+            ];
+        })->toArray();
+
         $created = 0;
         $updated = 0;
 
-        // Create or update permissions
-        foreach ($permissionMap as $permissionData) {
-            $permission = Permission::firstOrCreate(
-                ['name' => $permissionData['name']],
-                ['guard_name' => 'web']
+        if (! empty($permissionsToUpsert)) {
+            Permission::upsert(
+                $permissionsToUpsert,
+                ['name', 'guard_name'], // Unique columns
+                ['updated_at'] // Columns to update
             );
 
-            if ($permission->wasRecentlyCreated) {
-                $created++;
-            } else {
-                $updated++;
-            }
-
-            // Assign routes to permission if requested
-            if ($this->option('assign-routes')) {
-                $permission->routes()->sync($permissionData['routes']);
+            // Count created vs updated based on what existed before
+            foreach ($permissionNames as $permissionName) {
+                if (in_array($permissionName, $existingPermissionNames)) {
+                    $updated++;
+                } else {
+                    $created++;
+                }
             }
         }
 
         $this->info("Created {$created} new permission(s).");
         if ($updated > 0) {
             $this->info("Found {$updated} existing permission(s).");
+        }
+
+        // Batch sync route-permission relationships if requested
+        if ($this->option('assign-routes')) {
+            // Get all permissions with their IDs
+            $permissions = Permission::where('guard_name', 'web')
+                ->whereIn('name', array_keys($permissionMap))
+                ->get()
+                ->keyBy('name');
+
+            // Build pivot data for bulk insert
+            $pivotData = [];
+            foreach ($permissionMap as $permissionName => $permissionData) {
+                $permission = $permissions->get($permissionName);
+                if ($permission) {
+                    foreach ($permissionData['routes'] as $routeId) {
+                        $pivotData[] = [
+                            'permission_id' => $permission->id,
+                            'route_id' => $routeId,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+                }
+            }
+
+            // Delete existing relationships and insert new ones in bulk
+            if (! empty($pivotData)) {
+                // Get permission IDs to clear existing relationships
+                $permissionIds = $permissions->pluck('id')->toArray();
+                
+                // Delete existing route-permission relationships for these permissions
+                DB::table('route_permission')
+                    ->whereIn('permission_id', $permissionIds)
+                    ->delete();
+
+                // Bulk insert new relationships
+                DB::table('route_permission')->insert($pivotData);
+            }
         }
 
         // Attach all permissions to admin role

@@ -28,22 +28,15 @@ final class CheckRoutePermission
 
         $routeModel = Route::where('name', $routeName)->first();
 
-        // Handle missing route mapping
         if (! $routeModel) {
-            \Log::warning("Unregistered route: {$routeName}");
-
-            // Uncomment to block by default:
             abort(403, 'Access denied: route not registered.');
         }
 
-        // Public routes are accessible to everyone (including unauthenticated users)
         if ($routeModel->is_public) {
             return $next($request);
         }
 
-        // If route is not public, user must be authenticated
         if (! $user) {
-            \Log::warning('not authenticated');
             abort(403, 'Access denied: authentication required.');
         }
 

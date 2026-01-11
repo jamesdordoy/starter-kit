@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class ProfileDeleteRequest extends FormRequest
+class ProfileDeleteRequest extends BaseFormRequest
 {
     public function rules(): array
     {

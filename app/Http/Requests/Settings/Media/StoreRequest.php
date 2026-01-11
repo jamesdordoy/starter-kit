@@ -2,19 +2,11 @@
 
 namespace App\Http\Requests\Settings\Media;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class StoreRequest extends FormRequest
+class StoreRequest extends BaseFormRequest
 {
     const MIMES = 'xls,xlsx,csv,doc,docx,pdf,txt,jpg,jpeg,png';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.

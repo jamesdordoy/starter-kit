@@ -8,7 +8,7 @@ import type { PaginatedCollection } from '@/types/paginated-collection';
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { index as settingsIndex } from '@/actions/App/Http/Controllers/Settings/SettingController';
-import { index, show } from '@/actions/App/Http/Controllers/Settings/RoleController';
+import { show } from '@/actions/App/Http/Controllers/Settings/RoleController';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {

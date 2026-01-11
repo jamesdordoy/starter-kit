@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Requests\Settings\Permissions;
 
 use App\Data\PermissionStoreData;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-final class StorePermissionRequest extends FormRequest
+final class StorePermissionRequest extends BaseFormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     public function rules(): array
     {

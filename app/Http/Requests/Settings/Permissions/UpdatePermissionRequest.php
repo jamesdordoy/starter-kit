@@ -6,15 +6,10 @@ namespace App\Http\Requests\Settings\Permissions;
 
 use App\Data\PermissionUpdateData;
 use App\Models\Permission;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-final class UpdatePermissionRequest extends FormRequest
-{
-    public function authorize(): bool
-    {
-        return true;
-    }
+final class UpdatePermissionRequest extends BaseFormRequest
 
     public function rules(): array
     {

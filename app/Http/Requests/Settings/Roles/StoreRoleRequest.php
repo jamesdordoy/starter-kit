@@ -5,14 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Requests\Settings\Roles;
 
 use App\Data\RoleStoreData;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-final class StoreRoleRequest extends FormRequest
-{
-    public function authorize(): bool
-    {
-        return true;
-    }
+final class StoreRoleRequest extends BaseFormRequest
 
     public function rules(): array
     {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class ProfilePasswordUpdateRequest extends FormRequest
+class ProfilePasswordUpdateRequest extends BaseFormRequest
 {
     public function rules(): array
     {

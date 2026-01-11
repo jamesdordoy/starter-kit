@@ -4,10 +4,10 @@ namespace App\Http\Requests\Settings;
 
 use App\Data\UserData;
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdateRequest extends FormRequest
+class ProfileUpdateRequest extends BaseFormRequest
 {
     public function rules(): array
     {

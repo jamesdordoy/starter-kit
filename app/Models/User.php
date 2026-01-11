@@ -113,35 +113,12 @@ final class User extends Authenticatable implements HasMedia, MustVerifyEmail
         );
     }
 
-    /**
-     * Check if user has the visitor role.
-     */
-    public function isVisitor(): bool
-    {
-        return $this->hasRole('visitor');
-    }
-
-    /**
-     * Check if user has the admin role.
-     */
-    public function isAdmin(): bool
-    {
-        return $this->hasRole('admin');
-    }
-
     public function accessibleRoutes()
     {
-        // Admins have access to all routes
-        if ($this->isAdmin()) {
+        if ($this->hasRole('admin')) {
             return Route::query();
         }
 
-        // If user is a visitor, they can only access public routes
-        if ($this->isVisitor()) {
-            return Route::where('is_public', true);
-        }
-
-        // Get permission IDs the user has (direct + via roles)
         $permissionIds = $this->getAllPermissions()->pluck('id')->toArray();
 
         return Route::where(function ($query) use ($permissionIds) {

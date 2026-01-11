@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class ProfileAvatarUpdateRequest extends FormRequest
+class ProfileAvatarUpdateRequest extends BaseFormRequest
 {
     public function rules(): array
     {

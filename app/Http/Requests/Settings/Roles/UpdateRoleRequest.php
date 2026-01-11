@@ -6,15 +6,10 @@ namespace App\Http\Requests\Settings\Roles;
 
 use App\Data\RoleUpdateData;
 use App\Models\Role;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-final class UpdateRoleRequest extends FormRequest
-{
-    public function authorize(): bool
-    {
-        return true;
-    }
+final class UpdateRoleRequest extends BaseFormRequest
 
     public function rules(): array
     {

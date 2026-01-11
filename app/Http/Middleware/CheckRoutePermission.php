@@ -40,17 +40,10 @@ final class CheckRoutePermission
             abort(403, 'Access denied: authentication required.');
         }
 
-        // Admins have access to all routes
-        if ($user->isAdmin()) {
+        if ($user->hasRole('admin')) {
             return $next($request);
         }
 
-        // Visitor role can only access public routes (already checked above)
-        if ($user->isVisitor()) {
-            abort(403, 'Access denied: visitor role can only access public routes.');
-        }
-
-        // Check if user's permissions grant access to this route
         $userAccessibleRouteNames = $user->getAccessibleRouteNames();
         if (! in_array($routeName, $userAccessibleRouteNames)) {
             abort(403, 'Access denied: route not accessible with your current permissions.');

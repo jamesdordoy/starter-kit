@@ -10,11 +10,10 @@ import UserInfo from '@/components/UserInfo.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { Head, router, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import { index, update } from '@/actions/App/Http/Controllers/Settings/UserController';
-import { usePermissions } from '@/composables/usePermissions';
-import { useCanAccessRoute } from '@/composables/useCanAccessRoute';
+import { type SharedData } from '@/types';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -36,33 +35,9 @@ interface Props {
     };
 }
 
+const page = usePage<SharedData>();
+
 const props = defineProps<Props>();
-
-// Permission checks
-const { can, canAll } = usePermissions();
-const { canAccessRoute, canAccess } = useCanAccessRoute();
-
-// Check permissions for specific actions
-const canUpdateUser = computed(() => can('update_users'));
-
-// Example 1: Check route access by route name
-const canUpdateRolesPermissions = computed(() => {
-    return canAccessRoute('settings.users.roles-permissions.update');
-});
-
-// Example 2: Check route access using Wayfinder route definition
-const canUpdateRolesPermissionsViaRoute = computed(() => {
-    if (props.user.id) {
-        const routeDef = update['/settings/users/{user}/roles-permissions']({ user: props.user.id });
-        return canAccess(routeDef);
-    }
-    return false;
-});
-
-// Example 3: Check multiple permissions
-const canManageUsers = computed(() => {
-    return canAll(['view_users', 'update_users']);
-});
 
 const form = ref({
     name: props.user.name,
@@ -150,7 +125,7 @@ const updateRolesAndPermissions = () => {
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <Button v-if="canUpdateUser" type="button" @click="updateUserInfo">Save Changes</Button>
+                        <Button v-if="page.props.auth.can.update_users" type="button" @click="updateUserInfo">Save Changes</Button>
                         <p v-else class="text-sm text-muted-foreground">You don't have permission to update user information.</p>
                     </CardFooter>
                 </Card>
@@ -183,7 +158,7 @@ const updateRolesAndPermissions = () => {
                     </CardFooter>
                 </Card>
 
-                <Card v-if="canUpdateRolesPermissions">
+                <Card>
                     <CardHeader>
                         <CardTitle>Roles & Permissions</CardTitle>
                         <CardDescription>Manage the user's roles and permissions.</CardDescription>
@@ -202,15 +177,15 @@ const updateRolesAndPermissions = () => {
                                         <Checkbox 
                                             :id="permission.name" 
                                             v-model="selectedPermissions[permission.name]"
-                                            :disabled="!can(permission.name)"
+                                            :disabled="page.props.auth.can[permission.name]"
                                         />
                                         <Label 
                                             :for="permission.name" 
                                             class="text-sm font-normal"
-                                            :class="{ 'opacity-50': !can(permission.name) }"
+                                            :class="{ 'opacity-50': !page.props.auth.can[permission.name] }"
                                         >
                                             {{ permission.name }}
-                                            <span v-if="!can(permission.name)" class="ml-2 text-xs text-muted-foreground">(you don't have this permission)</span>
+                                            <span v-if="!page.props.auth.can[permission.name]" class="ml-2 text-xs text-muted-foreground">(you don't have this permission)</span>
                                         </Label>
                                     </div>
                                 </div>

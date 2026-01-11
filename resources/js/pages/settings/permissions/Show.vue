@@ -115,7 +115,7 @@ const updatePermission = () => {
                                     <Checkbox
                                         :id="`route-${route.id}`"
                                         :modelValue="isRouteSelected(route.id)"
-                                        @update:checked="(checked) => {
+                                        @update:checked="(checked: boolean) => {
                                             if (checked) {
                                                 if (route.id && !selectedRoutes.value.includes(route.id)) {
                                                     selectedRoutes.value.push(route.id);

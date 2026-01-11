@@ -11,6 +11,8 @@
 |
 */
 
+use App\Console\Commands\GeneratePermissionsFromRoutes;
+use App\Console\Commands\SyncRoutes;
 use App\Enums\RoleEnum;
 use App\Models\Permission;
 use App\Models\Role;
@@ -24,8 +26,8 @@ pest()->extend(Tests\TestCase::class)
     ->beforeEach(function () {
         Config::set('app.env', 'testing');
 
-        Artisan::call('route:sync');
-        Artisan::call('permissions:generate-from-routes', ['--assign-routes' => true]);
+        Artisan::call(SyncRoutes::class);
+        Artisan::call(GeneratePermissionsFromRoutes::class, ['--assign-routes' => true]);
 
         collect(RoleEnum::cases())->each(function ($roleEnum) {
             $role = Role::firstOrCreate(

@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ActivityFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 
+#[UseFactory(ActivityFactory::class)]
 final class Activity extends SpatieActivity
 {
+    use HasFactory;
+
     #[Scope]
     public function search(Builder $query, ?string $search): Builder
     {

@@ -6,7 +6,9 @@ namespace App\Models;
 
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,9 +32,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read CarbonInterface $updated_at
  * @property-read string $formatted_email_verified_at
  */
+#[UseFactory(UserFactory::class)]
 final class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, HasRoles, Impersonate, InteractsWithMedia, Notifiable;
 
     /**

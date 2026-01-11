@@ -9,7 +9,6 @@ use App\Http\Requests\BaseFormRequest;
 
 final class StorePermissionRequest extends BaseFormRequest
 {
-
     public function rules(): array
     {
         return [

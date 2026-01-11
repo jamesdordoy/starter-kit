@@ -189,7 +189,7 @@ final class GeneratePermissionsFromRoutes extends Command
             if (! empty($pivotData)) {
                 // Get permission IDs to clear existing relationships
                 $permissionIds = $permissions->pluck('id')->toArray();
-                
+
                 // Delete existing route-permission relationships for these permissions
                 DB::table('route_permission')
                     ->whereIn('permission_id', $permissionIds)

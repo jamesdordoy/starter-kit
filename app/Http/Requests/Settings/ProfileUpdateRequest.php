@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Settings;
 
 use App\Data\UserData;
-use App\Models\User;
 use App\Http\Requests\BaseFormRequest;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends BaseFormRequest

@@ -51,20 +51,21 @@ final class SyncRoutes extends Command
             ->get()
             ->map(fn ($r) => $r->name.'|'.$r->method)
             ->toArray();
-        
+
         $currentRoutes = $laravelRoutes->map(fn ($r) => $r['name'].'|'.$r['method'])->toArray();
 
         // Find stale routes (routes that no longer exist)
         $staleRoutes = array_diff($existingRoutes, $currentRoutes);
-        
+
         // Batch delete stale routes
         $deletedCount = 0;
         if (! empty($staleRoutes)) {
             $staleRouteKeys = collect($staleRoutes)->map(function ($routeKey) {
                 [$name, $method] = explode('|', $routeKey);
+
                 return ['name' => $name, 'method' => $method];
             });
-            
+
             // Delete stale routes in a single query using where conditions
             foreach ($staleRouteKeys as $routeData) {
                 $deleted = RouteModel::where('name', $routeData['name'])

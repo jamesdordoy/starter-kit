@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Requests\Settings\Permissions;
 
 use App\Data\PermissionUpdateData;
-use App\Models\Permission;
 use App\Http\Requests\BaseFormRequest;
+use App\Models\Permission;
 use Illuminate\Validation\Rule;
 
 final class UpdatePermissionRequest extends BaseFormRequest
-
+{
     public function rules(): array
     {
         $permissionId = $this->getPermissionId();

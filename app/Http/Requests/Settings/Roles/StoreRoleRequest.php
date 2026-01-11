@@ -8,7 +8,7 @@ use App\Data\RoleStoreData;
 use App\Http\Requests\BaseFormRequest;
 
 final class StoreRoleRequest extends BaseFormRequest
-
+{
     public function rules(): array
     {
         return [

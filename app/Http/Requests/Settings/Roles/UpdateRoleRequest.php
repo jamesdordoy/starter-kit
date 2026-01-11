@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Requests\Settings\Roles;
 
 use App\Data\RoleUpdateData;
-use App\Models\Role;
 use App\Http\Requests\BaseFormRequest;
+use App\Models\Role;
 use Illuminate\Validation\Rule;
 
 final class UpdateRoleRequest extends BaseFormRequest
-
+{
     public function rules(): array
     {
         $roleId = $this->getRoleId();

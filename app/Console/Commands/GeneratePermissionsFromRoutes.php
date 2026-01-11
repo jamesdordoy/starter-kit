@@ -42,20 +42,14 @@ final class GeneratePermissionsFromRoutes extends Command
      */
     private function parseRouteName(string $routeName): ?array
     {
-        // Split by dots
-        $parts = explode('.', $routeName);
+        $parts = Str::of($routeName)->explode('.');
 
-        // If less than 2 parts, it's probably not a resource route
-        if (count($parts) < 2) {
+        if ($parts->count() < 2) {
             return null;
         }
 
-        // Last part is usually the action
-        $action = array_pop($parts);
-
-        // Second to last is usually the resource (e.g., settings.users.index -> users)
-        // Or the last part before action if it's nested
-        $resource = array_pop($parts) ?: null;
+        $action = $parts->pop();
+        $resource = $parts->pop();
 
         if (! $resource || ! $action) {
             return null;
@@ -76,22 +70,18 @@ final class GeneratePermissionsFromRoutes extends Command
         $parsed = $this->parseRouteName($routeName);
 
         if (! $parsed) {
-            // For routes that don't match the pattern, use the route name as-is (normalized)
-            return str_replace('.', '_', $routeName);
+            return Str::replace('.', '_', $routeName);
         }
 
         $permissionAction = $this->mapActionToPermission($parsed['action']);
 
-        // If we can't map the action, use the route name as-is
         if (! $permissionAction) {
-            return str_replace('.', '_', $routeName);
+            return Str::replace('.', '_', $routeName);
         }
 
-        // Normalize resource name (replace hyphens with underscores)
-        $resource = str_replace('-', '_', $parsed['resource']);
+        $resource = Str::replace('-', '_', $parsed['resource']);
 
-        // Generate permission name: {action}_{resource}
-        return $permissionAction.'_'.$resource;
+        return sprintf('%s_%s', $permissionAction, $resource);
     }
 
     public function handle(): int
@@ -103,59 +93,39 @@ final class GeneratePermissionsFromRoutes extends Command
 
         $this->info("Found {$routes->count()} non-public routes.");
 
-        $permissionMap = [];
+        $permissionMap = $routes->mapToGroups(fn ($route) => [
+            $this->generatePermissionName($route->name) => $route->id,
+        ])->map(fn ($routeIds, $permissionName) => [
+            'name' => $permissionName,
+            'routes' => $routeIds->values()->toArray(),
+        ]);
 
-        // Group routes by permission name (multiple routes can map to same permission)
-        foreach ($routes as $route) {
-            $permissionName = $this->generatePermissionName($route->name);
+        $this->info(sprintf('Generated %d unique permission names.', $permissionMap->count()));
 
-            if (! isset($permissionMap[$permissionName])) {
-                $permissionMap[$permissionName] = [
-                    'name' => $permissionName,
-                    'routes' => [],
-                ];
-            }
-
-            $permissionMap[$permissionName]['routes'][] = $route->id;
-        }
-
-        $this->info('Generated '.count($permissionMap).' unique permission names.');
-
-        // Get existing permissions before upsert to determine what was created vs updated
-        $permissionNames = array_keys($permissionMap);
+        $permissionNames = $permissionMap->keys();
         $existingPermissionNames = Permission::where('guard_name', 'web')
             ->whereIn('name', $permissionNames)
-            ->pluck('name')
-            ->toArray();
+            ->pluck('name');
 
-        // Bulk upsert permissions
-        $permissionsToUpsert = collect($permissionMap)->map(function ($permissionData) {
-            return [
-                'name' => $permissionData['name'],
-                'guard_name' => 'web',
-                'updated_at' => now(),
-                'created_at' => now(),
-            ];
-        })->toArray();
+        $permissionsToUpsert = $permissionMap->map(fn ($permissionData) => [
+            'name' => $permissionData['name'],
+            'guard_name' => 'web',
+            'updated_at' => now(),
+            'created_at' => now(),
+        ])->values();
 
-        $created = 0;
-        $updated = 0;
-
-        if (! empty($permissionsToUpsert)) {
+        if (! $permissionsToUpsert->isEmpty()) {
             Permission::upsert(
-                $permissionsToUpsert,
-                ['name', 'guard_name'], // Unique columns
-                ['updated_at'] // Columns to update
+                $permissionsToUpsert->toArray(),
+                ['name', 'guard_name'],
+                ['updated_at']
             );
 
-            // Count created vs updated based on what existed before
-            foreach ($permissionNames as $permissionName) {
-                if (in_array($permissionName, $existingPermissionNames)) {
-                    $updated++;
-                } else {
-                    $created++;
-                }
-            }
+            $created = $permissionNames->diff($existingPermissionNames)->count();
+            $updated = $permissionNames->intersect($existingPermissionNames)->count();
+        } else {
+            $created = 0;
+            $updated = 0;
         }
 
         $this->info("Created {$created} new permission(s).");
@@ -163,42 +133,27 @@ final class GeneratePermissionsFromRoutes extends Command
             $this->info("Found {$updated} existing permission(s).");
         }
 
-        // Batch sync route-permission relationships if requested
         if ($this->option('assign-routes')) {
-            // Get all permissions with their IDs
             $permissions = Permission::where('guard_name', 'web')
-                ->whereIn('name', array_keys($permissionMap))
+                ->whereIn('name', $permissionMap->keys())
                 ->get()
                 ->keyBy('name');
 
-            // Build pivot data for bulk insert
-            $pivotData = [];
-            foreach ($permissionMap as $permissionName => $permissionData) {
-                $permission = $permissions->get($permissionName);
-                if ($permission) {
-                    foreach ($permissionData['routes'] as $routeId) {
-                        $pivotData[] = [
-                            'permission_id' => $permission->id,
-                            'route_id' => $routeId,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-                }
-            }
+            $pivotData = $permissionMap->flatMap(fn ($permissionData, $permissionName) => 
+                collect($permissionData['routes'])->map(fn ($routeId) => [
+                    'permission_id' => $permissions->get($permissionName)?->id,
+                    'route_id' => $routeId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ])
+            )->filter(fn ($data) => $data['permission_id'])->values();
 
-            // Delete existing relationships and insert new ones in bulk
-            if (! empty($pivotData)) {
-                // Get permission IDs to clear existing relationships
-                $permissionIds = $permissions->pluck('id')->toArray();
-
-                // Delete existing route-permission relationships for these permissions
+            if (! $pivotData->isEmpty()) {
                 DB::table('route_permission')
-                    ->whereIn('permission_id', $permissionIds)
+                    ->whereIn('permission_id', $permissions->pluck('id'))
                     ->delete();
 
-                // Bulk insert new relationships
-                DB::table('route_permission')->insert($pivotData);
+                DB::table('route_permission')->insert($pivotData->toArray());
             }
         }
 
@@ -208,10 +163,9 @@ final class GeneratePermissionsFromRoutes extends Command
             ['guard_name' => 'web']
         );
 
-        // Get all permission IDs (including newly created ones and existing ones)
-        $allPermissionIds = Permission::where('guard_name', 'web')->pluck('id')->toArray();
-
-        $adminRole->syncPermissions($allPermissionIds);
+        $adminRole->syncPermissions(
+            Permission::where('guard_name', 'web')->pluck('id')
+        );
         $this->info('All permissions have been assigned to the admin role.');
 
         if ($this->option('assign-routes')) {
@@ -278,10 +232,6 @@ final class GeneratePermissionsFromRoutes extends Command
 
         $stub = File::get(config('permission.generate_enum_stub'));
 
-        return str_replace(
-            ['{{CASES}}', '{{MATCH_ENTRIES}}'],
-            [$cases, $matchEntries],
-            $stub
-        );
+        return Str::replace(['{{CASES}}', '{{MATCH_ENTRIES}}'], [$cases, $matchEntries], $stub);
     }
 }

@@ -32,7 +32,6 @@ final class SyncRoutes extends Command
             ->flatMap(function ($route) use ($publicRoutePatterns) {
                 $routeName = $route->getName();
 
-                // Check if route matches any public pattern
                 $isPublic = collect($publicRoutePatterns)->contains(fn ($pattern) => Str::startsWith($routeName, $pattern));
 
                 return collect($route->methods())
@@ -52,10 +51,8 @@ final class SyncRoutes extends Command
 
         $currentRoutes = $laravelRoutes->map(fn ($route) => sprintf('%s|%s', $route['name'], $route['method']));
 
-        // Find stale routes (routes that no longer exist)
         $staleRoutes = $existingRoutes->diffAssoc($currentRoutes);
 
-        // Batch delete stale routes
         $deletedCount = 0;
         if (! $staleRoutes->isEmpty()) {
             $staleRouteKeys = collect($staleRoutes)->map(function ($routeKey) {

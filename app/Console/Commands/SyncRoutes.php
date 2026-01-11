@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\Route as RouteModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route as RouteFacade;
+use Illuminate\Support\Str;
 
 final class SyncRoutes extends Command
 {
@@ -32,9 +33,7 @@ final class SyncRoutes extends Command
                 $routeName = $route->getName();
 
                 // Check if route matches any public pattern
-                $isPublic = collect($publicRoutePatterns)->contains(function ($pattern) use ($routeName) {
-                    return str_starts_with($routeName, $pattern);
-                });
+                $isPublic = collect($publicRoutePatterns)->contains(fn ($pattern) => Str::startsWith($routeName, $pattern));
 
                 return collect($route->methods())
                     ->reject(fn ($method) => $method === 'HEAD')
@@ -49,48 +48,40 @@ final class SyncRoutes extends Command
         // Get all current route name+method combinations (use select for better performance)
         $existingRoutes = RouteModel::select('name', 'method')
             ->get()
-            ->map(fn ($r) => $r->name.'|'.$r->method)
-            ->toArray();
+            ->map(fn ($route) => sprintf('%s|%s', $route->name, $route->method));
 
-        $currentRoutes = $laravelRoutes->map(fn ($r) => $r['name'].'|'.$r['method'])->toArray();
+        $currentRoutes = $laravelRoutes->map(fn ($route) => sprintf('%s|%s', $route['name'], $route['method']));
 
         // Find stale routes (routes that no longer exist)
-        $staleRoutes = array_diff($existingRoutes, $currentRoutes);
+        $staleRoutes = $existingRoutes->diffAssoc($currentRoutes);
 
         // Batch delete stale routes
         $deletedCount = 0;
-        if (! empty($staleRoutes)) {
+        if (! $staleRoutes->isEmpty()) {
             $staleRouteKeys = collect($staleRoutes)->map(function ($routeKey) {
-                [$name, $method] = explode('|', $routeKey);
+                [$name, $method] = Str::of($routeKey)->explode('|');
 
                 return ['name' => $name, 'method' => $method];
             });
 
-            // Delete stale routes in a single query using where conditions
-            foreach ($staleRouteKeys as $routeData) {
-                $deleted = RouteModel::where('name', $routeData['name'])
-                    ->where('method', $routeData['method'])
-                    ->delete();
-                $deletedCount += $deleted;
-            }
+            $deletedCount = $staleRouteKeys->map(fn ($routeData) => RouteModel::where('name', $routeData['name'])
+                ->where('method', $routeData['method'])
+                ->delete())->sum();
         }
 
         // Bulk upsert routes using name+method as unique key
-        $routesToUpsert = $laravelRoutes->map(function ($routeData) {
-            return [
+        $routesToUpsert = $laravelRoutes->map(fn ($routeData) => [
                 'name' => $routeData['name'],
                 'method' => $routeData['method'],
                 'uri' => $routeData['uri'],
                 'label' => null,
                 'is_public' => $routeData['is_public'],
-                'updated_at' => now(),
-                'created_at' => now(),
-            ];
-        })->toArray();
 
-        if (! empty($routesToUpsert)) {
+            ]);
+
+        if (! $routesToUpsert->isEmpty()) {
             RouteModel::upsert(
-                $routesToUpsert,
+                $routesToUpsert->toArray(),
                 ['name', 'method'], // Unique columns
                 ['uri', 'is_public', 'label', 'updated_at'] // Columns to update
             );

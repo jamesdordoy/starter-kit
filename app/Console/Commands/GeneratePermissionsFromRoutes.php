@@ -10,10 +10,12 @@ use App\Models\Role;
 use App\Models\Route;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 final class GeneratePermissionsFromRoutes extends Command
 {
-    protected $signature = 'generate:permissions {--assign-routes : Assign routes to the generated permissions}';
+    protected $signature = 'generate:permissions {--assign-routes : Assign routes to the generated permissions} {--generate-enum : Generate an enum containing all permissions and their associated routes}';
 
     protected $description = 'Generate permissions based on routes in the database';
 
@@ -218,6 +220,68 @@ final class GeneratePermissionsFromRoutes extends Command
             $this->comment('Tip: Use --assign-routes flag to automatically assign routes to permissions.');
         }
 
+        if ($this->option('generate-enum')) {
+            $this->generatePermissionEnum();
+        }
+
         return self::SUCCESS;
+    }
+
+    /**
+     * Generate an enum containing all permissions and their associated routes
+     */
+    private function generatePermissionEnum(): void
+    {
+        $this->info('Generating permission enum...');
+
+        $permissions = Permission::with('routes')->orderBy('name')->get();
+
+        if ($permissions->isEmpty()) {
+            $this->warn('No permissions found to generate enum.');
+
+            return;
+        }
+
+        $enumCases = $permissions->mapWithKeys(fn ($permission) => [
+            Str::upper($permission->name) => $permission->name,
+        ]);
+
+        $permissionRoutesMap = $permissions->mapWithKeys(fn ($permission) => [
+            $permission->name => $permission->routes->pluck('name')->unique()->sort()->values()->toArray(),
+        ])->toArray();
+
+        $enumContent = $this->buildPermissionEnumContent($enumCases->toArray(), $permissionRoutesMap);
+
+        $enumPath = config('permission.generate_enum_path');
+        File::put($enumPath, $enumContent);
+
+        $this->info("Generated enum with {$permissions->count()} permission(s) at: {$enumPath}");
+    }
+
+    /**
+     * Build the permission enum PHP file content
+     */
+    private function buildPermissionEnumContent(array $enumCases, array $permissionRoutesMap): string
+    {
+        $cases = collect($enumCases)
+            ->map(fn ($permissionName, $caseName) => "\tcase {$caseName} = '{$permissionName}';")
+            ->implode("\n");
+
+        $matchEntries = collect($permissionRoutesMap)
+            ->sortKeys()
+            ->map(fn ($routeNames, $permission) => [
+                'case' => Str::upper($permission),
+                'routes' => collect($routeNames)->map(fn ($route) => "'{$route}'")->implode(', '),
+            ])
+            ->map(fn ($entry) => sprintf("\t\t\tself::%s => [%s],", $entry['case'], $entry['routes']))
+            ->implode("\n");
+
+        $stub = File::get(config('permission.generate_enum_stub'));
+
+        return str_replace(
+            ['{{CASES}}', '{{MATCH_ENTRIES}}'],
+            [$cases, $matchEntries],
+            $stub
+        );
     }
 }

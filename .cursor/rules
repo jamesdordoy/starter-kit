@@ -55,7 +55,7 @@ Laravel Best Practices
 - Use Laravel's built-in pagination features but use frontend typing and custom vue components for rendering.
 - If its logical, never ever use the DB facade and use models and factories.
 - Use and implement typescript where ever possible on the frontend via https://spatie.be/docs/laravel-data/.
-- Use LAravel defaults for everything where possible. Collections, Str, Array Facade etc. Avoid native php functions
+- Use Laravel defaults for everything where possible. Collections, Str, Array Facade etc. Avoid native php functions.
 
 Key Conventions
 1. Follow Laravel's MVC & actions architecture.
@@ -65,4 +65,5 @@ Key Conventions
 6. Use Laravel's event and listener system for decoupled code.
 7. Use Spatie query buiilder and dont use the default methods. Check `App/QueryBuilder/UserQuery.php`
 8. Use DTO e.g. `App\Data\UserData` for all data modeling for any request etc.
+9. Never use shortened variable names. 
   

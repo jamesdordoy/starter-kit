@@ -54,7 +54,8 @@ Laravel Best Practices
 - Implement proper database indexing for improved query performance.
 - Use Laravel's built-in pagination features but use frontend typing and custom vue components for rendering.
 - If its logical, never ever use the DB facade and use models and factories.
-- USe and implement typescript where ever possible on the frontend.
+- Use and implement typescript where ever possible on the frontend via https://spatie.be/docs/laravel-data/.
+- Use LAravel defaults for everything where possible. Collections, Str, Array Facade etc. Avoid native php functions
 
 Key Conventions
 1. Follow Laravel's MVC & actions architecture.

@@ -28,6 +28,9 @@ return [
 
     ],
 
+    'generate_enum_path' => app_path('Enums/PermissionEnum.php'),
+    'generate_enum_stub' => storage_path('stubs/permission-enum.stub'),
+
     'table_names' => [
 
         /*

@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Enums;
+
+enum PermissionEnum: string
+{
+{{CASES}}
+
+    /**
+     * Get all routes associated with this permission
+     *
+     * @return array<string>
+     */
+    public function routes(): array
+    {
+        return match ($this) {
+{{MATCH_ENTRIES}}
+        };
+    }
+}
